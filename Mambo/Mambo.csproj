@@ -187,6 +187,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="BusinessManagement\" />
+    <Folder Include="DataAccess\" />
+    <Folder Include="DBO\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
