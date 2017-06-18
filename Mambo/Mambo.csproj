@@ -149,7 +149,18 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="BusinessManagement\Article.cs" />
+    <Compile Include="BusinessManagement\ArticleLike.cs" />
+    <Compile Include="BusinessManagement\CommentArticle.cs" />
+    <Compile Include="BusinessManagement\Language.cs" />
+    <Compile Include="BusinessManagement\Resources.cs" />
+    <Compile Include="BusinessManagement\Role.cs" />
+    <Compile Include="BusinessManagement\Translation.cs" />
+    <Compile Include="BusinessManagement\User.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="DataAccess\Article.cs" />
+    <Compile Include="DataAccess\ArticleLike.cs" />
+    <Compile Include="DataAccess\CommentArticle.cs" />
     <Compile Include="DataAccess\GetArticle_Like_Result.cs">
       <DependentUpon>modele.tt</DependentUpon>
     </Compile>
@@ -174,6 +185,8 @@
     <Compile Include="DataAccess\GetUser_Result.cs">
       <DependentUpon>modele.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataAccess\Interface\ICrud.cs" />
+    <Compile Include="DataAccess\Language.cs" />
     <Compile Include="DataAccess\modele.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -189,6 +202,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>modele.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DataAccess\Resources.cs" />
+    <Compile Include="DataAccess\Role.cs" />
     <Compile Include="DataAccess\sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>modele.tt</DependentUpon>
     </Compile>
@@ -198,6 +213,7 @@
     <Compile Include="DataAccess\sysdiagrams.cs">
       <DependentUpon>modele.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataAccess\Translation.cs" />
     <Compile Include="DataAccess\T_ARTICLE.cs">
       <DependentUpon>modele.tt</DependentUpon>
     </Compile>
@@ -240,6 +256,14 @@
     <Compile Include="DataAccess\UpdateUser_Result.cs">
       <DependentUpon>modele.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataAccess\User.cs" />
+    <Compile Include="DBO\Article.cs" />
+    <Compile Include="DBO\ArticleLike.cs" />
+    <Compile Include="DBO\CommentArticle.cs" />
+    <Compile Include="DBO\Language.cs" />
+    <Compile Include="DBO\Resources.cs" />
+    <Compile Include="DBO\Role.cs" />
+    <Compile Include="DBO\Translation.cs" />
     <Compile Include="DBO\User.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -303,7 +327,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="BusinessManagement\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

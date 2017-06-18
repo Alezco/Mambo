@@ -8,22 +8,14 @@ namespace Mambo.DataAccess
 {
     public class Article
     {
-        public bool Create(DBO.Article obj, DBO.Resources resource)
+        public bool Create(DBO.Article obj)
         {
             try
             {
                 using (dbNetEntities bdd = new dbNetEntities())
                 {
                     long resultArticle = bdd.CreateArticle(obj.AdminId, obj.CreationDate, obj.Status, obj.NbViews).FirstOrDefault().Value;
-                    if (resultArticle > 0)
-                    {
-                        T_ARTICLE tArticle = bdd.T_ARTICLE.ToList().Where(x => x.id == resultArticle).FirstOrDefault();
-                        T_RESOURCES tResource = bdd.T_RESOURCES.ToList().Where(x => x.id == resource.Id).FirstOrDefault();
-
-                        tArticle.T_RESOURCES.Add(tResource);
-                        return true;
-                    }
-                    return false;
+                    return resultArticle > 0;
                     
                 }
             }
@@ -90,13 +82,24 @@ namespace Mambo.DataAccess
             }
         }
 
-        public bool Update(DBO.Article obj)
+        public bool Update(DBO.Article obj, DBO.Resources resources)
         {
             try
             {
                 using (dbNetEntities bdd = new dbNetEntities())
                 {
                     var req = bdd.UpdateArticle(obj.Id, obj.AdminId, obj.CreationDate, obj.Status, obj.NbViews).FirstOrDefault();
+
+                    T_ARTICLE tArticle = bdd.T_ARTICLE.ToList().Where(x => x.id == obj.Id).FirstOrDefault();
+                    T_RESOURCES tResource = bdd.T_RESOURCES.ToList().Where(x => x.id == resources.Id).FirstOrDefault();
+
+                    bdd.T_ARTICLE.Attach(tArticle);
+                    bdd.T_RESOURCES.Attach(tResource);
+
+                    tArticle.T_RESOURCES.Add(tResource);
+                    tResource.T_ARTICLE.Add(tArticle);
+                    bdd.SaveChanges();
+
                     //obj.isEqual(new DBO.Article(result.id, result.adminID, result.MONIDDERESOURCES, result.creationDate, result.status, result.nbViews));
                     return req != null && obj.isEqual(new DBO.Article(req.adminID, req.creationDate, req.status, req.nbViews));
                 }

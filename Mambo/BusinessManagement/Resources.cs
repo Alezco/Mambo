@@ -14,9 +14,9 @@ namespace Mambo.BusinessManagement
             resourcesAccess = new DataAccess.Resources();
         }
 
-        public bool Create(DBO.Resources obj, DBO.Article article)
+        public bool Create(DBO.Resources obj)
         {
-            return resourcesAccess.Create(obj, article);
+            return resourcesAccess.Create(obj);
         }
 
         public bool Delete(int key)
@@ -34,9 +34,9 @@ namespace Mambo.BusinessManagement
             return resourcesAccess.GetAll();
         }
 
-        public bool Update(DBO.Resources obj)
+        public bool Update(DBO.Resources obj, DBO.Article article)
         {
-            return resourcesAccess.Update(obj);
+            return resourcesAccess.Update(obj, article);
         }
 
     }

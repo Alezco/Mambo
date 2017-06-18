@@ -8,22 +8,14 @@ namespace Mambo.DataAccess
 {
     public class Resources
     {
-        public bool Create(DBO.Resources obj, DBO.Article article)
+        public bool Create(DBO.Resources obj)
         {
             try
             {
                 using (dbNetEntities bdd = new dbNetEntities())
                 {
                     long resultResources = bdd.CreateResources(obj.Title, obj.Description, obj.Path, obj.LanguageId).FirstOrDefault().Value;
-                    if (resultResources > 0)
-                    {  
-                        T_RESOURCES tResource = bdd.T_RESOURCES.ToList().Where(x => x.id == resultResources).FirstOrDefault();
-                        T_ARTICLE tArticle = bdd.T_ARTICLE.ToList().Where(x => x.id == article.Id).FirstOrDefault();
-
-                        tResource.T_ARTICLE.Add(tArticle);
-                        return true;
-                    }
-                    return false;
+                    return resultResources > 0;
 
                 }
             }
@@ -90,13 +82,24 @@ namespace Mambo.DataAccess
             }
         }
 
-        public bool Update(DBO.Resources obj)
+        public bool Update(DBO.Resources obj, DBO.Article article)
         {
             try
             {
                 using (dbNetEntities bdd = new dbNetEntities())
                 {
                     var req = bdd.UpdateResources(obj.Id, obj.Title, obj.Description, obj.Path, obj.LanguageId).FirstOrDefault();
+
+                    T_RESOURCES tResource = bdd.T_RESOURCES.ToList().Where(x => x.id == obj.Id).FirstOrDefault();
+                    T_ARTICLE tArticle = bdd.T_ARTICLE.ToList().Where(x => x.id == article.Id).FirstOrDefault();
+
+                    bdd.T_ARTICLE.Attach(tArticle);
+                    bdd.T_RESOURCES.Attach(tResource);
+
+                    tArticle.T_RESOURCES.Add(tResource);
+                    tResource.T_ARTICLE.Add(tArticle);
+                    bdd.SaveChanges();
+
                     //obj.isEqual(new DBO.Article(result.id, result.adminID, result.MONIDDERESOURCES, result.creationDate, result.status, result.nbViews));
                     return req != null && obj.isEqual(new DBO.Resources(req.languageID, req.title, req.description, req.path));
                 }
