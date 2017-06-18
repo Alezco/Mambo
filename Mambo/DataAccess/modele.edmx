@@ -1,0 +1,1360 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="dbNetModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="T_ARTICLE">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="adminID" Type="int" Nullable="false" />
+          <Property Name="resourcesID" Type="int" Nullable="false" />
+          <Property Name="creationDate" Type="date" Nullable="false" />
+          <Property Name="status" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="nbViews" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_ARTICLE_LIKE">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userID" Type="int" Nullable="false" />
+          <Property Name="articleID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_COMMENT_ARTICLE">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userID" Type="int" Nullable="false" />
+          <Property Name="articleID" Type="int" Nullable="false" />
+          <Property Name="creationDate" Type="date" Nullable="false" />
+          <Property Name="commentContent" Type="text" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_LANGUAGE">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="language" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_RESOURCES">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="text" Nullable="false" />
+          <Property Name="path" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="languageID" Type="int" Nullable="false" />
+          <Property Name="articleID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_ROLE">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="role" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_TRANSLATION">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="articleID" Type="int" Nullable="false" />
+          <Property Name="translatorID" Type="int" Nullable="false" />
+          <Property Name="language" Type="int" Nullable="false" />
+          <Property Name="translationArticleContent" Type="text" Nullable="false" />
+          <Property Name="translationArticleTitle" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_USER">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pseudo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="roleID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_T_ARTICLE_LIKE_T_ARTICLE">
+          <End Role="T_ARTICLE" Type="Self.T_ARTICLE" Multiplicity="1" />
+          <End Role="T_ARTICLE_LIKE" Type="Self.T_ARTICLE_LIKE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_ARTICLE">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="T_ARTICLE_LIKE">
+              <PropertyRef Name="articleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_ARTICLE_LIKE_T_USER">
+          <End Role="T_USER" Type="Self.T_USER" Multiplicity="1" />
+          <End Role="T_ARTICLE_LIKE" Type="Self.T_ARTICLE_LIKE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_USER">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="T_ARTICLE_LIKE">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_ARTICLE_T_RESOURCES">
+          <End Role="T_RESOURCES" Type="Self.T_RESOURCES" Multiplicity="1" />
+          <End Role="T_ARTICLE" Type="Self.T_ARTICLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_RESOURCES">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="T_ARTICLE">
+              <PropertyRef Name="resourcesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_ARTICLE_T_USER">
+          <End Role="T_USER" Type="Self.T_USER" Multiplicity="1" />
+          <End Role="T_ARTICLE" Type="Self.T_ARTICLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_USER">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="T_ARTICLE">
+              <PropertyRef Name="adminID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_COMMENT_ARTICLE_T_ARTICLE">
+          <End Role="T_ARTICLE" Type="Self.T_ARTICLE" Multiplicity="1" />
+          <End Role="T_COMMENT_ARTICLE" Type="Self.T_COMMENT_ARTICLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_ARTICLE">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="T_COMMENT_ARTICLE">
+              <PropertyRef Name="articleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_COMMENT_ARTICLE_T_USER">
+          <End Role="T_USER" Type="Self.T_USER" Multiplicity="1" />
+          <End Role="T_COMMENT_ARTICLE" Type="Self.T_COMMENT_ARTICLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_USER">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="T_COMMENT_ARTICLE">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_RESOURCES_T_ARTICLE">
+          <End Role="T_ARTICLE" Type="Self.T_ARTICLE" Multiplicity="1" />
+          <End Role="T_RESOURCES" Type="Self.T_RESOURCES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_ARTICLE">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="T_RESOURCES">
+              <PropertyRef Name="articleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_RESOURCES_T_RESOURCES">
+          <End Role="T_LANGUAGE" Type="Self.T_LANGUAGE" Multiplicity="1" />
+          <End Role="T_RESOURCES" Type="Self.T_RESOURCES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_LANGUAGE">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="T_RESOURCES">
+              <PropertyRef Name="languageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_TRADUCTION_T_ARTICLE">
+          <End Role="T_ARTICLE" Type="Self.T_ARTICLE" Multiplicity="1" />
+          <End Role="T_TRANSLATION" Type="Self.T_TRANSLATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_ARTICLE">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="T_TRANSLATION">
+              <PropertyRef Name="articleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_TRADUCTION_T_USER">
+          <End Role="T_USER" Type="Self.T_USER" Multiplicity="1" />
+          <End Role="T_TRANSLATION" Type="Self.T_TRANSLATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_USER">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="T_TRANSLATION">
+              <PropertyRef Name="translatorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_TRANSLATION_T_LANGUAGE">
+          <End Role="T_LANGUAGE" Type="Self.T_LANGUAGE" Multiplicity="1" />
+          <End Role="T_TRANSLATION" Type="Self.T_TRANSLATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_LANGUAGE">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="T_TRANSLATION">
+              <PropertyRef Name="language" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_USER_T_USER">
+          <End Role="T_ROLE" Type="Self.T_ROLE" Multiplicity="1" />
+          <End Role="T_USER" Type="Self.T_USER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_ROLE">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="T_USER">
+              <PropertyRef Name="roleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="CreateArticle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="adminID" Type="int" Mode="In" />
+          <Parameter Name="creationDate" Type="date" Mode="In" />
+          <Parameter Name="status" Type="varchar" Mode="In" />
+          <Parameter Name="nbViews" Type="int" Mode="In" />
+        </Function>
+        <Function Name="CreateArticle_Like" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userID" Type="int" Mode="In" />
+          <Parameter Name="articleID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="CreateComment_Article" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userID" Type="int" Mode="In" />
+          <Parameter Name="articleID" Type="int" Mode="In" />
+          <Parameter Name="creationDate" Type="date" Mode="In" />
+          <Parameter Name="commentContent" Type="text" Mode="In" />
+        </Function>
+        <Function Name="CreateLanguage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="language" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="CreateResources" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="title" Type="varchar" Mode="In" />
+          <Parameter Name="description" Type="text" Mode="In" />
+          <Parameter Name="path" Type="varchar" Mode="In" />
+          <Parameter Name="languageID" Type="int" Mode="In" />
+          <Parameter Name="articleID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="CreateRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="role" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="CreateTranslation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="articleID" Type="int" Mode="In" />
+          <Parameter Name="translatorID" Type="int" Mode="In" />
+          <Parameter Name="language" Type="int" Mode="In" />
+          <Parameter Name="translationArticleContent" Type="text" Mode="In" />
+          <Parameter Name="translationArticleTitle" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="CreateUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pseudo" Type="varchar" Mode="In" />
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varchar" Mode="In" />
+          <Parameter Name="roleID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteArticle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteArticle_Like" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteComment_Article" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteLanguage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteResources" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteTranslation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="GetArticle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetArticle_Like" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetComment_Article" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetLanguage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetResources" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetTranslation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="UpdateArticle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="adminID" Type="int" Mode="In" />
+          <Parameter Name="creationDate" Type="date" Mode="In" />
+          <Parameter Name="status" Type="varchar" Mode="In" />
+          <Parameter Name="nbViews" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UpdateArticle_Like" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="userID" Type="int" Mode="In" />
+          <Parameter Name="articleID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UpdateComment_Article" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="userID" Type="int" Mode="In" />
+          <Parameter Name="articleID" Type="int" Mode="In" />
+          <Parameter Name="creationDate" Type="date" Mode="In" />
+          <Parameter Name="commentContent" Type="text" Mode="In" />
+        </Function>
+        <Function Name="UpdateLanguage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="language" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UpdateResources" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="title" Type="varchar" Mode="In" />
+          <Parameter Name="description" Type="text" Mode="In" />
+          <Parameter Name="path" Type="varchar" Mode="In" />
+          <Parameter Name="languageID" Type="int" Mode="In" />
+          <Parameter Name="articleID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UpdateRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="role" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UpdateTranslation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="articleID" Type="int" Mode="In" />
+          <Parameter Name="translatorID" Type="int" Mode="In" />
+          <Parameter Name="language" Type="int" Mode="In" />
+          <Parameter Name="translationArticleContent" Type="text" Mode="In" />
+          <Parameter Name="translationArticleTitle" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UpdateUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="pseudo" Type="varchar" Mode="In" />
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varchar" Mode="In" />
+          <Parameter Name="roleID" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="dbNetModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_ARTICLE" EntityType="Self.T_ARTICLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_ARTICLE_LIKE" EntityType="Self.T_ARTICLE_LIKE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_COMMENT_ARTICLE" EntityType="Self.T_COMMENT_ARTICLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_LANGUAGE" EntityType="Self.T_LANGUAGE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_RESOURCES" EntityType="Self.T_RESOURCES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_ROLE" EntityType="Self.T_ROLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_TRANSLATION" EntityType="Self.T_TRANSLATION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_USER" EntityType="Self.T_USER" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_T_ARTICLE_LIKE_T_ARTICLE" Association="Self.FK_T_ARTICLE_LIKE_T_ARTICLE">
+            <End Role="T_ARTICLE" EntitySet="T_ARTICLE" />
+            <End Role="T_ARTICLE_LIKE" EntitySet="T_ARTICLE_LIKE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_ARTICLE_LIKE_T_USER" Association="Self.FK_T_ARTICLE_LIKE_T_USER">
+            <End Role="T_USER" EntitySet="T_USER" />
+            <End Role="T_ARTICLE_LIKE" EntitySet="T_ARTICLE_LIKE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_ARTICLE_T_RESOURCES" Association="Self.FK_T_ARTICLE_T_RESOURCES">
+            <End Role="T_RESOURCES" EntitySet="T_RESOURCES" />
+            <End Role="T_ARTICLE" EntitySet="T_ARTICLE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_ARTICLE_T_USER" Association="Self.FK_T_ARTICLE_T_USER">
+            <End Role="T_USER" EntitySet="T_USER" />
+            <End Role="T_ARTICLE" EntitySet="T_ARTICLE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_COMMENT_ARTICLE_T_ARTICLE" Association="Self.FK_T_COMMENT_ARTICLE_T_ARTICLE">
+            <End Role="T_ARTICLE" EntitySet="T_ARTICLE" />
+            <End Role="T_COMMENT_ARTICLE" EntitySet="T_COMMENT_ARTICLE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_COMMENT_ARTICLE_T_USER" Association="Self.FK_T_COMMENT_ARTICLE_T_USER">
+            <End Role="T_USER" EntitySet="T_USER" />
+            <End Role="T_COMMENT_ARTICLE" EntitySet="T_COMMENT_ARTICLE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_RESOURCES_T_ARTICLE" Association="Self.FK_T_RESOURCES_T_ARTICLE">
+            <End Role="T_ARTICLE" EntitySet="T_ARTICLE" />
+            <End Role="T_RESOURCES" EntitySet="T_RESOURCES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_RESOURCES_T_RESOURCES" Association="Self.FK_T_RESOURCES_T_RESOURCES">
+            <End Role="T_LANGUAGE" EntitySet="T_LANGUAGE" />
+            <End Role="T_RESOURCES" EntitySet="T_RESOURCES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_TRADUCTION_T_ARTICLE" Association="Self.FK_T_TRADUCTION_T_ARTICLE">
+            <End Role="T_ARTICLE" EntitySet="T_ARTICLE" />
+            <End Role="T_TRANSLATION" EntitySet="T_TRANSLATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_TRADUCTION_T_USER" Association="Self.FK_T_TRADUCTION_T_USER">
+            <End Role="T_USER" EntitySet="T_USER" />
+            <End Role="T_TRANSLATION" EntitySet="T_TRANSLATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_TRANSLATION_T_LANGUAGE" Association="Self.FK_T_TRANSLATION_T_LANGUAGE">
+            <End Role="T_LANGUAGE" EntitySet="T_LANGUAGE" />
+            <End Role="T_TRANSLATION" EntitySet="T_TRANSLATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_USER_T_USER" Association="Self.FK_T_USER_T_USER">
+            <End Role="T_ROLE" EntitySet="T_ROLE" />
+            <End Role="T_USER" EntitySet="T_USER" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dbNetModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="T_ARTICLE">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="adminID" Type="Int32" Nullable="false" />
+          <Property Name="resourcesID" Type="Int32" Nullable="false" />
+          <Property Name="creationDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nbViews" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="T_ARTICLE_LIKE" Relationship="Self.FK_T_ARTICLE_LIKE_T_ARTICLE" FromRole="T_ARTICLE" ToRole="T_ARTICLE_LIKE" />
+          <NavigationProperty Name="T_RESOURCES" Relationship="Self.FK_T_ARTICLE_T_RESOURCES" FromRole="T_ARTICLE" ToRole="T_RESOURCES" />
+          <NavigationProperty Name="T_USER" Relationship="Self.FK_T_ARTICLE_T_USER" FromRole="T_ARTICLE" ToRole="T_USER" />
+          <NavigationProperty Name="T_COMMENT_ARTICLE" Relationship="Self.FK_T_COMMENT_ARTICLE_T_ARTICLE" FromRole="T_ARTICLE" ToRole="T_COMMENT_ARTICLE" />
+          <NavigationProperty Name="T_RESOURCES1" Relationship="Self.FK_T_RESOURCES_T_ARTICLE" FromRole="T_ARTICLE" ToRole="T_RESOURCES" />
+          <NavigationProperty Name="T_TRANSLATION" Relationship="Self.FK_T_TRADUCTION_T_ARTICLE" FromRole="T_ARTICLE" ToRole="T_TRANSLATION" />
+        </EntityType>
+        <EntityType Name="T_ARTICLE_LIKE">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userID" Type="Int32" Nullable="false" />
+          <Property Name="articleID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="T_ARTICLE" Relationship="Self.FK_T_ARTICLE_LIKE_T_ARTICLE" FromRole="T_ARTICLE_LIKE" ToRole="T_ARTICLE" />
+          <NavigationProperty Name="T_USER" Relationship="Self.FK_T_ARTICLE_LIKE_T_USER" FromRole="T_ARTICLE_LIKE" ToRole="T_USER" />
+        </EntityType>
+        <EntityType Name="T_COMMENT_ARTICLE">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userID" Type="Int32" Nullable="false" />
+          <Property Name="articleID" Type="Int32" Nullable="false" />
+          <Property Name="creationDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="commentContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="T_ARTICLE" Relationship="Self.FK_T_COMMENT_ARTICLE_T_ARTICLE" FromRole="T_COMMENT_ARTICLE" ToRole="T_ARTICLE" />
+          <NavigationProperty Name="T_USER" Relationship="Self.FK_T_COMMENT_ARTICLE_T_USER" FromRole="T_COMMENT_ARTICLE" ToRole="T_USER" />
+        </EntityType>
+        <EntityType Name="T_LANGUAGE">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="language" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="T_RESOURCES" Relationship="Self.FK_T_RESOURCES_T_RESOURCES" FromRole="T_LANGUAGE" ToRole="T_RESOURCES" />
+          <NavigationProperty Name="T_TRANSLATION" Relationship="Self.FK_T_TRANSLATION_T_LANGUAGE" FromRole="T_LANGUAGE" ToRole="T_TRANSLATION" />
+        </EntityType>
+        <EntityType Name="T_RESOURCES">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="path" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="languageID" Type="Int32" Nullable="false" />
+          <Property Name="articleID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="T_ARTICLE" Relationship="Self.FK_T_ARTICLE_T_RESOURCES" FromRole="T_RESOURCES" ToRole="T_ARTICLE" />
+          <NavigationProperty Name="T_ARTICLE1" Relationship="Self.FK_T_RESOURCES_T_ARTICLE" FromRole="T_RESOURCES" ToRole="T_ARTICLE" />
+          <NavigationProperty Name="T_LANGUAGE" Relationship="Self.FK_T_RESOURCES_T_RESOURCES" FromRole="T_RESOURCES" ToRole="T_LANGUAGE" />
+        </EntityType>
+        <EntityType Name="T_ROLE">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="role" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="T_USER" Relationship="Self.FK_T_USER_T_USER" FromRole="T_ROLE" ToRole="T_USER" />
+        </EntityType>
+        <EntityType Name="T_TRANSLATION">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="articleID" Type="Int32" Nullable="false" />
+          <Property Name="translatorID" Type="Int32" Nullable="false" />
+          <Property Name="language" Type="Int32" Nullable="false" />
+          <Property Name="translationArticleContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="translationArticleTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="T_ARTICLE" Relationship="Self.FK_T_TRADUCTION_T_ARTICLE" FromRole="T_TRANSLATION" ToRole="T_ARTICLE" />
+          <NavigationProperty Name="T_LANGUAGE" Relationship="Self.FK_T_TRANSLATION_T_LANGUAGE" FromRole="T_TRANSLATION" ToRole="T_LANGUAGE" />
+          <NavigationProperty Name="T_USER" Relationship="Self.FK_T_TRADUCTION_T_USER" FromRole="T_TRANSLATION" ToRole="T_USER" />
+        </EntityType>
+        <EntityType Name="T_USER">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pseudo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="roleID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="T_ARTICLE" Relationship="Self.FK_T_ARTICLE_T_USER" FromRole="T_USER" ToRole="T_ARTICLE" />
+          <NavigationProperty Name="T_ARTICLE_LIKE" Relationship="Self.FK_T_ARTICLE_LIKE_T_USER" FromRole="T_USER" ToRole="T_ARTICLE_LIKE" />
+          <NavigationProperty Name="T_COMMENT_ARTICLE" Relationship="Self.FK_T_COMMENT_ARTICLE_T_USER" FromRole="T_USER" ToRole="T_COMMENT_ARTICLE" />
+          <NavigationProperty Name="T_ROLE" Relationship="Self.FK_T_USER_T_USER" FromRole="T_USER" ToRole="T_ROLE" />
+          <NavigationProperty Name="T_TRANSLATION" Relationship="Self.FK_T_TRADUCTION_T_USER" FromRole="T_USER" ToRole="T_TRANSLATION" />
+        </EntityType>
+        <Association Name="FK_T_ARTICLE_LIKE_T_ARTICLE">
+          <End Role="T_ARTICLE" Type="Self.T_ARTICLE" Multiplicity="1" />
+          <End Role="T_ARTICLE_LIKE" Type="Self.T_ARTICLE_LIKE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_ARTICLE">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="T_ARTICLE_LIKE">
+              <PropertyRef Name="articleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_ARTICLE_T_RESOURCES">
+          <End Role="T_RESOURCES" Type="Self.T_RESOURCES" Multiplicity="1" />
+          <End Role="T_ARTICLE" Type="Self.T_ARTICLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_RESOURCES">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="T_ARTICLE">
+              <PropertyRef Name="resourcesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_ARTICLE_T_USER">
+          <End Role="T_USER" Type="Self.T_USER" Multiplicity="1" />
+          <End Role="T_ARTICLE" Type="Self.T_ARTICLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_USER">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="T_ARTICLE">
+              <PropertyRef Name="adminID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_COMMENT_ARTICLE_T_ARTICLE">
+          <End Role="T_ARTICLE" Type="Self.T_ARTICLE" Multiplicity="1" />
+          <End Role="T_COMMENT_ARTICLE" Type="Self.T_COMMENT_ARTICLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_ARTICLE">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="T_COMMENT_ARTICLE">
+              <PropertyRef Name="articleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_RESOURCES_T_ARTICLE">
+          <End Role="T_ARTICLE" Type="Self.T_ARTICLE" Multiplicity="1" />
+          <End Role="T_RESOURCES" Type="Self.T_RESOURCES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_ARTICLE">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="T_RESOURCES">
+              <PropertyRef Name="articleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_TRADUCTION_T_ARTICLE">
+          <End Role="T_ARTICLE" Type="Self.T_ARTICLE" Multiplicity="1" />
+          <End Role="T_TRANSLATION" Type="Self.T_TRANSLATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_ARTICLE">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="T_TRANSLATION">
+              <PropertyRef Name="articleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_ARTICLE_LIKE_T_USER">
+          <End Role="T_USER" Type="Self.T_USER" Multiplicity="1" />
+          <End Role="T_ARTICLE_LIKE" Type="Self.T_ARTICLE_LIKE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_USER">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="T_ARTICLE_LIKE">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_COMMENT_ARTICLE_T_USER">
+          <End Role="T_USER" Type="Self.T_USER" Multiplicity="1" />
+          <End Role="T_COMMENT_ARTICLE" Type="Self.T_COMMENT_ARTICLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_USER">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="T_COMMENT_ARTICLE">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_RESOURCES_T_RESOURCES">
+          <End Role="T_LANGUAGE" Type="Self.T_LANGUAGE" Multiplicity="1" />
+          <End Role="T_RESOURCES" Type="Self.T_RESOURCES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_LANGUAGE">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="T_RESOURCES">
+              <PropertyRef Name="languageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_TRANSLATION_T_LANGUAGE">
+          <End Role="T_LANGUAGE" Type="Self.T_LANGUAGE" Multiplicity="1" />
+          <End Role="T_TRANSLATION" Type="Self.T_TRANSLATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_LANGUAGE">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="T_TRANSLATION">
+              <PropertyRef Name="language" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_USER_T_USER">
+          <End Role="T_ROLE" Type="Self.T_ROLE" Multiplicity="1" />
+          <End Role="T_USER" Type="Self.T_USER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_ROLE">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="T_USER">
+              <PropertyRef Name="roleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_TRADUCTION_T_USER">
+          <End Role="T_USER" Type="Self.T_USER" Multiplicity="1" />
+          <End Role="T_TRANSLATION" Type="Self.T_TRANSLATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_USER">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="T_TRANSLATION">
+              <PropertyRef Name="translatorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbNetEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="T_ARTICLE" EntityType="Self.T_ARTICLE" />
+          <EntitySet Name="T_ARTICLE_LIKE" EntityType="Self.T_ARTICLE_LIKE" />
+          <EntitySet Name="T_COMMENT_ARTICLE" EntityType="Self.T_COMMENT_ARTICLE" />
+          <EntitySet Name="T_LANGUAGE" EntityType="Self.T_LANGUAGE" />
+          <EntitySet Name="T_RESOURCES" EntityType="Self.T_RESOURCES" />
+          <EntitySet Name="T_ROLE" EntityType="Self.T_ROLE" />
+          <EntitySet Name="T_TRANSLATION" EntityType="Self.T_TRANSLATION" />
+          <EntitySet Name="T_USER" EntityType="Self.T_USER" />
+          <AssociationSet Name="FK_T_ARTICLE_LIKE_T_ARTICLE" Association="Self.FK_T_ARTICLE_LIKE_T_ARTICLE">
+            <End Role="T_ARTICLE" EntitySet="T_ARTICLE" />
+            <End Role="T_ARTICLE_LIKE" EntitySet="T_ARTICLE_LIKE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_ARTICLE_T_RESOURCES" Association="Self.FK_T_ARTICLE_T_RESOURCES">
+            <End Role="T_RESOURCES" EntitySet="T_RESOURCES" />
+            <End Role="T_ARTICLE" EntitySet="T_ARTICLE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_ARTICLE_T_USER" Association="Self.FK_T_ARTICLE_T_USER">
+            <End Role="T_USER" EntitySet="T_USER" />
+            <End Role="T_ARTICLE" EntitySet="T_ARTICLE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_COMMENT_ARTICLE_T_ARTICLE" Association="Self.FK_T_COMMENT_ARTICLE_T_ARTICLE">
+            <End Role="T_ARTICLE" EntitySet="T_ARTICLE" />
+            <End Role="T_COMMENT_ARTICLE" EntitySet="T_COMMENT_ARTICLE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_RESOURCES_T_ARTICLE" Association="Self.FK_T_RESOURCES_T_ARTICLE">
+            <End Role="T_ARTICLE" EntitySet="T_ARTICLE" />
+            <End Role="T_RESOURCES" EntitySet="T_RESOURCES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_TRADUCTION_T_ARTICLE" Association="Self.FK_T_TRADUCTION_T_ARTICLE">
+            <End Role="T_ARTICLE" EntitySet="T_ARTICLE" />
+            <End Role="T_TRANSLATION" EntitySet="T_TRANSLATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_ARTICLE_LIKE_T_USER" Association="Self.FK_T_ARTICLE_LIKE_T_USER">
+            <End Role="T_USER" EntitySet="T_USER" />
+            <End Role="T_ARTICLE_LIKE" EntitySet="T_ARTICLE_LIKE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_COMMENT_ARTICLE_T_USER" Association="Self.FK_T_COMMENT_ARTICLE_T_USER">
+            <End Role="T_USER" EntitySet="T_USER" />
+            <End Role="T_COMMENT_ARTICLE" EntitySet="T_COMMENT_ARTICLE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_RESOURCES_T_RESOURCES" Association="Self.FK_T_RESOURCES_T_RESOURCES">
+            <End Role="T_LANGUAGE" EntitySet="T_LANGUAGE" />
+            <End Role="T_RESOURCES" EntitySet="T_RESOURCES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_TRANSLATION_T_LANGUAGE" Association="Self.FK_T_TRANSLATION_T_LANGUAGE">
+            <End Role="T_LANGUAGE" EntitySet="T_LANGUAGE" />
+            <End Role="T_TRANSLATION" EntitySet="T_TRANSLATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_USER_T_USER" Association="Self.FK_T_USER_T_USER">
+            <End Role="T_ROLE" EntitySet="T_ROLE" />
+            <End Role="T_USER" EntitySet="T_USER" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_TRADUCTION_T_USER" Association="Self.FK_T_TRADUCTION_T_USER">
+            <End Role="T_USER" EntitySet="T_USER" />
+            <End Role="T_TRANSLATION" EntitySet="T_TRANSLATION" />
+          </AssociationSet>
+          <FunctionImport Name="CreateArticle" ReturnType="Collection(Int32)">
+            <Parameter Name="adminID" Mode="In" Type="Int32" />
+            <Parameter Name="creationDate" Mode="In" Type="DateTime" />
+            <Parameter Name="status" Mode="In" Type="String" />
+            <Parameter Name="nbViews" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="CreateArticle_Like" ReturnType="Collection(Int32)">
+            <Parameter Name="userID" Mode="In" Type="Int32" />
+            <Parameter Name="articleID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="CreateComment_Article" ReturnType="Collection(Int32)">
+            <Parameter Name="userID" Mode="In" Type="Int32" />
+            <Parameter Name="articleID" Mode="In" Type="Int32" />
+            <Parameter Name="creationDate" Mode="In" Type="DateTime" />
+            <Parameter Name="commentContent" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="CreateLanguage" ReturnType="Collection(Int32)">
+            <Parameter Name="language" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="CreateResources" ReturnType="Collection(Int32)">
+            <Parameter Name="title" Mode="In" Type="String" />
+            <Parameter Name="description" Mode="In" Type="String" />
+            <Parameter Name="path" Mode="In" Type="String" />
+            <Parameter Name="languageID" Mode="In" Type="Int32" />
+            <Parameter Name="articleID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="CreateRole" ReturnType="Collection(Int32)">
+            <Parameter Name="role" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="CreateTranslation" ReturnType="Collection(Int32)">
+            <Parameter Name="articleID" Mode="In" Type="Int32" />
+            <Parameter Name="translatorID" Mode="In" Type="Int32" />
+            <Parameter Name="language" Mode="In" Type="Int32" />
+            <Parameter Name="translationArticleContent" Mode="In" Type="String" />
+            <Parameter Name="translationArticleTitle" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="CreateUser" ReturnType="Collection(Int32)">
+            <Parameter Name="pseudo" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+            <Parameter Name="roleID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteArticle" ReturnType="Collection(Int32)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteArticle_Like" ReturnType="Collection(Int32)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteComment_Article" ReturnType="Collection(Int32)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteLanguage" ReturnType="Collection(Int32)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteResources" ReturnType="Collection(Int32)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteRole" ReturnType="Collection(Int32)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteTranslation" ReturnType="Collection(Int32)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteUser" ReturnType="Collection(Int32)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetArticle" ReturnType="Collection(dbNetModel.GetArticle_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetArticle_Like" ReturnType="Collection(dbNetModel.GetArticle_Like_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetComment_Article" ReturnType="Collection(dbNetModel.GetComment_Article_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetLanguage" ReturnType="Collection(dbNetModel.GetLanguage_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetResources" ReturnType="Collection(dbNetModel.GetResources_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetRole" ReturnType="Collection(dbNetModel.GetRole_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetTranslation" ReturnType="Collection(dbNetModel.GetTranslation_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetUser" ReturnType="Collection(dbNetModel.GetUser_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(dbNetModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(dbNetModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <FunctionImport Name="UpdateArticle" ReturnType="Collection(dbNetModel.UpdateArticle_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="adminID" Mode="In" Type="Int32" />
+            <Parameter Name="creationDate" Mode="In" Type="DateTime" />
+            <Parameter Name="status" Mode="In" Type="String" />
+            <Parameter Name="nbViews" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateArticle_Like" ReturnType="Collection(dbNetModel.UpdateArticle_Like_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="userID" Mode="In" Type="Int32" />
+            <Parameter Name="articleID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateComment_Article" ReturnType="Collection(dbNetModel.UpdateComment_Article_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="userID" Mode="In" Type="Int32" />
+            <Parameter Name="articleID" Mode="In" Type="Int32" />
+            <Parameter Name="creationDate" Mode="In" Type="DateTime" />
+            <Parameter Name="commentContent" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateLanguage" ReturnType="Collection(String)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="language" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateResources" ReturnType="Collection(dbNetModel.UpdateResources_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="title" Mode="In" Type="String" />
+            <Parameter Name="description" Mode="In" Type="String" />
+            <Parameter Name="path" Mode="In" Type="String" />
+            <Parameter Name="languageID" Mode="In" Type="Int32" />
+            <Parameter Name="articleID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateRole" ReturnType="Collection(String)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="role" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateTranslation" ReturnType="Collection(dbNetModel.UpdateTranslation_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="articleID" Mode="In" Type="Int32" />
+            <Parameter Name="translatorID" Mode="In" Type="Int32" />
+            <Parameter Name="language" Mode="In" Type="Int32" />
+            <Parameter Name="translationArticleContent" Mode="In" Type="String" />
+            <Parameter Name="translationArticleTitle" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateUser" ReturnType="Collection(dbNetModel.UpdateUser_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="pseudo" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+            <Parameter Name="roleID" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="GetArticle_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="Int32" Name="adminID" Nullable="false" />
+          <Property Type="Int32" Name="resourcesID" Nullable="false" />
+          <Property Type="DateTime" Name="creationDate" Nullable="false" />
+          <Property Type="String" Name="status" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="nbViews" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetArticle_Like_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="Int32" Name="userID" Nullable="false" />
+          <Property Type="Int32" Name="articleID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetComment_Article_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="Int32" Name="userID" Nullable="false" />
+          <Property Type="Int32" Name="articleID" Nullable="false" />
+          <Property Type="DateTime" Name="creationDate" Nullable="false" />
+          <Property Type="String" Name="commentContent" Nullable="false" MaxLength="Max" />
+        </ComplexType>
+        <ComplexType Name="GetLanguage_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="language" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetResources_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="title" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="description" Nullable="false" MaxLength="Max" />
+          <Property Type="String" Name="path" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="languageID" Nullable="false" />
+          <Property Type="Int32" Name="articleID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetRole_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="role" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetTranslation_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="Int32" Name="articleID" Nullable="false" />
+          <Property Type="Int32" Name="translatorID" Nullable="false" />
+          <Property Type="Int32" Name="language" Nullable="false" />
+          <Property Type="String" Name="translationArticleContent" Nullable="false" MaxLength="Max" />
+          <Property Type="String" Name="translationArticleTitle" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetUser_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="pseudo" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="email" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="password" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="roleID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="UpdateArticle_Result">
+          <Property Type="Int32" Name="adminID" Nullable="false" />
+          <Property Type="DateTime" Name="creationDate" Nullable="false" />
+          <Property Type="String" Name="status" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="nbViews" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="UpdateArticle_Like_Result">
+          <Property Type="Int32" Name="userID" Nullable="false" />
+          <Property Type="Int32" Name="articleID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="UpdateComment_Article_Result">
+          <Property Type="Int32" Name="userID" Nullable="false" />
+          <Property Type="Int32" Name="articleID" Nullable="false" />
+          <Property Type="DateTime" Name="creationDate" Nullable="false" />
+          <Property Type="String" Name="commentContent" Nullable="false" MaxLength="Max" />
+        </ComplexType>
+        <ComplexType Name="UpdateResources_Result">
+          <Property Type="String" Name="title" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="description" Nullable="false" MaxLength="Max" />
+          <Property Type="String" Name="path" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="languageID" Nullable="false" />
+          <Property Type="Int32" Name="articleID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="UpdateTranslation_Result">
+          <Property Type="Int32" Name="articleID" Nullable="false" />
+          <Property Type="Int32" Name="translatorID" Nullable="false" />
+          <Property Type="Int32" Name="language" Nullable="false" />
+          <Property Type="String" Name="translationArticleContent" Nullable="false" MaxLength="Max" />
+          <Property Type="String" Name="translationArticleTitle" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="UpdateUser_Result">
+          <Property Type="String" Name="pseudo" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="email" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="password" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="roleID" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dbNetModelStoreContainer" CdmEntityContainer="dbNetEntities">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="dbNetModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_ARTICLE">
+            <EntityTypeMapping TypeName="dbNetModel.T_ARTICLE">
+              <MappingFragment StoreEntitySet="T_ARTICLE">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="adminID" ColumnName="adminID" />
+                <ScalarProperty Name="resourcesID" ColumnName="resourcesID" />
+                <ScalarProperty Name="creationDate" ColumnName="creationDate" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="nbViews" ColumnName="nbViews" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_ARTICLE_LIKE">
+            <EntityTypeMapping TypeName="dbNetModel.T_ARTICLE_LIKE">
+              <MappingFragment StoreEntitySet="T_ARTICLE_LIKE">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="articleID" ColumnName="articleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_COMMENT_ARTICLE">
+            <EntityTypeMapping TypeName="dbNetModel.T_COMMENT_ARTICLE">
+              <MappingFragment StoreEntitySet="T_COMMENT_ARTICLE">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="articleID" ColumnName="articleID" />
+                <ScalarProperty Name="creationDate" ColumnName="creationDate" />
+                <ScalarProperty Name="commentContent" ColumnName="commentContent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_LANGUAGE">
+            <EntityTypeMapping TypeName="dbNetModel.T_LANGUAGE">
+              <MappingFragment StoreEntitySet="T_LANGUAGE">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="language" ColumnName="language" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_RESOURCES">
+            <EntityTypeMapping TypeName="dbNetModel.T_RESOURCES">
+              <MappingFragment StoreEntitySet="T_RESOURCES">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="path" ColumnName="path" />
+                <ScalarProperty Name="languageID" ColumnName="languageID" />
+                <ScalarProperty Name="articleID" ColumnName="articleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_ROLE">
+            <EntityTypeMapping TypeName="dbNetModel.T_ROLE">
+              <MappingFragment StoreEntitySet="T_ROLE">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="role" ColumnName="role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_TRANSLATION">
+            <EntityTypeMapping TypeName="dbNetModel.T_TRANSLATION">
+              <MappingFragment StoreEntitySet="T_TRANSLATION">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="articleID" ColumnName="articleID" />
+                <ScalarProperty Name="translatorID" ColumnName="translatorID" />
+                <ScalarProperty Name="language" ColumnName="language" />
+                <ScalarProperty Name="translationArticleContent" ColumnName="translationArticleContent" />
+                <ScalarProperty Name="translationArticleTitle" ColumnName="translationArticleTitle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_USER">
+            <EntityTypeMapping TypeName="dbNetModel.T_USER">
+              <MappingFragment StoreEntitySet="T_USER">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="pseudo" ColumnName="pseudo" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="roleID" ColumnName="roleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="CreateArticle" FunctionName="dbNetModel.Store.CreateArticle" />
+          <FunctionImportMapping FunctionImportName="CreateArticle_Like" FunctionName="dbNetModel.Store.CreateArticle_Like" />
+          <FunctionImportMapping FunctionImportName="CreateComment_Article" FunctionName="dbNetModel.Store.CreateComment_Article" />
+          <FunctionImportMapping FunctionImportName="CreateLanguage" FunctionName="dbNetModel.Store.CreateLanguage" />
+          <FunctionImportMapping FunctionImportName="CreateResources" FunctionName="dbNetModel.Store.CreateResources" />
+          <FunctionImportMapping FunctionImportName="CreateRole" FunctionName="dbNetModel.Store.CreateRole" />
+          <FunctionImportMapping FunctionImportName="CreateTranslation" FunctionName="dbNetModel.Store.CreateTranslation" />
+          <FunctionImportMapping FunctionImportName="CreateUser" FunctionName="dbNetModel.Store.CreateUser" />
+          <FunctionImportMapping FunctionImportName="DeleteArticle" FunctionName="dbNetModel.Store.DeleteArticle" />
+          <FunctionImportMapping FunctionImportName="DeleteArticle_Like" FunctionName="dbNetModel.Store.DeleteArticle_Like" />
+          <FunctionImportMapping FunctionImportName="DeleteComment_Article" FunctionName="dbNetModel.Store.DeleteComment_Article" />
+          <FunctionImportMapping FunctionImportName="DeleteLanguage" FunctionName="dbNetModel.Store.DeleteLanguage" />
+          <FunctionImportMapping FunctionImportName="DeleteResources" FunctionName="dbNetModel.Store.DeleteResources" />
+          <FunctionImportMapping FunctionImportName="DeleteRole" FunctionName="dbNetModel.Store.DeleteRole" />
+          <FunctionImportMapping FunctionImportName="DeleteTranslation" FunctionName="dbNetModel.Store.DeleteTranslation" />
+          <FunctionImportMapping FunctionImportName="DeleteUser" FunctionName="dbNetModel.Store.DeleteUser" />
+          <FunctionImportMapping FunctionImportName="GetArticle" FunctionName="dbNetModel.Store.GetArticle">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dbNetModel.GetArticle_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="adminID" ColumnName="adminID" />
+                <ScalarProperty Name="resourcesID" ColumnName="resourcesID" />
+                <ScalarProperty Name="creationDate" ColumnName="creationDate" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="nbViews" ColumnName="nbViews" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetArticle_Like" FunctionName="dbNetModel.Store.GetArticle_Like">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dbNetModel.GetArticle_Like_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="articleID" ColumnName="articleID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetComment_Article" FunctionName="dbNetModel.Store.GetComment_Article">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dbNetModel.GetComment_Article_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="articleID" ColumnName="articleID" />
+                <ScalarProperty Name="creationDate" ColumnName="creationDate" />
+                <ScalarProperty Name="commentContent" ColumnName="commentContent" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetLanguage" FunctionName="dbNetModel.Store.GetLanguage">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dbNetModel.GetLanguage_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="language" ColumnName="language" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetResources" FunctionName="dbNetModel.Store.GetResources">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dbNetModel.GetResources_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="path" ColumnName="path" />
+                <ScalarProperty Name="languageID" ColumnName="languageID" />
+                <ScalarProperty Name="articleID" ColumnName="articleID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetRole" FunctionName="dbNetModel.Store.GetRole">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dbNetModel.GetRole_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="role" ColumnName="role" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetTranslation" FunctionName="dbNetModel.Store.GetTranslation">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dbNetModel.GetTranslation_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="articleID" ColumnName="articleID" />
+                <ScalarProperty Name="translatorID" ColumnName="translatorID" />
+                <ScalarProperty Name="language" ColumnName="language" />
+                <ScalarProperty Name="translationArticleContent" ColumnName="translationArticleContent" />
+                <ScalarProperty Name="translationArticleTitle" ColumnName="translationArticleTitle" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetUser" FunctionName="dbNetModel.Store.GetUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dbNetModel.GetUser_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="pseudo" ColumnName="pseudo" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="roleID" ColumnName="roleID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="dbNetModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="dbNetModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="dbNetModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="dbNetModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dbNetModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="dbNetModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dbNetModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="dbNetModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="dbNetModel.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="UpdateArticle" FunctionName="dbNetModel.Store.UpdateArticle">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dbNetModel.UpdateArticle_Result">
+                <ScalarProperty Name="adminID" ColumnName="adminID" />
+                <ScalarProperty Name="creationDate" ColumnName="creationDate" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="nbViews" ColumnName="nbViews" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UpdateArticle_Like" FunctionName="dbNetModel.Store.UpdateArticle_Like">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dbNetModel.UpdateArticle_Like_Result">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="articleID" ColumnName="articleID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UpdateComment_Article" FunctionName="dbNetModel.Store.UpdateComment_Article">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dbNetModel.UpdateComment_Article_Result">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="articleID" ColumnName="articleID" />
+                <ScalarProperty Name="creationDate" ColumnName="creationDate" />
+                <ScalarProperty Name="commentContent" ColumnName="commentContent" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UpdateLanguage" FunctionName="dbNetModel.Store.UpdateLanguage" />
+          <FunctionImportMapping FunctionImportName="UpdateResources" FunctionName="dbNetModel.Store.UpdateResources">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dbNetModel.UpdateResources_Result">
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="path" ColumnName="path" />
+                <ScalarProperty Name="languageID" ColumnName="languageID" />
+                <ScalarProperty Name="articleID" ColumnName="articleID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UpdateRole" FunctionName="dbNetModel.Store.UpdateRole" />
+          <FunctionImportMapping FunctionImportName="UpdateTranslation" FunctionName="dbNetModel.Store.UpdateTranslation">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dbNetModel.UpdateTranslation_Result">
+                <ScalarProperty Name="articleID" ColumnName="articleID" />
+                <ScalarProperty Name="translatorID" ColumnName="translatorID" />
+                <ScalarProperty Name="language" ColumnName="language" />
+                <ScalarProperty Name="translationArticleContent" ColumnName="translationArticleContent" />
+                <ScalarProperty Name="translationArticleTitle" ColumnName="translationArticleTitle" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UpdateUser" FunctionName="dbNetModel.Store.UpdateUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dbNetModel.UpdateUser_Result">
+                <ScalarProperty Name="pseudo" ColumnName="pseudo" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="roleID" ColumnName="roleID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

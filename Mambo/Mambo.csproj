@@ -45,6 +45,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -52,6 +58,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -142,6 +150,97 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="DataAccess\GetArticle_Like_Result.cs">
+      <DependentUpon>modele.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\GetArticle_Result.cs">
+      <DependentUpon>modele.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\GetComment_Article_Result.cs">
+      <DependentUpon>modele.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\GetLanguage_Result.cs">
+      <DependentUpon>modele.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\GetResources_Result.cs">
+      <DependentUpon>modele.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\GetRole_Result.cs">
+      <DependentUpon>modele.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\GetTranslation_Result.cs">
+      <DependentUpon>modele.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\GetUser_Result.cs">
+      <DependentUpon>modele.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\modele.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>modele.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\modele.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>modele.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\modele.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>modele.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>modele.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\sp_helpdiagrams_Result.cs">
+      <DependentUpon>modele.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\sysdiagrams.cs">
+      <DependentUpon>modele.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\T_ARTICLE.cs">
+      <DependentUpon>modele.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\T_ARTICLE_LIKE.cs">
+      <DependentUpon>modele.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\T_COMMENT_ARTICLE.cs">
+      <DependentUpon>modele.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\T_LANGUAGE.cs">
+      <DependentUpon>modele.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\T_RESOURCES.cs">
+      <DependentUpon>modele.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\T_ROLE.cs">
+      <DependentUpon>modele.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\T_TRANSLATION.cs">
+      <DependentUpon>modele.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\T_USER.cs">
+      <DependentUpon>modele.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\UpdateArticle_Like_Result.cs">
+      <DependentUpon>modele.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\UpdateArticle_Result.cs">
+      <DependentUpon>modele.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\UpdateComment_Article_Result.cs">
+      <DependentUpon>modele.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\UpdateResources_Result.cs">
+      <DependentUpon>modele.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\UpdateTranslation_Result.cs">
+      <DependentUpon>modele.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\UpdateUser_Result.cs">
+      <DependentUpon>modele.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBO\User.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -150,6 +249,16 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="DataAccess\modele.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>modele.edmx</DependentUpon>
+      <LastGenOutput>modele.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DataAccess\modele.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>modele.edmx</DependentUpon>
+      <LastGenOutput>modele.cs</LastGenOutput>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -158,6 +267,13 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EntityDeploy Include="DataAccess\modele.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>modele.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="DataAccess\modele.edmx.diagram">
+      <DependentUpon>modele.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -188,8 +304,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="BusinessManagement\" />
-    <Folder Include="DataAccess\" />
-    <Folder Include="DBO\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -206,6 +320,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

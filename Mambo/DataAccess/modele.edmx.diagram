@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="de7970248a324c6fb95c8388e1d4fccf" Name="Diagram1">
+        <EntityTypeShape EntityType="dbNetModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbNetModel.T_ARTICLE" Width="1.5" PointX="5.25" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbNetModel.T_ARTICLE_LIKE" Width="1.5" PointX="7.5" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbNetModel.T_COMMENT_ARTICLE" Width="1.5" PointX="7.5" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbNetModel.T_LANGUAGE" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbNetModel.T_RESOURCES" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbNetModel.T_ROLE" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbNetModel.T_TRANSLATION" Width="1.5" PointX="10.5" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbNetModel.T_USER" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="dbNetModel.FK_T_ARTICLE_LIKE_T_ARTICLE" ManuallyRouted="false" />
+        <AssociationConnector Association="dbNetModel.FK_T_ARTICLE_T_RESOURCES" ManuallyRouted="false" />
+        <AssociationConnector Association="dbNetModel.FK_T_ARTICLE_T_USER" ManuallyRouted="false" />
+        <AssociationConnector Association="dbNetModel.FK_T_COMMENT_ARTICLE_T_ARTICLE" ManuallyRouted="false" />
+        <AssociationConnector Association="dbNetModel.FK_T_RESOURCES_T_ARTICLE" ManuallyRouted="false" />
+        <AssociationConnector Association="dbNetModel.FK_T_TRADUCTION_T_ARTICLE" ManuallyRouted="false" />
+        <AssociationConnector Association="dbNetModel.FK_T_ARTICLE_LIKE_T_USER" ManuallyRouted="false" />
+        <AssociationConnector Association="dbNetModel.FK_T_COMMENT_ARTICLE_T_USER" ManuallyRouted="false" />
+        <AssociationConnector Association="dbNetModel.FK_T_RESOURCES_T_RESOURCES" ManuallyRouted="false" />
+        <AssociationConnector Association="dbNetModel.FK_T_TRANSLATION_T_LANGUAGE" ManuallyRouted="false" />
+        <AssociationConnector Association="dbNetModel.FK_T_USER_T_USER" ManuallyRouted="false" />
+        <AssociationConnector Association="dbNetModel.FK_T_TRADUCTION_T_USER" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
