@@ -264,7 +264,6 @@
           <Parameter Name="description" Type="text" Mode="In" />
           <Parameter Name="path" Type="varchar" Mode="In" />
           <Parameter Name="languageID" Type="int" Mode="In" />
-          <Parameter Name="articleID" Type="int" Mode="In" />
         </Function>
         <Function Name="CreateRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="role" Type="varchar" Mode="In" />
@@ -390,7 +389,6 @@
           <Parameter Name="description" Type="text" Mode="In" />
           <Parameter Name="path" Type="varchar" Mode="In" />
           <Parameter Name="languageID" Type="int" Mode="In" />
-          <Parameter Name="articleID" Type="int" Mode="In" />
         </Function>
         <Function Name="UpdateRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
@@ -778,12 +776,11 @@
           <FunctionImport Name="CreateLanguage" ReturnType="Collection(Int32)">
             <Parameter Name="language" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="CreateResources">
+          <FunctionImport Name="CreateResources" ReturnType="Collection(Int32)">
             <Parameter Name="title" Mode="In" Type="String" />
             <Parameter Name="description" Mode="In" Type="String" />
             <Parameter Name="path" Mode="In" Type="String" />
             <Parameter Name="languageID" Mode="In" Type="Int32" />
-            <Parameter Name="articleID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="CreateRole" ReturnType="Collection(Int32)">
             <Parameter Name="role" Mode="In" Type="String" />
@@ -902,13 +899,12 @@
             <Parameter Name="id" Mode="In" Type="Int32" />
             <Parameter Name="language" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="UpdateResources">
+          <FunctionImport Name="UpdateResources" ReturnType="Collection(dbNetModel.UpdateResources_Result)">
             <Parameter Name="id" Mode="In" Type="Int32" />
             <Parameter Name="title" Mode="In" Type="String" />
             <Parameter Name="description" Mode="In" Type="String" />
             <Parameter Name="path" Mode="In" Type="String" />
             <Parameter Name="languageID" Mode="In" Type="Int32" />
-            <Parameter Name="articleID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="UpdateRole" ReturnType="Collection(String)">
             <Parameter Name="id" Mode="In" Type="Int32" />
@@ -1005,6 +1001,12 @@
           <Property Type="Int32" Name="articleID" Nullable="false" />
           <Property Type="DateTime" Name="creationDate" Nullable="false" />
           <Property Type="String" Name="commentContent" Nullable="false" MaxLength="Max" />
+        </ComplexType>
+        <ComplexType Name="UpdateResources_Result">
+          <Property Type="String" Name="title" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="description" Nullable="false" MaxLength="Max" />
+          <Property Type="String" Name="path" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="languageID" Nullable="false" />
         </ComplexType>
         <ComplexType Name="UpdateTranslation_Result">
           <Property Type="Int32" Name="articleID" Nullable="false" />
@@ -1275,7 +1277,16 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="UpdateLanguage" FunctionName="dbNetModel.Store.UpdateLanguage" />
-          <FunctionImportMapping FunctionImportName="UpdateResources" FunctionName="dbNetModel.Store.UpdateResources" />
+          <FunctionImportMapping FunctionImportName="UpdateResources" FunctionName="dbNetModel.Store.UpdateResources">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dbNetModel.UpdateResources_Result">
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="path" ColumnName="path" />
+                <ScalarProperty Name="languageID" ColumnName="languageID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="UpdateRole" FunctionName="dbNetModel.Store.UpdateRole" />
           <FunctionImportMapping FunctionImportName="UpdateTranslation" FunctionName="dbNetModel.Store.UpdateTranslation">
             <ResultMapping>

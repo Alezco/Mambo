@@ -24,5 +24,40 @@ namespace Mambo.DBO
             Status = status;
             NbViews = nbViews;
         }
+
+        public Article(int adminId, DateTime creationDate, string status, int nbViews)
+        {
+            AdminId = adminId;
+            CreationDate = creationDate;
+            Status = status;
+            NbViews = nbViews;
+        }
+
+        public Article(int id, int adminId, List<Resources> resourcesList, DateTime creationDate, string status, int nbViews)
+        {
+            Id = id;
+            AdminId = adminId;
+            ResourcesList = resourcesList;
+            CreationDate = creationDate;
+            Status = status;
+            NbViews = nbViews;
+        }
+
+        public Article(int id, int adminId, DateTime creationDate, string status, int nbViews)
+        {
+            Id = id;
+            AdminId = adminId;
+            CreationDate = creationDate;
+            Status = status;
+            NbViews = nbViews;
+        }
+
+        public bool isEqual(Article obj)
+        {
+            return AdminId == obj.AdminId
+                && CreationDate == obj.CreationDate
+                && Status == obj.Status
+                && NbViews == obj.NbViews;
+        }
     }
 }

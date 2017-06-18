@@ -24,5 +24,40 @@ namespace Mambo.DBO
             Description = description;
             Path = path;
         }
+
+        public Resources(int id, int languageId, List<Article> articlesList, string title, string description, string path)
+        {
+            Id = Id;
+            LanguageId = languageId;
+            ArticlesList = articlesList;
+            Title = title;
+            Description = description;
+            Path = path;
+        }
+
+        public Resources(int languageId, string title, string description, string path)
+        {
+            LanguageId = languageId;
+            Title = title;
+            Description = description;
+            Path = path;
+        }
+
+        public Resources(int id, int languageId, string title, string description, string path)
+        {
+            Id = id;
+            LanguageId = languageId;
+            Title = title;
+            Description = description;
+            Path = path;
+        }
+
+        public bool isEqual(Resources obj)
+        {
+            return LanguageId == obj.LanguageId
+                && Title == obj.Title
+                && Description == obj.Description
+                && Path == obj.Path;
+        }
     }
 }
