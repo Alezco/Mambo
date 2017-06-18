@@ -24,5 +24,24 @@ namespace Mambo.DBO
             TranslationArticleTitle = translationArticleTitle;
             TranslationArticleContent = translationArticleContent;
         }
+
+        public Translation(int id, int articleId, int translatorId, int languageId, string translationArticleTitle, string translationArticleContent)
+        {
+            Id = id;
+            ArticleId = articleId;
+            TranslatorId = translatorId;
+            LanguageId = languageId;
+            TranslationArticleTitle = translationArticleTitle;
+            TranslationArticleContent = translationArticleContent;
+        }
+
+        public bool isEqual(Translation t2)
+        {
+            return this.ArticleId == t2.ArticleId
+                && this.TranslatorId == t2.TranslatorId
+                && this.LanguageId == t2.LanguageId
+                && this.TranslationArticleTitle == t2.TranslationArticleTitle
+                && this.TranslationArticleContent == t2.TranslationArticleContent;
+        }
     }
 }
