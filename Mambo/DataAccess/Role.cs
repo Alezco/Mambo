@@ -57,7 +57,7 @@ namespace Mambo.DataAccess
             }
         }
 
-        public List<DBO.Role> GetAll(Type t)
+        public List<DBO.Role> GetAll()
         {
             try
             {

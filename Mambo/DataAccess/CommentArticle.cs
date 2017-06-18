@@ -57,7 +57,7 @@ namespace Mambo.DataAccess
             }
         }
 
-        public List<DBO.CommentArticle> GetAll(Type t)
+        public List<DBO.CommentArticle> GetAll()
         {
             try
             {

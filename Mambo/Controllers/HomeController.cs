@@ -10,6 +10,8 @@ namespace Mambo.Controllers
     {
         public ActionResult Index()
         {
+
+
             return View();
         }
 

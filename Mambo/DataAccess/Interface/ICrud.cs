@@ -12,6 +12,6 @@ namespace Mambo.DataAccess.Interface
         bool Update(T obj);
         bool Delete(int key);
         T Get(int key);
-        List<T> GetAll(Type t);
+        List<T> GetAll();
     }
 }
