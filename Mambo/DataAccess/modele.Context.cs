@@ -101,7 +101,7 @@ namespace Mambo.DataAccess
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("CreateLanguage", languageParameter);
         }
     
-        public virtual ObjectResult<Nullable<int>> CreateResources(string title, string description, string path, Nullable<int> languageID, Nullable<int> articleID)
+        public virtual int CreateResources(string title, string description, string path, Nullable<int> languageID, Nullable<int> articleID)
         {
             var titleParameter = title != null ?
                 new ObjectParameter("title", title) :
@@ -123,7 +123,7 @@ namespace Mambo.DataAccess
                 new ObjectParameter("articleID", articleID) :
                 new ObjectParameter("articleID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("CreateResources", titleParameter, descriptionParameter, pathParameter, languageIDParameter, articleIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateResources", titleParameter, descriptionParameter, pathParameter, languageIDParameter, articleIDParameter);
         }
     
         public virtual ObjectResult<Nullable<int>> CreateRole(string role)
@@ -508,7 +508,7 @@ namespace Mambo.DataAccess
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("UpdateLanguage", idParameter, languageParameter);
         }
     
-        public virtual ObjectResult<UpdateResources_Result> UpdateResources(Nullable<int> id, string title, string description, string path, Nullable<int> languageID, Nullable<int> articleID)
+        public virtual int UpdateResources(Nullable<int> id, string title, string description, string path, Nullable<int> languageID, Nullable<int> articleID)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
@@ -534,7 +534,7 @@ namespace Mambo.DataAccess
                 new ObjectParameter("articleID", articleID) :
                 new ObjectParameter("articleID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UpdateResources_Result>("UpdateResources", idParameter, titleParameter, descriptionParameter, pathParameter, languageIDParameter, articleIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateResources", idParameter, titleParameter, descriptionParameter, pathParameter, languageIDParameter, articleIDParameter);
         }
     
         public virtual ObjectResult<string> UpdateRole(Nullable<int> id, string role)

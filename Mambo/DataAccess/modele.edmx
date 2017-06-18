@@ -21,7 +21,6 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="adminID" Type="int" Nullable="false" />
-          <Property Name="resourcesID" Type="int" Nullable="false" />
           <Property Name="creationDate" Type="date" Nullable="false" />
           <Property Name="status" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="nbViews" Type="int" Nullable="false" />
@@ -33,6 +32,14 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="userID" Type="int" Nullable="false" />
           <Property Name="articleID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_ARTICLE_RESOURCES">
+          <Key>
+            <PropertyRef Name="articleID" />
+            <PropertyRef Name="resourceID" />
+          </Key>
+          <Property Name="articleID" Type="int" Nullable="false" />
+          <Property Name="resourceID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="T_COMMENT_ARTICLE">
           <Key>
@@ -60,7 +67,6 @@
           <Property Name="description" Type="text" Nullable="false" />
           <Property Name="path" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="languageID" Type="int" Nullable="false" />
-          <Property Name="articleID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="T_ROLE">
           <Key>
@@ -114,15 +120,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_T_ARTICLE_T_RESOURCES">
+        <Association Name="FK_T_ARTICLE_RESOURCES_T_ARTICLE">
+          <End Role="T_ARTICLE" Type="Self.T_ARTICLE" Multiplicity="1" />
+          <End Role="T_ARTICLE_RESOURCES" Type="Self.T_ARTICLE_RESOURCES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_ARTICLE">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="T_ARTICLE_RESOURCES">
+              <PropertyRef Name="articleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_ARTICLE_RESOURCES_T_RESOURCES">
           <End Role="T_RESOURCES" Type="Self.T_RESOURCES" Multiplicity="1" />
-          <End Role="T_ARTICLE" Type="Self.T_ARTICLE" Multiplicity="*" />
+          <End Role="T_ARTICLE_RESOURCES" Type="Self.T_ARTICLE_RESOURCES" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="T_RESOURCES">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="T_ARTICLE">
-              <PropertyRef Name="resourcesID" />
+            <Dependent Role="T_ARTICLE_RESOURCES">
+              <PropertyRef Name="resourceID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -159,18 +177,6 @@
             </Principal>
             <Dependent Role="T_COMMENT_ARTICLE">
               <PropertyRef Name="userID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_T_RESOURCES_T_ARTICLE">
-          <End Role="T_ARTICLE" Type="Self.T_ARTICLE" Multiplicity="1" />
-          <End Role="T_RESOURCES" Type="Self.T_RESOURCES" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="T_ARTICLE">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="T_RESOURCES">
-              <PropertyRef Name="articleID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -409,6 +415,7 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_ARTICLE" EntityType="Self.T_ARTICLE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_ARTICLE_LIKE" EntityType="Self.T_ARTICLE_LIKE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_ARTICLE_RESOURCES" EntityType="Self.T_ARTICLE_RESOURCES" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_COMMENT_ARTICLE" EntityType="Self.T_COMMENT_ARTICLE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_LANGUAGE" EntityType="Self.T_LANGUAGE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_RESOURCES" EntityType="Self.T_RESOURCES" Schema="dbo" store:Type="Tables" />
@@ -423,9 +430,13 @@
             <End Role="T_USER" EntitySet="T_USER" />
             <End Role="T_ARTICLE_LIKE" EntitySet="T_ARTICLE_LIKE" />
           </AssociationSet>
-          <AssociationSet Name="FK_T_ARTICLE_T_RESOURCES" Association="Self.FK_T_ARTICLE_T_RESOURCES">
-            <End Role="T_RESOURCES" EntitySet="T_RESOURCES" />
+          <AssociationSet Name="FK_T_ARTICLE_RESOURCES_T_ARTICLE" Association="Self.FK_T_ARTICLE_RESOURCES_T_ARTICLE">
             <End Role="T_ARTICLE" EntitySet="T_ARTICLE" />
+            <End Role="T_ARTICLE_RESOURCES" EntitySet="T_ARTICLE_RESOURCES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_ARTICLE_RESOURCES_T_RESOURCES" Association="Self.FK_T_ARTICLE_RESOURCES_T_RESOURCES">
+            <End Role="T_RESOURCES" EntitySet="T_RESOURCES" />
+            <End Role="T_ARTICLE_RESOURCES" EntitySet="T_ARTICLE_RESOURCES" />
           </AssociationSet>
           <AssociationSet Name="FK_T_ARTICLE_T_USER" Association="Self.FK_T_ARTICLE_T_USER">
             <End Role="T_USER" EntitySet="T_USER" />
@@ -438,10 +449,6 @@
           <AssociationSet Name="FK_T_COMMENT_ARTICLE_T_USER" Association="Self.FK_T_COMMENT_ARTICLE_T_USER">
             <End Role="T_USER" EntitySet="T_USER" />
             <End Role="T_COMMENT_ARTICLE" EntitySet="T_COMMENT_ARTICLE" />
-          </AssociationSet>
-          <AssociationSet Name="FK_T_RESOURCES_T_ARTICLE" Association="Self.FK_T_RESOURCES_T_ARTICLE">
-            <End Role="T_ARTICLE" EntitySet="T_ARTICLE" />
-            <End Role="T_RESOURCES" EntitySet="T_RESOURCES" />
           </AssociationSet>
           <AssociationSet Name="FK_T_RESOURCES_T_RESOURCES" Association="Self.FK_T_RESOURCES_T_RESOURCES">
             <End Role="T_LANGUAGE" EntitySet="T_LANGUAGE" />
@@ -485,16 +492,14 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="adminID" Type="Int32" Nullable="false" />
-          <Property Name="resourcesID" Type="Int32" Nullable="false" />
           <Property Name="creationDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="nbViews" Type="Int32" Nullable="false" />
           <NavigationProperty Name="T_ARTICLE_LIKE" Relationship="Self.FK_T_ARTICLE_LIKE_T_ARTICLE" FromRole="T_ARTICLE" ToRole="T_ARTICLE_LIKE" />
-          <NavigationProperty Name="T_RESOURCES" Relationship="Self.FK_T_ARTICLE_T_RESOURCES" FromRole="T_ARTICLE" ToRole="T_RESOURCES" />
           <NavigationProperty Name="T_USER" Relationship="Self.FK_T_ARTICLE_T_USER" FromRole="T_ARTICLE" ToRole="T_USER" />
           <NavigationProperty Name="T_COMMENT_ARTICLE" Relationship="Self.FK_T_COMMENT_ARTICLE_T_ARTICLE" FromRole="T_ARTICLE" ToRole="T_COMMENT_ARTICLE" />
-          <NavigationProperty Name="T_RESOURCES1" Relationship="Self.FK_T_RESOURCES_T_ARTICLE" FromRole="T_ARTICLE" ToRole="T_RESOURCES" />
           <NavigationProperty Name="T_TRANSLATION" Relationship="Self.FK_T_TRADUCTION_T_ARTICLE" FromRole="T_ARTICLE" ToRole="T_TRANSLATION" />
+          <NavigationProperty Name="T_RESOURCES" Relationship="Self.T_ARTICLE_RESOURCES" FromRole="T_ARTICLE" ToRole="T_RESOURCES" />
         </EntityType>
         <EntityType Name="T_ARTICLE_LIKE">
           <Key>
@@ -536,10 +541,8 @@
           <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="path" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="languageID" Type="Int32" Nullable="false" />
-          <Property Name="articleID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="T_ARTICLE" Relationship="Self.FK_T_ARTICLE_T_RESOURCES" FromRole="T_RESOURCES" ToRole="T_ARTICLE" />
-          <NavigationProperty Name="T_ARTICLE1" Relationship="Self.FK_T_RESOURCES_T_ARTICLE" FromRole="T_RESOURCES" ToRole="T_ARTICLE" />
           <NavigationProperty Name="T_LANGUAGE" Relationship="Self.FK_T_RESOURCES_T_RESOURCES" FromRole="T_RESOURCES" ToRole="T_LANGUAGE" />
+          <NavigationProperty Name="T_ARTICLE" Relationship="Self.T_ARTICLE_RESOURCES" FromRole="T_RESOURCES" ToRole="T_ARTICLE" />
         </EntityType>
         <EntityType Name="T_ROLE">
           <Key>
@@ -590,18 +593,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_T_ARTICLE_T_RESOURCES">
-          <End Role="T_RESOURCES" Type="Self.T_RESOURCES" Multiplicity="1" />
-          <End Role="T_ARTICLE" Type="Self.T_ARTICLE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="T_RESOURCES">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="T_ARTICLE">
-              <PropertyRef Name="resourcesID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_T_ARTICLE_T_USER">
           <End Role="T_USER" Type="Self.T_USER" Multiplicity="1" />
           <End Role="T_ARTICLE" Type="Self.T_ARTICLE" Multiplicity="*" />
@@ -622,18 +613,6 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="T_COMMENT_ARTICLE">
-              <PropertyRef Name="articleID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_T_RESOURCES_T_ARTICLE">
-          <End Role="T_ARTICLE" Type="Self.T_ARTICLE" Multiplicity="1" />
-          <End Role="T_RESOURCES" Type="Self.T_RESOURCES" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="T_ARTICLE">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="T_RESOURCES">
               <PropertyRef Name="articleID" />
             </Dependent>
           </ReferentialConstraint>
@@ -722,6 +701,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="T_ARTICLE_RESOURCES">
+          <End Role="T_ARTICLE" Type="Self.T_ARTICLE" Multiplicity="*" />
+          <End Role="T_RESOURCES" Type="Self.T_RESOURCES" Multiplicity="*" />
+        </Association>
         <EntityContainer Name="dbNetEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="T_ARTICLE" EntityType="Self.T_ARTICLE" />
@@ -736,10 +719,6 @@
             <End Role="T_ARTICLE" EntitySet="T_ARTICLE" />
             <End Role="T_ARTICLE_LIKE" EntitySet="T_ARTICLE_LIKE" />
           </AssociationSet>
-          <AssociationSet Name="FK_T_ARTICLE_T_RESOURCES" Association="Self.FK_T_ARTICLE_T_RESOURCES">
-            <End Role="T_RESOURCES" EntitySet="T_RESOURCES" />
-            <End Role="T_ARTICLE" EntitySet="T_ARTICLE" />
-          </AssociationSet>
           <AssociationSet Name="FK_T_ARTICLE_T_USER" Association="Self.FK_T_ARTICLE_T_USER">
             <End Role="T_USER" EntitySet="T_USER" />
             <End Role="T_ARTICLE" EntitySet="T_ARTICLE" />
@@ -747,10 +726,6 @@
           <AssociationSet Name="FK_T_COMMENT_ARTICLE_T_ARTICLE" Association="Self.FK_T_COMMENT_ARTICLE_T_ARTICLE">
             <End Role="T_ARTICLE" EntitySet="T_ARTICLE" />
             <End Role="T_COMMENT_ARTICLE" EntitySet="T_COMMENT_ARTICLE" />
-          </AssociationSet>
-          <AssociationSet Name="FK_T_RESOURCES_T_ARTICLE" Association="Self.FK_T_RESOURCES_T_ARTICLE">
-            <End Role="T_ARTICLE" EntitySet="T_ARTICLE" />
-            <End Role="T_RESOURCES" EntitySet="T_RESOURCES" />
           </AssociationSet>
           <AssociationSet Name="FK_T_TRADUCTION_T_ARTICLE" Association="Self.FK_T_TRADUCTION_T_ARTICLE">
             <End Role="T_ARTICLE" EntitySet="T_ARTICLE" />
@@ -780,6 +755,10 @@
             <End Role="T_USER" EntitySet="T_USER" />
             <End Role="T_TRANSLATION" EntitySet="T_TRANSLATION" />
           </AssociationSet>
+          <AssociationSet Name="T_ARTICLE_RESOURCES" Association="Self.T_ARTICLE_RESOURCES">
+            <End Role="T_ARTICLE" EntitySet="T_ARTICLE" />
+            <End Role="T_RESOURCES" EntitySet="T_RESOURCES" />
+          </AssociationSet>
           <FunctionImport Name="CreateArticle" ReturnType="Collection(Int32)">
             <Parameter Name="adminID" Mode="In" Type="Int32" />
             <Parameter Name="creationDate" Mode="In" Type="DateTime" />
@@ -799,7 +778,7 @@
           <FunctionImport Name="CreateLanguage" ReturnType="Collection(Int32)">
             <Parameter Name="language" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="CreateResources" ReturnType="Collection(Int32)">
+          <FunctionImport Name="CreateResources">
             <Parameter Name="title" Mode="In" Type="String" />
             <Parameter Name="description" Mode="In" Type="String" />
             <Parameter Name="path" Mode="In" Type="String" />
@@ -923,7 +902,7 @@
             <Parameter Name="id" Mode="In" Type="Int32" />
             <Parameter Name="language" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="UpdateResources" ReturnType="Collection(dbNetModel.UpdateResources_Result)">
+          <FunctionImport Name="UpdateResources">
             <Parameter Name="id" Mode="In" Type="Int32" />
             <Parameter Name="title" Mode="In" Type="String" />
             <Parameter Name="description" Mode="In" Type="String" />
@@ -954,7 +933,6 @@
         <ComplexType Name="GetArticle_Result">
           <Property Type="Int32" Name="id" Nullable="false" />
           <Property Type="Int32" Name="adminID" Nullable="false" />
-          <Property Type="Int32" Name="resourcesID" Nullable="false" />
           <Property Type="DateTime" Name="creationDate" Nullable="false" />
           <Property Type="String" Name="status" Nullable="false" MaxLength="50" />
           <Property Type="Int32" Name="nbViews" Nullable="false" />
@@ -981,7 +959,6 @@
           <Property Type="String" Name="description" Nullable="false" MaxLength="Max" />
           <Property Type="String" Name="path" Nullable="false" MaxLength="50" />
           <Property Type="Int32" Name="languageID" Nullable="false" />
-          <Property Type="Int32" Name="articleID" Nullable="false" />
         </ComplexType>
         <ComplexType Name="GetRole_Result">
           <Property Type="Int32" Name="id" Nullable="false" />
@@ -1029,13 +1006,6 @@
           <Property Type="DateTime" Name="creationDate" Nullable="false" />
           <Property Type="String" Name="commentContent" Nullable="false" MaxLength="Max" />
         </ComplexType>
-        <ComplexType Name="UpdateResources_Result">
-          <Property Type="String" Name="title" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="description" Nullable="false" MaxLength="Max" />
-          <Property Type="String" Name="path" Nullable="false" MaxLength="50" />
-          <Property Type="Int32" Name="languageID" Nullable="false" />
-          <Property Type="Int32" Name="articleID" Nullable="false" />
-        </ComplexType>
         <ComplexType Name="UpdateTranslation_Result">
           <Property Type="Int32" Name="articleID" Nullable="false" />
           <Property Type="Int32" Name="translatorID" Nullable="false" />
@@ -1071,7 +1041,6 @@
               <MappingFragment StoreEntitySet="T_ARTICLE">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="adminID" ColumnName="adminID" />
-                <ScalarProperty Name="resourcesID" ColumnName="resourcesID" />
                 <ScalarProperty Name="creationDate" ColumnName="creationDate" />
                 <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="nbViews" ColumnName="nbViews" />
@@ -1114,7 +1083,6 @@
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="path" ColumnName="path" />
                 <ScalarProperty Name="languageID" ColumnName="languageID" />
-                <ScalarProperty Name="articleID" ColumnName="articleID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1149,6 +1117,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="T_ARTICLE_RESOURCES" TypeName="dbNetModel.T_ARTICLE_RESOURCES" StoreEntitySet="T_ARTICLE_RESOURCES">
+            <EndProperty Name="T_ARTICLE">
+              <ScalarProperty Name="id" ColumnName="articleID" />
+            </EndProperty>
+            <EndProperty Name="T_RESOURCES">
+              <ScalarProperty Name="id" ColumnName="resourceID" />
+            </EndProperty>
+          </AssociationSetMapping>
           <FunctionImportMapping FunctionImportName="CreateArticle" FunctionName="dbNetModel.Store.CreateArticle" />
           <FunctionImportMapping FunctionImportName="CreateArticle_Like" FunctionName="dbNetModel.Store.CreateArticle_Like" />
           <FunctionImportMapping FunctionImportName="CreateComment_Article" FunctionName="dbNetModel.Store.CreateComment_Article" />
@@ -1170,7 +1146,6 @@
               <ComplexTypeMapping TypeName="dbNetModel.GetArticle_Result">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="adminID" ColumnName="adminID" />
-                <ScalarProperty Name="resourcesID" ColumnName="resourcesID" />
                 <ScalarProperty Name="creationDate" ColumnName="creationDate" />
                 <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="nbViews" ColumnName="nbViews" />
@@ -1213,7 +1188,6 @@
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="path" ColumnName="path" />
                 <ScalarProperty Name="languageID" ColumnName="languageID" />
-                <ScalarProperty Name="articleID" ColumnName="articleID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -1301,17 +1275,7 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="UpdateLanguage" FunctionName="dbNetModel.Store.UpdateLanguage" />
-          <FunctionImportMapping FunctionImportName="UpdateResources" FunctionName="dbNetModel.Store.UpdateResources">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="dbNetModel.UpdateResources_Result">
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="path" ColumnName="path" />
-                <ScalarProperty Name="languageID" ColumnName="languageID" />
-                <ScalarProperty Name="articleID" ColumnName="articleID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UpdateResources" FunctionName="dbNetModel.Store.UpdateResources" />
           <FunctionImportMapping FunctionImportName="UpdateRole" FunctionName="dbNetModel.Store.UpdateRole" />
           <FunctionImportMapping FunctionImportName="UpdateTranslation" FunctionName="dbNetModel.Store.UpdateTranslation">
             <ResultMapping>

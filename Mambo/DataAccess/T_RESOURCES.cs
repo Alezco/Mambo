@@ -25,11 +25,9 @@ namespace Mambo.DataAccess
         public string description { get; set; }
         public string path { get; set; }
         public int languageID { get; set; }
-        public int articleID { get; set; }
     
+        public virtual T_LANGUAGE T_LANGUAGE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<T_ARTICLE> T_ARTICLE { get; set; }
-        public virtual T_ARTICLE T_ARTICLE1 { get; set; }
-        public virtual T_LANGUAGE T_LANGUAGE { get; set; }
     }
 }

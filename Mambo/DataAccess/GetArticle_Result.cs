@@ -15,7 +15,6 @@ namespace Mambo.DataAccess
     {
         public int id { get; set; }
         public int adminID { get; set; }
-        public int resourcesID { get; set; }
         public System.DateTime creationDate { get; set; }
         public string status { get; set; }
         public int nbViews { get; set; }

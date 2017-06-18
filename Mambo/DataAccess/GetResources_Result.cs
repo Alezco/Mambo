@@ -18,6 +18,5 @@ namespace Mambo.DataAccess
         public string description { get; set; }
         public string path { get; set; }
         public int languageID { get; set; }
-        public int articleID { get; set; }
     }
 }

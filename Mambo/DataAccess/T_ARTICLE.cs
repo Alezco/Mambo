@@ -19,26 +19,24 @@ namespace Mambo.DataAccess
         {
             this.T_ARTICLE_LIKE = new HashSet<T_ARTICLE_LIKE>();
             this.T_COMMENT_ARTICLE = new HashSet<T_COMMENT_ARTICLE>();
-            this.T_RESOURCES1 = new HashSet<T_RESOURCES>();
             this.T_TRANSLATION = new HashSet<T_TRANSLATION>();
+            this.T_RESOURCES = new HashSet<T_RESOURCES>();
         }
     
         public int id { get; set; }
         public int adminID { get; set; }
-        public int resourcesID { get; set; }
         public System.DateTime creationDate { get; set; }
         public string status { get; set; }
         public int nbViews { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<T_ARTICLE_LIKE> T_ARTICLE_LIKE { get; set; }
-        public virtual T_RESOURCES T_RESOURCES { get; set; }
         public virtual T_USER T_USER { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<T_COMMENT_ARTICLE> T_COMMENT_ARTICLE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<T_RESOURCES> T_RESOURCES1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<T_TRANSLATION> T_TRANSLATION { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<T_RESOURCES> T_RESOURCES { get; set; }
     }
 }
