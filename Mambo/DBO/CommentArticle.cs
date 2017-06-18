@@ -22,5 +22,22 @@ namespace Mambo.DBO
             CreationDate = creationDate;
             CommentContent = commentContent;
         }
+
+        public CommentArticle(int id, int userId, int articleId, DateTime creationDate, string commentContent)
+        {
+            Id = id;
+            UserId = userId;
+            ArticleId = articleId;
+            CreationDate = creationDate;
+            CommentContent = commentContent;
+        }
+
+        public bool isEqual(CommentArticle obj)
+        {
+            return UserId == obj.UserId
+                && ArticleId == obj.ArticleId
+                && CreationDate == obj.CreationDate
+                && CommentContent == obj.CommentContent;
+        }
     }
 }

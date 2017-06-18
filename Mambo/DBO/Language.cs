@@ -16,5 +16,15 @@ namespace Mambo.DBO
         {
             LanguageName = languageName;
         }
+
+        public Language(int id, string languageName)
+        {
+            Id = id;
+            LanguageName = languageName;
+        }
+        public bool isEqual(Language l2)
+        {
+            return this.LanguageName == l2.LanguageName;
+        }
     }
 }

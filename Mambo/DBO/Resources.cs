@@ -9,17 +9,17 @@ namespace Mambo.DBO
     {
         public int Id { get; set; }
         public int LanguageId { get; set; }
-        public int ArticleId { get; set; }
+        public List<Article> ArticlesList { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string Path { get; set; }
 
         public Resources() { }
 
-        public Resources(int languageId, int articleId, string title, string description, string path)
+        public Resources(int languageId, List<Article> articlesList, string title, string description, string path)
         {
             LanguageId = languageId;
-            ArticleId = articleId;
+            ArticlesList = articlesList;
             Title = title;
             Description = description;
             Path = path;

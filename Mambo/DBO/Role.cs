@@ -16,5 +16,16 @@ namespace Mambo.DBO
         {
             RoleName = roleName;
         }
+
+        public Role(int id, string roleName)
+        {
+            Id = id;
+            RoleName = roleName;
+        }
+
+        public bool isEqual(Role r2)
+        {
+            return this.RoleName == r2.RoleName;
+        }
     }
 }

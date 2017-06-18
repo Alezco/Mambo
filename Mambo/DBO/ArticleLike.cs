@@ -18,5 +18,18 @@ namespace Mambo.DBO
             UserId = userId;
             ArticleId = articleId;
         }
+
+        public ArticleLike(int id,  int userId, int articleId)
+        {
+            Id = id;
+            UserId = userId;
+            ArticleId = articleId;
+        }
+
+        public bool isEqual(ArticleLike obj)
+        {
+            return UserId == obj.UserId
+                && ArticleId == obj.ArticleId;
+        }
     }
 }
