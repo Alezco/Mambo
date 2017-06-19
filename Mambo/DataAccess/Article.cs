@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Mambo.DBO;
+using System.Diagnostics;
 
 namespace Mambo.DataAccess
 {
@@ -18,8 +19,10 @@ namespace Mambo.DataAccess
                     return resultArticle > 0;
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                Debug.WriteLine("Article Exception");
+                Debug.WriteLine(exception.ToString());
                 return false;
             }
         }
@@ -34,8 +37,10 @@ namespace Mambo.DataAccess
                     return result > 0;
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                Debug.WriteLine("Article Exception");
+                Debug.WriteLine(exception.ToString());
                 return false;
             }
         }
@@ -61,11 +66,12 @@ namespace Mambo.DataAccess
                     }
                     article.ResourcesList = resourcesList;
                     return article;
-
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                Debug.WriteLine("Article Exception");
+                Debug.WriteLine(exception.ToString());
                 return null;
             }
         }
@@ -74,6 +80,7 @@ namespace Mambo.DataAccess
         {
             try
             {
+                Debug.WriteLine("test");
                 using (dbNetEntities bdd = new dbNetEntities())
                 {
                     List<T_ARTICLE> tArticles = bdd.T_ARTICLE.ToList();
@@ -96,8 +103,10 @@ namespace Mambo.DataAccess
                 }
             }
 
-            catch (Exception)
+            catch (Exception exception)
             {
+                Debug.WriteLine("Article Exception");
+                Debug.WriteLine(exception.ToString());
                 return null;
             }
         }
@@ -124,8 +133,10 @@ namespace Mambo.DataAccess
                     return req != null && obj.isEqual(new DBO.Article(req.adminID, req.creationDate, req.status, req.nbViews));
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                Debug.WriteLine("Article Exception");
+                Debug.WriteLine(exception.ToString());
                 return false;
             }
         }

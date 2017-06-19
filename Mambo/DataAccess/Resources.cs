@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Mambo.DBO;
+using System.Diagnostics;
 
 namespace Mambo.DataAccess
 {
@@ -19,8 +20,10 @@ namespace Mambo.DataAccess
 
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                Debug.WriteLine("Resource Exception");
+                Debug.WriteLine(exception.ToString());
                 return false;
             }
         }
@@ -35,8 +38,10 @@ namespace Mambo.DataAccess
                     return result > 0;
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                Debug.WriteLine("Language Exception");
+                Debug.WriteLine(exception.ToString());
                 return false;
             }
         }
@@ -63,8 +68,10 @@ namespace Mambo.DataAccess
                     return resources;
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                Debug.WriteLine("Language Exception");
+                Debug.WriteLine(exception.ToString());
                 return null;
             }
         }
@@ -96,8 +103,10 @@ namespace Mambo.DataAccess
                 }
             }
 
-            catch (Exception)
+            catch (Exception exception)
             {
+                Debug.WriteLine("Language Exception");
+                Debug.WriteLine(exception.ToString());
                 return null;
             }
         }
@@ -124,8 +133,10 @@ namespace Mambo.DataAccess
                     return req != null && obj.isEqual(new DBO.Resources(req.languageID, req.title, req.description, req.path));
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                Debug.WriteLine("Language Exception");
+                Debug.WriteLine(exception.ToString());
                 return false;
             }
         }

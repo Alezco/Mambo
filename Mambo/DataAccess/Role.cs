@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Mambo.DBO;
+using System.Diagnostics;
 
 namespace Mambo.DataAccess
 {
@@ -19,8 +20,10 @@ namespace Mambo.DataAccess
                     return result > 0;
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                Debug.WriteLine("Role Exception");
+                Debug.WriteLine(exception.ToString());
                 return false;
             }
         }
@@ -35,8 +38,10 @@ namespace Mambo.DataAccess
                     return result > 0;
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                Debug.WriteLine("Role Exception");
+                Debug.WriteLine(exception.ToString());
                 return false;
             }
         }
@@ -51,8 +56,10 @@ namespace Mambo.DataAccess
                     return new DBO.Role(result.id, result.role);
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                Debug.WriteLine("Role Exception");
+                Debug.WriteLine(exception.ToString());
                 return null;
             }
         }
@@ -74,8 +81,10 @@ namespace Mambo.DataAccess
                 }
             }
 
-            catch (Exception)
+            catch (Exception exception)
             {
+                Debug.WriteLine("Role Exception");
+                Debug.WriteLine(exception.ToString());
                 return null;
             }
         }
@@ -87,12 +96,13 @@ namespace Mambo.DataAccess
                 using (dbNetEntities bdd = new dbNetEntities())
                 {
                     var req = bdd.UpdateRole(obj.Id, obj.RoleName).FirstOrDefault();
-
                     return obj.isEqual(new DBO.Role(req));
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                Debug.WriteLine("Role Exception");
+                Debug.WriteLine(exception.ToString());
                 return false;
             }
         }

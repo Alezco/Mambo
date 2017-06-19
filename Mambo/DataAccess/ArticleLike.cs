@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Mambo.DBO;
+using System.Diagnostics;
 
 namespace Mambo.DataAccess
 {
@@ -19,8 +20,10 @@ namespace Mambo.DataAccess
                     return result > 0;
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                Debug.WriteLine("ArticleLike Exception");
+                Debug.WriteLine(exception.ToString());
                 return false;
             }
         }
@@ -35,8 +38,10 @@ namespace Mambo.DataAccess
                     return result > 0;
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                Debug.WriteLine("ArticleLike Exception");
+                Debug.WriteLine(exception.ToString());
                 return false;
             }
         }
@@ -51,8 +56,10 @@ namespace Mambo.DataAccess
                     return new DBO.ArticleLike(result.id, result.userID, result.articleID);
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                Debug.WriteLine("ArticleLike Exception");
+                Debug.WriteLine(exception.ToString());
                 return null;
             }
         }
@@ -74,8 +81,10 @@ namespace Mambo.DataAccess
                 }
             }
 
-            catch (Exception)
+            catch (Exception exception)
             {
+                Debug.WriteLine("ArticleLike Exception");
+                Debug.WriteLine(exception.ToString());
                 return null;
             }
         }
@@ -91,8 +100,10 @@ namespace Mambo.DataAccess
                     return req != null && obj.isEqual(new DBO.ArticleLike(req.articleID, req.userID, req.articleID));
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                Debug.WriteLine("ArticleLike Exception");
+                Debug.WriteLine(exception.ToString());
                 return false;
             }
         }

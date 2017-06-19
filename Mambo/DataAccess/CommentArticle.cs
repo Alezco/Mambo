@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Mambo.DBO;
+using System.Diagnostics;
 
 namespace Mambo.DataAccess
 {
@@ -19,8 +20,10 @@ namespace Mambo.DataAccess
                     return result > 0;
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                Debug.WriteLine("CommentArticle Exception");
+                Debug.WriteLine(exception.ToString());
                 return false;
             }
         }
@@ -35,8 +38,10 @@ namespace Mambo.DataAccess
                     return result > 0;
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                Debug.WriteLine("CommentArticle Exception");
+                Debug.WriteLine(exception.ToString());
                 return false;
             }
         }
@@ -51,8 +56,10 @@ namespace Mambo.DataAccess
                     return new DBO.CommentArticle(result.id, result.userID, result.articleID, result.creationDate, result.commentContent);
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                Debug.WriteLine("CommentArticle Exception");
+                Debug.WriteLine(exception.ToString());
                 return null;
             }
         }
@@ -75,8 +82,10 @@ namespace Mambo.DataAccess
                 }
             }
 
-            catch (Exception)
+            catch (Exception exception)
             {
+                Debug.WriteLine("CommentArticle Exception");
+                Debug.WriteLine(exception.ToString());
                 return null;
             }
         }
@@ -88,12 +97,13 @@ namespace Mambo.DataAccess
                 using (dbNetEntities bdd = new dbNetEntities())
                 {
                     var req = bdd.UpdateComment_Article(obj.Id, obj.UserId, obj.ArticleId, obj.CreationDate, obj.CommentContent).FirstOrDefault();
-
                     return req != null && obj.isEqual(new DBO.CommentArticle(req.articleID, req.userID, req.articleID, req.creationDate, req.commentContent));
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                Debug.WriteLine("CommentArticle Exception");
+                Debug.WriteLine(exception.ToString());
                 return false;
             }
         }

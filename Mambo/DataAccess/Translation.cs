@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Mambo.DBO;
+using System.Diagnostics;
 
 namespace Mambo.DataAccess
 {
@@ -20,8 +21,10 @@ namespace Mambo.DataAccess
                     return result > 0;
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                Debug.WriteLine("Translation Exception");
+                Debug.WriteLine(exception.ToString());
                 return false;
             }
         }
@@ -36,8 +39,10 @@ namespace Mambo.DataAccess
                     return result > 0;
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                Debug.WriteLine("Translation Exception");
+                Debug.WriteLine(exception.ToString());
                 return false;
             }
         }
@@ -52,8 +57,10 @@ namespace Mambo.DataAccess
                     return new DBO.Translation(result.id, result.articleID, result.translatorID, result.language, result.translationArticleTitle, result.translationArticleContent);
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                Debug.WriteLine("Translation Exception");
+                Debug.WriteLine(exception.ToString());
                 return null;
             }
         }
@@ -76,8 +83,10 @@ namespace Mambo.DataAccess
                 }
             }
 
-            catch (Exception)
+            catch (Exception exception)
             {
+                Debug.WriteLine("Translation Exception");
+                Debug.WriteLine(exception.ToString());
                 return null;
             }
         }
@@ -93,8 +102,10 @@ namespace Mambo.DataAccess
                     return req != null && obj.isEqual(new DBO.Translation(req.articleID, req.translatorID, req.language, req.translationArticleTitle, req.translationArticleContent));
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                Debug.WriteLine("Translation Exception");
+                Debug.WriteLine(exception.ToString());
                 return false;
             }
         }
