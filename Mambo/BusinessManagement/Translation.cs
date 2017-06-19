@@ -30,6 +30,11 @@ namespace Mambo.BusinessManagement
             return translationAccess.Get(key);
         }
 
+        public List<DBO.Translation> GetTranslationsByArticleId(int key)
+        {
+            return translationAccess.GetTranslationsByArticleId(key);
+        }
+
         public List<DBO.Translation> GetAll()
         {
             return translationAccess.GetAll();

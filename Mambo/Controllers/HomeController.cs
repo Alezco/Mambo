@@ -1,8 +1,10 @@
 ﻿using Mambo.DataAccess;
 using Mambo.DBO;
+using Mambo.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -15,32 +17,17 @@ namespace Mambo.Controllers
         public ActionResult Index()
         {
             BusinessManagement.Article articleManagement = new BusinessManagement.Article();
-            return View(articleManagement.GetAll());
-            //List<Article> listArticles = articleManagement.GetAll();
+            List<DBO.Article> articles = articleManagement.GetAll();
+            BusinessManagement.Translation translationManagement = new BusinessManagement.Translation();
+            List<DBO.Translation> translations = translationManagement.GetAll();
 
-            /*BusinessManagement.User userBusiness = new BusinessManagement.User();
-            BusinessManagement.Role roleBusiness = new BusinessManagement.Role();
-            BusinessManagement.Translation translationBusiness = new BusinessManagement.Translation();
-            BusinessManagement.Article articleBusiness = new BusinessManagement.Article();
-            BusinessManagement.Language language = new BusinessManagement.Language();
-            BusinessManagement.Resources resourcesBusiness = new BusinessManagement.Resources();
+            ArticleViewModel myModel = new ArticleViewModel()
+            {
+                Articles = articles,
+                Translations = translations
+            };
 
-            //roleBusiness.Create(new DBO.Role("Admin"));
-            //userBusiness.Create(new DBO.User(1, "admin", "admin@test.fr", "admin"));
-
-
-            /*DBO.Article article = new DBO.Article(1, DateTime.Now, "test", 1);
-            DBO.Resources resource = new DBO.Resources(1, "test ressource", "super description", "un path");
-            articleBusiness.Create(article);
-            //language.Create(new DBO.Language("français"));
-            resourcesBusiness.Create(resource);
-            article.Id = 2;
-            resource.Id = 2;
-            articleBusiness.Update(article, resource);
-            resourcesBusiness.GetAll();*/
-
-
-            //return View();
+            return View(myModel);
         }
 
         public ActionResult About()
@@ -48,7 +35,7 @@ namespace Mambo.Controllers
             ViewBag.Message = "Your application description page.";
 
             return View();
-        }
+        } 
 
         public ActionResult Contact()
         {

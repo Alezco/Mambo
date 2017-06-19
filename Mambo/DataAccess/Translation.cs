@@ -65,6 +65,31 @@ namespace Mambo.DataAccess
             }
         }
 
+        public List<DBO.Translation> GetTranslationsByArticleId(int key)
+        {
+            try
+            {
+                using (dbNetEntities bdd = new dbNetEntities())
+                {
+                    List<T_TRANSLATION> tListTranslation = bdd.T_TRANSLATION.Where(x => x.articleID == key).ToList();
+                    if (tListTranslation == null)
+                        return null;
+                    List<DBO.Translation> listTranslation = new List<DBO.Translation>();
+                    foreach (T_TRANSLATION tTranslation in tListTranslation)
+                    {
+                        listTranslation.Add(new DBO.Translation(tTranslation.id, tTranslation.articleID, tTranslation.translatorID, tTranslation.language, tTranslation.translationArticleTitle, tTranslation.translationArticleContent));
+                    }
+                    return listTranslation;
+                }
+            }
+            catch (Exception exception)
+            {
+                Debug.WriteLine("Translation Exception");
+                Debug.WriteLine(exception.ToString());
+                return null;
+            }
+        }
+
         public List<DBO.Translation> GetAll()
         {
             try
@@ -111,3 +136,4 @@ namespace Mambo.DataAccess
         }
     }
 }
+ 

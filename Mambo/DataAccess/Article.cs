@@ -80,7 +80,6 @@ namespace Mambo.DataAccess
         {
             try
             {
-                Debug.WriteLine("test");
                 using (dbNetEntities bdd = new dbNetEntities())
                 {
                     List<T_ARTICLE> tArticles = bdd.T_ARTICLE.ToList();

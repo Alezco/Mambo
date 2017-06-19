@@ -1,0 +1,36 @@
+﻿@using Mambo.Models
+@model ArticleViewModel
+
+@{
+    ViewBag.Title = "Article";
+}
+
+<h2>Détails</h2>
+
+<div>
+    <h4>Article</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        @ trans = Model.Translations
+
+        <dt>
+            @Html.DisplayNameFor(model => Model.Translations.FirstOrDefault().TranslationArticleTitle)
+        </dt>
+
+        <dd>
+           @Html.DisplayNameFor(model => Model.Translations.FirstOrDefault().TranslationArticleTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => Model.Translations.FirstOrDefault().TranslationArticleContent)
+        </dt>
+
+        <dd>
+            @Html.DisplayNameFor(model => Model.Translations.FirstOrDefault().TranslationArticleContent)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

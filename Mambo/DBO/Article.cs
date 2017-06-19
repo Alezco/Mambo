@@ -14,7 +14,10 @@ namespace Mambo.DBO
         public string Status { get; set; }
         public int NbViews { get; set; }
 
-        public Article() { }
+        public Article()
+        {
+            ResourcesList = new List<Resources>();
+        }
 
         public Article(int adminId, List<Resources> resourcesList, DateTime creationDate, string status, int nbViews)
         {

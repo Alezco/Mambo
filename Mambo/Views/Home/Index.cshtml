@@ -1,34 +1,41 @@
-﻿@{
+﻿@using Mambo.Models
+@model ArticleViewModel
+
+
+@{
     ViewBag.Title = "Mambo";
 }
+
 
 <div class="jumbotron">
     <h1>Mambo</h1>
 </div>
 
-@model IEnumerable<Mambo.DBO.Article>
-
-@{
-    ViewBag.Title = "Index";
-}
-
 <h2>Les derniers articles</h2>
 
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.AdminId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreationDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NbViews)
-        </th>
-        <th></th>
+        <th>Titre</th>
+        <th>Date</th>
+        <th>Contenu</th> 
     </tr>
+
+    @foreach (var translation in Model.Translations)
+    {
+        foreach (var article in Model.Articles)
+        {
+            if (article.Id == translation.ArticleId)
+            {
+                <tr>
+                    <td>@translation.TranslationArticleTitle</td>
+                    <td>@article.CreationDate</td>
+                    <td>@translation.TranslationArticleContent</td>
+                    <td>
+                        @Html.ActionLink("Lire", "ArticleDetails", new { id = @translation.Id })
+                    </td>
+                </tr>
+            }
+        }
+    }
 
 </table>
