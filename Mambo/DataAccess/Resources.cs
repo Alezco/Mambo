@@ -49,7 +49,18 @@ namespace Mambo.DataAccess
                 {
                     var result = bdd.GetResources(key).FirstOrDefault();
                     //return new DBO.Resources(result.id, result.languageID, MALISTED'ARTICLE, result.title, result.description, result.path);
-                    return new DBO.Resources(result.id, result.languageID, result.title, result.description, result.path);
+
+                    T_RESOURCES tResource = bdd.T_RESOURCES.ToList().Where(x => x.id == key).FirstOrDefault();
+                    List<T_ARTICLE> tArticles = tResource.T_ARTICLE.ToList();
+                    DBO.Resources resources = new DBO.Resources(result.id, result.languageID, result.title, result.description, result.path);
+                    List<DBO.Article> articles = new List<DBO.Article>();
+                    foreach (T_ARTICLE item in tArticles)
+                    {
+                        DBO.Article a = new DBO.Article(item.id, item.adminID, item.creationDate, item.status, item.nbViews);
+                        articles.Add(a);
+                    }
+                    resources.ArticlesList = articles;
+                    return resources;
                 }
             }
             catch (Exception)
@@ -68,8 +79,17 @@ namespace Mambo.DataAccess
                     List<DBO.Resources> resources = new List<DBO.Resources>();
                     foreach (T_RESOURCES tResource in tResources)
                     {
+
+                        List<T_ARTICLE> tArticleList = tResource.T_ARTICLE.ToList();
+                        List<DBO.Article> articleList = new List<DBO.Article>();
+                        foreach (T_ARTICLE item in tArticleList)
+                        {
+                            DBO.Article article = new DBO.Article(item.id, item.adminID, item.creationDate, item.status, item.nbViews);
+                            articleList.Add(article);
+                        }
+
                         //ADD new DBO.Article(tResources.id, tResources.adminID, tResources.MALISTED'ARTICLE, tResources.creationDate, tResources.status, tResources.nbViews);
-                        DBO.Resources resource = new DBO.Resources(tResource.id, tResource.languageID, tResource.title, tResource.description, tResource.path);
+                        DBO.Resources resource = new DBO.Resources(tResource.id, tResource.languageID, articleList, tResource.title, tResource.description, tResource.path);
                         resources.Add(resource);
                     }
                     return resources;

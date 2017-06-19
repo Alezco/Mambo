@@ -49,7 +49,20 @@ namespace Mambo.DataAccess
                 {
                     var result = bdd.GetArticle(key).FirstOrDefault();
                     //return new DBO.Article(result.id, result.adminID, result.MONIDDERESOURCES, result.creationDate, result.status, result.nbViews);
-                    return new DBO.Article(result.id, result.adminID, result.creationDate, result.status, result.nbViews);
+
+                    T_ARTICLE tArticle = bdd.T_ARTICLE.ToList().Where(x => x.id == key).FirstOrDefault();
+                    List<T_RESOURCES> tResources = tArticle.T_RESOURCES.ToList();
+
+                    DBO.Article article = new DBO.Article(result.id, result.adminID, result.creationDate, result.status, result.nbViews);
+                    List<DBO.Resources> resourcesList = new List<DBO.Resources>();
+                    foreach (T_RESOURCES item in tResources)
+                    {
+                        DBO.Resources r = new DBO.Resources(item.id, item.languageID, item.title, item.description, item.path);
+                        resourcesList.Add(r);
+                    }
+                    article.ResourcesList = resourcesList;
+                    return article;
+
                 }
             }
             catch (Exception)
@@ -68,8 +81,16 @@ namespace Mambo.DataAccess
                     List<DBO.Article> articles = new List<DBO.Article>();
                     foreach (T_ARTICLE tArticle in tArticles)
                     {
+                        List<T_RESOURCES> tResourcesList = tArticle.T_RESOURCES.ToList();
+                        List<DBO.Resources> resourcesList = new List<DBO.Resources>();
+                        foreach (T_RESOURCES item in tResourcesList)
+                        {
+                            DBO.Resources resources = new DBO.Resources(item.id, item.languageID, item.title, item.description, item.path);
+                            resourcesList.Add(resources);
+                        }
+                        
                         //ADD new DBO.Article(result.id, result.adminID, result.MONIDDERESOURCES, result.creationDate, result.status, result.nbViews);
-                        DBO.Article article = new DBO.Article(tArticle.id, tArticle.adminID, tArticle.creationDate, tArticle.status, tArticle.nbViews);
+                        DBO.Article article = new DBO.Article(tArticle.id, tArticle.adminID, resourcesList, tArticle.creationDate, tArticle.status, tArticle.nbViews);
                         articles.Add(article);
                     }
                     return articles;

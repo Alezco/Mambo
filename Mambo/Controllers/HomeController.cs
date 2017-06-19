@@ -21,14 +21,15 @@ namespace Mambo.Controllers
             //userBusiness.Create(new DBO.User(1, "admin", "admin@test.fr", "admin"));
 
 
-            DBO.Article article = new DBO.Article(1, DateTime.Now, "test", 1);
+            /*DBO.Article article = new DBO.Article(1, DateTime.Now, "test", 1);
             DBO.Resources resource = new DBO.Resources(1, "test ressource", "super description", "un path");
             articleBusiness.Create(article);
             //language.Create(new DBO.Language("français"));
             resourcesBusiness.Create(resource);
             article.Id = 2;
             resource.Id = 2;
-            articleBusiness.Update(article, resource);*/
+            articleBusiness.Update(article, resource);
+            resourcesBusiness.GetAll();*/
 
 
             return View();
