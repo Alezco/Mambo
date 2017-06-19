@@ -16,7 +16,6 @@ namespace Mambo.DataAccess
                 {
                     long resultArticle = bdd.CreateArticle(obj.AdminId, obj.CreationDate, obj.Status, obj.NbViews).FirstOrDefault().Value;
                     return resultArticle > 0;
-                    
                 }
             }
             catch (Exception)

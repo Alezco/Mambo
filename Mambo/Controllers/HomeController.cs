@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Mambo.DataAccess;
+using Mambo.DBO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,8 +10,14 @@ namespace Mambo.Controllers
 {
     public class HomeController : Controller
     {
+        private dbNetEntities db = new dbNetEntities();
+
         public ActionResult Index()
         {
+            BusinessManagement.Article articleManagement = new BusinessManagement.Article();
+            return View(articleManagement.GetAll());
+            //List<Article> listArticles = articleManagement.GetAll();
+
             /*BusinessManagement.User userBusiness = new BusinessManagement.User();
             BusinessManagement.Role roleBusiness = new BusinessManagement.Role();
             BusinessManagement.Translation translationBusiness = new BusinessManagement.Translation();
@@ -32,7 +40,7 @@ namespace Mambo.Controllers
             resourcesBusiness.GetAll();*/
 
 
-            return View();
+            //return View();
         }
 
         public ActionResult About()
