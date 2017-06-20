@@ -153,6 +153,7 @@
     <Compile Include="BusinessManagement\ArticleLike.cs" />
     <Compile Include="BusinessManagement\CommentArticle.cs" />
     <Compile Include="BusinessManagement\CustomMembership.cs" />
+    <Compile Include="BusinessManagement\CustomRoleProvider.cs" />
     <Compile Include="BusinessManagement\Language.cs" />
     <Compile Include="BusinessManagement\Resources.cs" />
     <Compile Include="BusinessManagement\Role.cs" />
