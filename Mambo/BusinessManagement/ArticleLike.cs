@@ -39,5 +39,10 @@ namespace Mambo.BusinessManagement
         {
             return articleLikeAccess.Update(obj);
         }
+
+        public int CountLikesByArticleId(int key)
+        {
+            return articleLikeAccess.CountLikesByArticleId(key);
+        }
     }
 }

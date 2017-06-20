@@ -20,18 +20,19 @@
         <th>Contenu</th> 
     </tr>
 
-    @foreach (var translation in Model.Translations)
+    @foreach (var article in Model.Articles)
     {
-        foreach (var article in Model.Articles)
+        foreach (var translation in Model.Translations)
         {
-            if (article.Id == translation.ArticleId)
+            // Langue à définir en fonction du choix de l'utilisateur
+            if (article.Id == translation.ArticleId && translation.LanguageId == 1)
             {
                 <tr>
-                    <td>@translation.TranslationArticleTitle</td>
+                    <td>@Html.ActionLink(translation.TranslationArticleTitle, "ArticleDetails", new { id = @article.Id })</td>
                     <td>@article.CreationDate</td>
                     <td>@translation.TranslationArticleContent</td>
                     <td>
-                        @Html.ActionLink("Lire", "ArticleDetails", new { id = @translation.Id })
+                        @Html.ActionLink("Lire", "ArticleDetails", new { id = @article.Id })
                     </td>
                 </tr>
             }

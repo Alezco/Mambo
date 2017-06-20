@@ -30,6 +30,11 @@ namespace Mambo.BusinessManagement
             return commentArticleAccess.Get(key);
         }
 
+        public List<DBO.CommentArticle> GetCommentsByArticleId(int key)
+        {
+            return commentArticleAccess.GetCommentsByArticleId(key);
+        }
+
         public List<DBO.CommentArticle> GetAll()
         {
             return commentArticleAccess.GetAll();

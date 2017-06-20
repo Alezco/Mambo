@@ -1,36 +1,38 @@
 ﻿@using Mambo.Models
-@model ArticleViewModel
+@model ArticleDetailModel
 
 @{
     ViewBag.Title = "Article";
 }
 
-<h2>Détails</h2>
+<h1>@Model.Translations.FirstOrDefault().TranslationArticleTitle</h1>
 
 <div>
-    <h4>Article</h4>
+    <h6>@Model.Article.CreationDate</h6>
     <hr />
-    <dl class="dl-horizontal">
-        @trans = Model.Translations
+    <p>
+        @Model.Translations.FirstOrDefault().TranslationArticleContent
+    </p>
+    <hr />
 
-        <dt>
-            @Html.DisplayNameFor(model => Model.Translations.FirstOrDefault().TranslationArticleTitle)
-        </dt>
+    <h4>Commentaires (@Model.Comments.Count)</h4>
+    @foreach (var comment in Model.Comments)
+    {
+        <dl class="dl-horizontal">
+            <dt>
+                @comment.Username
+            </dt>
+            <dd>
+                @comment.Comment
+            </dd>
+            <dd>
+                @comment.Date
+            </dd>
 
-        <dd>
-           @Html.DisplayNameFor(model => Model.Translations.FirstOrDefault().TranslationArticleTitle)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => Model.Translations.FirstOrDefault().TranslationArticleContent)
-        </dt>
-
-        <dd>
-            @Html.DisplayNameFor(model => Model.Translations.FirstOrDefault().TranslationArticleContent)
-        </dd>
-
-    </dl>
+        </dl>
+    }
 </div>
+
 <p>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Retour", "Index")
 </p>

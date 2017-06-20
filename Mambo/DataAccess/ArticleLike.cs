@@ -107,5 +107,23 @@ namespace Mambo.DataAccess
                 return false;
             }
         }
+
+        public int CountLikesByArticleId(int key)
+        {
+            try
+            {
+                using (dbNetEntities bdd = new dbNetEntities())
+                {
+                    List<T_ARTICLE_LIKE> tListLikes = bdd.T_ARTICLE_LIKE.Where(x => x.articleID == key).ToList();
+                    return tListLikes.Count;
+                }
+            }
+            catch (Exception exception)
+            {
+                Debug.WriteLine("ArticleLike Exception");
+                Debug.WriteLine(exception.ToString());
+                return 0;
+            }
+        }
     }
 }

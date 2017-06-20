@@ -64,6 +64,31 @@ namespace Mambo.DataAccess
             }
         }
 
+        public List<DBO.CommentArticle> GetCommentsByArticleId(int key)
+        {
+            try
+            {
+                using (dbNetEntities bdd = new dbNetEntities())
+                {
+                    List<T_COMMENT_ARTICLE> tListComments = bdd.T_COMMENT_ARTICLE.Where(x => x.articleID == key).ToList();
+                    if (tListComments == null)
+                        return null;
+                    List<DBO.CommentArticle> listComment = new List<DBO.CommentArticle>();
+                    foreach (T_COMMENT_ARTICLE tComment in tListComments)
+                    {
+                        listComment.Add(new DBO.CommentArticle(tComment.id, tComment.userID, tComment.articleID, tComment.creationDate, tComment.commentContent));
+                    }
+                    return listComment;
+                }
+            }
+            catch (Exception exception)
+            {
+                Debug.WriteLine("CommentArticle Exception");
+                Debug.WriteLine(exception.ToString());
+                return null;
+            }
+        }
+
         public List<DBO.CommentArticle> GetAll()
         {
             try
