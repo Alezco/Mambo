@@ -157,6 +157,7 @@
     <Compile Include="BusinessManagement\Language.cs" />
     <Compile Include="BusinessManagement\Resources.cs" />
     <Compile Include="BusinessManagement\Role.cs" />
+    <Compile Include="BusinessManagement\Security.cs" />
     <Compile Include="BusinessManagement\Translation.cs" />
     <Compile Include="BusinessManagement\User.cs" />
     <Compile Include="Controllers\AuthentificationController.cs" />

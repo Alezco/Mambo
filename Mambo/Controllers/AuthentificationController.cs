@@ -20,7 +20,7 @@ namespace Mambo.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (Membership.ValidateUser(model.Email, model.Password))
+                if (Membership.ValidateUser(model.Email, BusinessManagement.Security.GenerateHash(model.Password)))
                 {
                     FormsAuthentication.RedirectFromLoginPage(model.Email, model.RememberMe);
                 }
@@ -47,7 +47,7 @@ namespace Mambo.Controllers
                     return View(model);
                 }
                 BusinessManagement.User bUser = new BusinessManagement.User();
-                DBO.User u = new DBO.User(1, model.UserName, model.Email, model.Password);
+                DBO.User u = new DBO.User(1, model.UserName, model.Email, BusinessManagement.Security.GenerateHash(model.Password));
                 var success = bUser.Create(u);
                 if (success)
                 {
