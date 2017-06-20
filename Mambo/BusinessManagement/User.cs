@@ -30,6 +30,11 @@ namespace Mambo.BusinessManagement
             return userAccess.Get(key);
         }
 
+        public DBO.User GetByEmail(string email)
+        {
+            return userAccess.GetByEmail(email);
+        }
+
         public List<DBO.User> GetAll()
         {
             return userAccess.GetAll();

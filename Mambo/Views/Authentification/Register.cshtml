@@ -1,18 +1,29 @@
-﻿
+﻿@model Mambo.Models.Register
 @{
     ViewBag.Title = "Register";
 }
 
-<h2>Register</h2>
-<form name="login" action="" method="post" accept-charset="utf-8">
-    <label for="email">Email</label>
-    <input type="email" name="email" placeholder="yourname@email.com" required value="@Request.Form["email"]">
+<h2>@ViewBag.Title</h2>
+<hr />
+@Html.ValidationSummary(true)
+<br />
+@using (Html.BeginForm(null, null, new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+{
+    @Html.LabelFor(m => m.UserName)
+    @Html.TextBoxFor(m => m.UserName)
+    @Html.ValidationMessageFor(m => m.UserName)
     <br />
-    <label for="password">Password</label>
-    <input type="password" name="password" placeholder="Password" required>
+    @Html.LabelFor(m => m.Email)
+    @Html.TextBoxFor(m => m.Email)
+    @Html.ValidationMessageFor(m => m.Email)
     <br />
-    <label for="password_confirm">Password confirm</label>
-    <input type="password" name="password_confirm" placeholder="Password confirm" required>
+    @Html.LabelFor(m => m.Password)
+    @Html.PasswordFor(m => m.Password)
+    @Html.ValidationMessageFor(m => m.Password)
     <br />
-    <input type="submit" value="Register">
-</form>
+    @Html.LabelFor(m => m.PasswordConfirm)
+    @Html.PasswordFor(m => m.PasswordConfirm)
+    @Html.ValidationMessageFor(m => m.PasswordConfirm)
+    <br />
+    <input type="submit" value="Register" />
+}

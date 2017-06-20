@@ -64,6 +64,24 @@ namespace Mambo.DataAccess
             }
         }
 
+        public DBO.User GetByEmail(string email)
+        {
+            try
+            {
+                using (dbNetEntities bdd = new dbNetEntities())
+                {
+                    var result = bdd.T_USER.Where(x => x.email == email).FirstOrDefault();
+                    return new DBO.User(result.id, result.roleID, result.pseudo, result.email, result.password);
+                }
+            }
+            catch (Exception exception)
+            {
+                Debug.WriteLine("User Exception");
+                Debug.WriteLine(exception.ToString());
+                return null;
+            }
+        }
+
         public List<DBO.User> GetAll()
         {
             try
