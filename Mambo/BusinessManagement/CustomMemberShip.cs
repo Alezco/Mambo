@@ -123,7 +123,8 @@ namespace Mambo.BusinessManagement
 
         public override MembershipPasswordFormat PasswordFormat
         {
-            get { throw new NotImplementedException(); }
+            // Encryption is done manually
+            get { return MembershipPasswordFormat.Clear; }
         }
 
         public override int MinRequiredPasswordLength

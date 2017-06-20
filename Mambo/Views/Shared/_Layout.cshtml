@@ -25,9 +25,16 @@
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li>@Html.ActionLink("Se connecter", "Login", "Authentification")</li>
-                    <li>@Html.ActionLink("S'inscrire", "Register", "Authentification")</li>
-                    <li>@Html.ActionLink("Deconnexion", "Deconnect", "Authentification")</li>
+                    @if (@HttpContext.Current.User.Identity.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Deconnexion", "Deconnect", "Authentification")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Se connecter", "Login", "Authentification")</li>
+                        <li>@Html.ActionLink("S'inscrire", "Register", "Authentification")</li>
+                    }
+                    
                 </ul>
             </div>
                 

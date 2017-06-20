@@ -59,10 +59,15 @@ namespace Mambo.Controllers
 
         public ActionResult Deconnect()
         {
+            return View();
+        }
+
+        public ActionResult DeconnectAction()
+        {
             FormsAuthentication.SignOut();
             Roles.DeleteCookie();
             Session.Clear();
-            return View();
+            return RedirectToAction("Login", "Authentification");
         }
     }
 }
