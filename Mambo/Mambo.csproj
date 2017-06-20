@@ -338,6 +338,7 @@
     <Content Include="Views\Home\ArticleDetails.cshtml" />
     <Content Include="Views\Authentification\Login.cshtml" />
     <Content Include="Views\Authentification\Register.cshtml" />
+    <Content Include="Views\Authentification\Deconnect.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
