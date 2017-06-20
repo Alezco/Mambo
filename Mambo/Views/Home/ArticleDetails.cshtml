@@ -9,10 +9,27 @@
 
 <div>
     <h6>@Model.Article.CreationDate</h6>
-    <hr />
+    <br />
     <p>
         @Model.Translations.FirstOrDefault().TranslationArticleContent
     </p>
+    <hr />
+
+    <h4>Médias (@Model.Article.ResourcesList.Count)</h4>
+    @foreach (var media in Model.Article.ResourcesList)
+    {
+        <dl class="dl-horizontal">
+            <dt>
+                @media.Title
+            </dt>
+            <dd>
+                @media.Description
+            </dd>
+            <dd>
+                @media.Path
+            </dd>
+        </dl>
+    }
     <hr />
 
     <h4>Commentaires (@Model.Comments.Count)</h4>
@@ -25,12 +42,26 @@
             <dd>
                 @comment.Comment
             </dd>
-            <dd>
+            <dd style="font-size:75%">
                 @comment.Date
             </dd>
-
         </dl>
     }
+    <hr />
+
+    <h2>Commenter cet article</h2>
+    @Html.ValidationSummary(true)
+    <br />
+    @using (Html.BeginForm("ArticleDetails", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+    {
+        @Html.TextAreaFor(m => m.UserComment.Text)
+        @Html.HiddenFor(m => m.Article.Id)
+        @Html.ValidationMessageFor(m => m.UserComment.Text)
+        <br /> <br />
+        <input type="submit"  value="Publier" />
+    }
+    <hr />
+
 </div>
 
 <p>

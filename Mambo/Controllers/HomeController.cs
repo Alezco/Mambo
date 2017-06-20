@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace Mambo.Controllers
 {
@@ -30,8 +31,13 @@ namespace Mambo.Controllers
             return View(myModel);
         }
 
-        public ActionResult ArticleDetails(int? id)
+        public ActionResult ArticleDetails(ArticleDetailModel model, int? id)
         {
+            if (model.UserComment != null)
+            {
+                AddComment(model);
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -79,6 +85,23 @@ namespace Mambo.Controllers
                 return HttpNotFound();
             }
             return View(myModel);
+        }
+
+        private void AddComment(ArticleDetailModel model)
+        {
+            string t = model.UserComment.Text;
+            if (ModelState.IsValid)
+            {
+                if (string.IsNullOrEmpty(model.UserComment.Text))
+                {
+                    ModelState.AddModelError("", "Le champ ne peut pas être vide");
+                }
+                BusinessManagement.User userManagement = new BusinessManagement.User();
+                DBO.User currentUser = userManagement.GetByEmail(HttpContext.User.Identity.Name);
+                BusinessManagement.CommentArticle commentManagement = new BusinessManagement.CommentArticle();
+                commentManagement.Create(new DBO.CommentArticle(currentUser.Id, model.Article.Id, DateTime.Now, model.UserComment.Text));
+                ModelState.Clear();
+            }
         }
 
         [Authorize(Roles = "Administrator")]
