@@ -21,7 +21,7 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="adminID" Type="int" Nullable="false" />
-          <Property Name="creationDate" Type="date" Nullable="false" />
+          <Property Name="creationDate" Type="datetime" Nullable="false" />
           <Property Name="status" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="nbViews" Type="int" Nullable="false" />
         </EntityType>
@@ -48,7 +48,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="userID" Type="int" Nullable="false" />
           <Property Name="articleID" Type="int" Nullable="false" />
-          <Property Name="creationDate" Type="date" Nullable="false" />
+          <Property Name="creationDate" Type="datetime" Nullable="false" />
           <Property Name="commentContent" Type="text" Nullable="false" />
         </EntityType>
         <EntityType Name="T_LANGUAGE">
@@ -65,7 +65,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="title" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="description" Type="text" Nullable="false" />
-          <Property Name="path" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="path" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="languageID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="T_ROLE">
@@ -242,7 +242,7 @@
         </Association>
         <Function Name="CreateArticle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="adminID" Type="int" Mode="In" />
-          <Parameter Name="creationDate" Type="date" Mode="In" />
+          <Parameter Name="creationDate" Type="datetime" Mode="In" />
           <Parameter Name="status" Type="varchar" Mode="In" />
           <Parameter Name="nbViews" Type="int" Mode="In" />
         </Function>
@@ -253,7 +253,7 @@
         <Function Name="CreateComment_Article" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userID" Type="int" Mode="In" />
           <Parameter Name="articleID" Type="int" Mode="In" />
-          <Parameter Name="creationDate" Type="date" Mode="In" />
+          <Parameter Name="creationDate" Type="datetime" Mode="In" />
           <Parameter Name="commentContent" Type="text" Mode="In" />
         </Function>
         <Function Name="CreateLanguage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -363,7 +363,7 @@
         <Function Name="UpdateArticle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
           <Parameter Name="adminID" Type="int" Mode="In" />
-          <Parameter Name="creationDate" Type="date" Mode="In" />
+          <Parameter Name="creationDate" Type="datetime" Mode="In" />
           <Parameter Name="status" Type="varchar" Mode="In" />
           <Parameter Name="nbViews" Type="int" Mode="In" />
         </Function>
@@ -376,7 +376,7 @@
           <Parameter Name="id" Type="int" Mode="In" />
           <Parameter Name="userID" Type="int" Mode="In" />
           <Parameter Name="articleID" Type="int" Mode="In" />
-          <Parameter Name="creationDate" Type="date" Mode="In" />
+          <Parameter Name="creationDate" Type="datetime" Mode="In" />
           <Parameter Name="commentContent" Type="text" Mode="In" />
         </Function>
         <Function Name="UpdateLanguage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -490,7 +490,7 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="adminID" Type="Int32" Nullable="false" />
-          <Property Name="creationDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="creationDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="nbViews" Type="Int32" Nullable="false" />
           <NavigationProperty Name="T_ARTICLE_LIKE" Relationship="Self.FK_T_ARTICLE_LIKE_T_ARTICLE" FromRole="T_ARTICLE" ToRole="T_ARTICLE_LIKE" />
@@ -516,7 +516,7 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="userID" Type="Int32" Nullable="false" />
           <Property Name="articleID" Type="Int32" Nullable="false" />
-          <Property Name="creationDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="creationDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="commentContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="T_ARTICLE" Relationship="Self.FK_T_COMMENT_ARTICLE_T_ARTICLE" FromRole="T_COMMENT_ARTICLE" ToRole="T_ARTICLE" />
           <NavigationProperty Name="T_USER" Relationship="Self.FK_T_COMMENT_ARTICLE_T_USER" FromRole="T_COMMENT_ARTICLE" ToRole="T_USER" />
@@ -537,7 +537,7 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="path" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="path" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="languageID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="T_LANGUAGE" Relationship="Self.FK_T_RESOURCES_T_RESOURCES" FromRole="T_RESOURCES" ToRole="T_LANGUAGE" />
           <NavigationProperty Name="T_ARTICLE" Relationship="Self.T_ARTICLE_RESOURCES" FromRole="T_RESOURCES" ToRole="T_ARTICLE" />
@@ -929,7 +929,7 @@
         <ComplexType Name="GetArticle_Result">
           <Property Type="Int32" Name="id" Nullable="false" />
           <Property Type="Int32" Name="adminID" Nullable="false" />
-          <Property Type="DateTime" Name="creationDate" Nullable="false" />
+          <Property Type="DateTime" Name="creationDate" Nullable="false" Precision="23" />
           <Property Type="String" Name="status" Nullable="false" MaxLength="50" />
           <Property Type="Int32" Name="nbViews" Nullable="false" />
         </ComplexType>
@@ -942,7 +942,7 @@
           <Property Type="Int32" Name="id" Nullable="false" />
           <Property Type="Int32" Name="userID" Nullable="false" />
           <Property Type="Int32" Name="articleID" Nullable="false" />
-          <Property Type="DateTime" Name="creationDate" Nullable="false" />
+          <Property Type="DateTime" Name="creationDate" Nullable="false" Precision="23" />
           <Property Type="String" Name="commentContent" Nullable="false" MaxLength="Max" />
         </ComplexType>
         <ComplexType Name="GetLanguage_Result">
@@ -953,7 +953,7 @@
           <Property Type="Int32" Name="id" Nullable="false" />
           <Property Type="String" Name="title" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="description" Nullable="false" MaxLength="Max" />
-          <Property Type="String" Name="path" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="path" Nullable="false" MaxLength="255" />
           <Property Type="Int32" Name="languageID" Nullable="false" />
         </ComplexType>
         <ComplexType Name="GetRole_Result">
@@ -988,7 +988,7 @@
         </ComplexType>
         <ComplexType Name="UpdateArticle_Result">
           <Property Type="Int32" Name="adminID" Nullable="false" />
-          <Property Type="DateTime" Name="creationDate" Nullable="false" />
+          <Property Type="DateTime" Name="creationDate" Nullable="false" Precision="23" />
           <Property Type="String" Name="status" Nullable="false" MaxLength="50" />
           <Property Type="Int32" Name="nbViews" Nullable="false" />
         </ComplexType>
@@ -999,13 +999,13 @@
         <ComplexType Name="UpdateComment_Article_Result">
           <Property Type="Int32" Name="userID" Nullable="false" />
           <Property Type="Int32" Name="articleID" Nullable="false" />
-          <Property Type="DateTime" Name="creationDate" Nullable="false" />
+          <Property Type="DateTime" Name="creationDate" Nullable="false" Precision="23" />
           <Property Type="String" Name="commentContent" Nullable="false" MaxLength="Max" />
         </ComplexType>
         <ComplexType Name="UpdateResources_Result">
           <Property Type="String" Name="title" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="description" Nullable="false" MaxLength="Max" />
-          <Property Type="String" Name="path" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="path" Nullable="false" MaxLength="255" />
           <Property Type="Int32" Name="languageID" Nullable="false" />
         </ComplexType>
         <ComplexType Name="UpdateTranslation_Result">
