@@ -161,6 +161,7 @@
     <Compile Include="BusinessManagement\Translation.cs" />
     <Compile Include="BusinessManagement\User.cs" />
     <Compile Include="Controllers\AuthentificationController.cs" />
+    <Compile Include="Controllers\BackOfficeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="DataAccess\Article.cs" />
     <Compile Include="DataAccess\ArticleLike.cs" />
@@ -340,6 +341,7 @@
     <Content Include="Views\Authentification\Login.cshtml" />
     <Content Include="Views\Authentification\Register.cshtml" />
     <Content Include="Views\Authentification\Deconnect.cshtml" />
+    <Content Include="Views\BackOffice\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
