@@ -9,21 +9,21 @@ namespace Mambo.DataAccess
 {
     public class Article
     {
-        public bool Create(DBO.Article obj)
+        public int Create(DBO.Article obj)
         {
             try
             {
                 using (dbNetEntities bdd = new dbNetEntities())
                 {
-                    long resultArticle = bdd.CreateArticle(obj.AdminId, obj.CreationDate, obj.Status, obj.NbViews).FirstOrDefault().Value;
-                    return resultArticle > 0;
+                    int resultArticle = bdd.CreateArticle(obj.AdminId, obj.CreationDate, obj.Status, obj.NbViews).FirstOrDefault().Value;
+                    return resultArticle;
                 }
             }
             catch (Exception exception)
             {
                 Debug.WriteLine("Article Exception");
                 Debug.WriteLine(exception.ToString());
-                return false;
+                return 0;
             }
         }
 
@@ -66,6 +66,38 @@ namespace Mambo.DataAccess
                     }
                     article.ResourcesList = resourcesList;
                     return article;
+                }
+            }
+            catch (Exception exception)
+            {
+                Debug.WriteLine("Article Exception");
+                Debug.WriteLine(exception.ToString());
+                return null;
+            }
+        }
+
+        public List<DBO.Article> GetArticlesNotValidated()
+        {
+            try
+            {
+                using (dbNetEntities bdd = new dbNetEntities())
+                {
+                    List<T_ARTICLE> tListArticles = bdd.T_ARTICLE.Where(x => x.status != "VALIDATED").ToList(); 
+                    if (tListArticles == null)
+                        return null;
+                    List<DBO.Article> listArticle = new List<DBO.Article>();
+                    foreach (T_ARTICLE tArticle in tListArticles)
+                    {
+                        List<T_RESOURCES> tListResources = tArticle.T_RESOURCES.ToList();
+                        List<DBO.Resources> resourcesList = new List<DBO.Resources>();
+                        foreach (T_RESOURCES item in tListResources)
+                        {
+                            DBO.Resources resources = new DBO.Resources(item.id, item.languageID, item.title, item.description, item.path);
+                            resourcesList.Add(resources);
+                        }
+                        listArticle.Add(new DBO.Article(tArticle.id, tArticle.adminID, resourcesList, tArticle.creationDate, tArticle.status, tArticle.nbViews));
+                    }
+                    return listArticle;
                 }
             }
             catch (Exception exception)

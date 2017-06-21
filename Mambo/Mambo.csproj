@@ -273,6 +273,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ArticleCreationModel.cs" />
     <Compile Include="Models\ArticleDetailModel.cs" />
     <Compile Include="Models\ArticleViewModel.cs" />
     <Compile Include="Models\Login.cs" />
@@ -341,6 +342,10 @@
     <Content Include="Views\Authentification\Login.cshtml" />
     <Content Include="Views\Authentification\Register.cshtml" />
     <Content Include="Views\Authentification\Deconnect.cshtml" />
+    <Content Include="Views\BackOffice\Create.cshtml" />
+    <Content Include="Views\BackOffice\Delete.cshtml" />
+    <Content Include="Views\BackOffice\Details.cshtml" />
+    <Content Include="Views\BackOffice\Edit.cshtml" />
     <Content Include="Views\BackOffice\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

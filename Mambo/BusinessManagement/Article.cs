@@ -14,7 +14,7 @@ namespace Mambo.BusinessManagement
             articleAccess = new DataAccess.Article();
         }
 
-        public bool Create(DBO.Article obj)
+        public int Create(DBO.Article obj)
         {
             return articleAccess.Create(obj);
         }
@@ -27,6 +27,11 @@ namespace Mambo.BusinessManagement
         public DBO.Article Get(int key)
         {
             return articleAccess.Get(key);
+        }
+
+        public List<DBO.Article> GetArticlesNotValidated()
+        {
+            return articleAccess.GetArticlesNotValidated();
         }
 
         public List<DBO.Article> GetAll()

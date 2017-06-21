@@ -64,6 +64,24 @@ namespace Mambo.DataAccess
             }
         }
 
+        public DBO.Language GetLanguageByName(string name)
+        {
+            try
+            {
+                using (dbNetEntities bdd = new dbNetEntities())
+                {
+                    T_LANGUAGE tLanguage = bdd.T_LANGUAGE.Where(x => x.language == name).FirstOrDefault();
+                    return new DBO.Language(tLanguage.id, tLanguage.language);
+                }
+            }
+            catch (Exception exception)
+            {
+                Debug.WriteLine("Language Exception");
+                Debug.WriteLine(exception.ToString());
+                return null;
+            }
+        }
+
         public List<DBO.Language> GetAll()
         {
             try

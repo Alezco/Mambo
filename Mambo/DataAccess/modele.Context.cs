@@ -595,5 +595,7 @@ namespace Mambo.DataAccess
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UpdateUser_Result>("UpdateUser", idParameter, pseudoParameter, emailParameter, passwordParameter, roleIDParameter);
         }
+
+        public System.Data.Entity.DbSet<Mambo.DBO.Article> Articles { get; set; }
     }
 }

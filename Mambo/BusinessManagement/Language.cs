@@ -30,6 +30,11 @@ namespace Mambo.BusinessManagement
             return languageAccess.Get(key);
         }
 
+        public DBO.Language GetLanguageByName(string name)
+        {
+            return languageAccess.GetLanguageByName(name);
+        }
+
         public List<DBO.Language> GetAll()
         {
             return languageAccess.GetAll();
