@@ -1,4 +1,6 @@
-﻿@model IEnumerable<Mambo.DBO.Article>
+﻿@using Mambo.Models
+@model IEnumerable<Mambo.DBO.Article>
+
 
 @{
     ViewBag.Title = "Index";
@@ -15,41 +17,31 @@
 </p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.AdminId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreationDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NbViews)
-        </th>
-        <th></th>
+        <th>Id</th>
+        <th>Date</th>
+        <th>Status</th>
     </tr>
 
-@foreach (var item in Model) {
+   @foreach (var article in Model)
+   {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.AdminId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreationDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NbViews)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
+        <td>@article.Id</td>
+        <td>@article.CreationDate</td>
+        <td>@article.Status</td>
+        @if (@HttpContext.Current.User.IsInRole("ADMIN"))
+        {
+            <td>
+                @Html.ActionLink("Lire", "Details", new { id = @article.Id })
+            </td>
+        }
+        else
+        {
+            <td>
+                @Html.ActionLink("Traduire", "Details", new { id = @article.Id })
+            </td>
+        }
+
     </tr>
-}
+   }
 
 </table>
