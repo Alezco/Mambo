@@ -16,6 +16,7 @@ namespace Mambo.Controllers
         private dbNetEntities db = new dbNetEntities();
 
         // GET: BackOffice
+        [Authorize(Roles = "ADMIN")]
         public ActionResult Index()
         {
             BusinessManagement.Article articleManagement = new BusinessManagement.Article();
@@ -23,6 +24,7 @@ namespace Mambo.Controllers
         }
 
         // GET: BackOffice/Details/5
+        [Authorize(Roles = "ADMIN")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -38,6 +40,7 @@ namespace Mambo.Controllers
         }
 
         // GET: BackOffice/Create
+        [Authorize(Roles = "ADMIN")]
         public ActionResult Create()
         {
             return View();
@@ -74,6 +77,7 @@ namespace Mambo.Controllers
         }
 
         // GET: BackOffice/Edit/5
+        [Authorize(Roles = "ADMIN")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -105,6 +109,7 @@ namespace Mambo.Controllers
         }
 
         // GET: BackOffice/Delete/5
+        [Authorize(Roles = "ADMIN")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
