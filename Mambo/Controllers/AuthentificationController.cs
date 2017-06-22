@@ -47,7 +47,7 @@ namespace Mambo.Controllers
                     return View(model);
                 }
                 BusinessManagement.User bUser = new BusinessManagement.User();
-                DBO.User u = new DBO.User(1, model.UserName, model.Email, BusinessManagement.Security.GenerateHash(model.Password));
+                DBO.User u = new DBO.User(3, model.UserName, model.Email, BusinessManagement.Security.GenerateHash(model.Password));
                 var success = bUser.Create(u);
                 if (success)
                 {
