@@ -15,6 +15,7 @@
 
 <table class="table">
     <tr>
+        <th></th>
         <th>Titre</th>
         <th>Date</th>
         <th>Contenu</th> 
@@ -28,6 +29,23 @@
             if (article.Id == translation.ArticleId && translation.LanguageId == 1)
             {
                 <tr>
+                    <td>
+                        @if (article.ResourcesList.Count == 0)
+                        {
+                            <img src="http://www.euneighbours.eu/sites/default/files/2017-01/placeholder.png" width="50px" height="50px" />
+                        }
+                        @if (article.ResourcesList.Count != 0)
+                        {
+                            foreach (var resource in article.ResourcesList)
+                            {
+                                if (resource.Path.EndsWith("png") || resource.Path.EndsWith("jpg"))
+                                {
+                                    <img src="@resource.Path" width="50px" height="50px" />
+                                    break;
+                                }
+                            }
+                        }
+                    </td>
                     <td>@Html.ActionLink(translation.TranslationArticleTitle, "ArticleDetails", new { id = @article.Id })</td>
                     <td>@article.CreationDate</td>
                     <td>@translation.TranslationArticleContent</td>
