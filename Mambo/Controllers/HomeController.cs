@@ -118,5 +118,12 @@ namespace Mambo.Controllers
 
             return View();
         }
+
+
+        public ActionResult LikeAction()
+        {
+
+            return View();
+        }
     }
 }
