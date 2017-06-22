@@ -15,54 +15,58 @@
     </p>
     <hr />
 
-    <h4>Médias (@Model.Article.ResourcesList.Count)</h4>
-    @foreach (var media in Model.Article.ResourcesList)
-    {
-        <dl class="dl-horizontal">
-            <dt>
-                @media.Title
-            </dt>
-            <dd>
-                @media.Description
-            </dd>
-            <dd>
-                @media.Path
-            </dd>
-        </dl>
-    }
-    <hr />
+    <div class="row">
+        <h4>Médias (@Model.Article.ResourcesList.Count)</h4>
+        @foreach (var media in Model.Article.ResourcesList)
+        {
+            <div class="col-sm-6">
+                <div class="card" style="width: 20rem;">
+                    <img class="card-img-top" style="width: 300px;" src="@Url.Content(@media.Path)" alt="@media.Title">
+                    <div class="card-block">
+                        <h4 class="card-title">@media.Title</h4>
+                        <p class="card-text">@media.Description</p>
+                        <a target="_blank" href="@media.Path" class="btn btn-primary">SEE THE RESSOURCES</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+        <hr />
+        <div class="row">
+            <h4>Commentaires (@Model.Comments.Count)</h4>
+            @foreach (var comment in Model.Comments)
+            {
+                <dl class="dl-horizontal">
+                    <dt>
+                        @comment.Username
+                    </dt>
+                    <dd>
+                        @comment.Comment
+                    </dd>
+                    <dd style="font-size:75%">
+                        @comment.Date
+                    </dd>
+                </dl>
+            }
+            <hr />
+        </div>
 
-    <h4>Commentaires (@Model.Comments.Count)</h4>
-    @foreach (var comment in Model.Comments)
-    {
-        <dl class="dl-horizontal">
-            <dt>
-                @comment.Username
-            </dt>
-            <dd>
-                @comment.Comment
-            </dd>
-            <dd style="font-size:75%">
-                @comment.Date
-            </dd>
-        </dl>
-    }
-    <hr />
+        <h2>Commenter cet article</h2>
+        @Html.ValidationSummary(true)
+        <br />
+        @using (Html.BeginForm("ArticleDetails", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+            {
+            @Html.TextAreaFor(m => m.UserComment.Text)
+            @Html.HiddenFor(m => m.Article.Id)
+            @Html.ValidationMessageFor(m => m.UserComment.Text)
+            <br /> <br />
+            <input type="submit" value="Publier" />
+        }
+        <hr />
 
-    <h2>Commenter cet article</h2>
-    @Html.ValidationSummary(true)
-    <br />
-    @using (Html.BeginForm("ArticleDetails", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
-    {
-        @Html.TextAreaFor(m => m.UserComment.Text)
-        @Html.HiddenFor(m => m.Article.Id)
-        @Html.ValidationMessageFor(m => m.UserComment.Text)
-        <br /> <br />
-        <input type="submit"  value="Publier" />
-    }
-    <hr />
+    </div>
 
-</div>
+
 
 <p>
     @Html.ActionLink("Retour", "Index")
