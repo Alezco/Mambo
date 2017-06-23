@@ -17,6 +17,7 @@
 </p>
 <table class="table">
     <tr>
+        <th></th>
         <th>Id</th>
         <th>Date</th>
         <th>Status</th>
@@ -25,6 +26,23 @@
    @foreach (var article in Model)
    {
     <tr>
+        <td>
+            @if (article.ResourcesList.Count == 0)
+            {
+                <img src="http://www.euneighbours.eu/sites/default/files/2017-01/placeholder.png" width="50px" height="50px" />
+            }
+            @if (article.ResourcesList.Count != 0)
+            {
+                foreach (var resource in article.ResourcesList)
+                {
+                    if (resource.Path.EndsWith("png") || resource.Path.EndsWith("jpg"))
+                    {
+                        <img src="@resource.Path" width="50px" height="50px" />
+                        break;
+                    }
+                }
+            }
+        </td>
         <td>@article.Id</td>
         <td>@article.CreationDate</td>
         <td>@article.Status</td>
