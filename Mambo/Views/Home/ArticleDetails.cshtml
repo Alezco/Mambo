@@ -12,62 +12,67 @@
     <p class="text-center">
         @Model.Translations.FirstOrDefault().TranslationArticleContent
     </p>
-   @if (Model.IsFavorite == false)
-   {
-        <div class="text-center">
-            <button onclick="location.href='@Url.Action("LikeAction", "Home", new { modelID = Model.Article.Id }, null)'" type="submit" name="submitbutton1" class="btn btn-default btn-sm">
-            <span class="glyphicon glyphicon-star">
-            </span>
-            Favorite  @Model.NbLikes
-            </button>
-        </div>
-   }
-   else
-   {
     <div class="text-center">
-        <button class="btn btn-default btn-sm">
-            <span class="glyphicon glyphicon-star" style="color: yellow">
-            </span>
-            Favorite  @Model.NbLikes
-        </button>
-    </div>
-   }
-    <hr />
-
-    <div class="row">
-        <h4 class="text-center">@Model.Translations.FirstOrDefault().TranslationArticleTitle have @Model.Article.ResourcesList.Count médias</h4>
-        @foreach (var media in Model.Article.ResourcesList)
+        @if (Model.IsFavorite == false)
         {
-            <div class="col-sm-3">
-                <div class="card">
-                    @if (@media.Path.EndsWith("png") || @media.Path.EndsWith("jpg"))
-                    {
-                        <img class="card-img-top img-responsive" style="width: 300px;" src="@Url.Content(@media.Path)" alt="@media.Title">
-                    }
-                    else if (@media.Path.EndsWith("pdf"))
-                    {
-                        <img class="card-img-top img-responsive" style="width: 300px;" src="https://raw.githubusercontent.com/Alezco/Mambo/master/Ressources/pdf_placeholder.png" alt="@media.Title">
-                    }
-                    else if (@media.Path.EndsWith("docx"))
-                    {
-                        <img class="card-img-top img-responsive" style="width: 300px;" src="https://raw.githubusercontent.com/Alezco/Mambo/master/Ressources/word_placeholder.png" alt="@media.Title">
-                    }
-                    else
-                    {
-                        <img class="card-img-top img-responsive" style="width: 300px;" src="https://raw.githubusercontent.com/Alezco/Mambo/master/Ressources/file_placeholder.png" alt="@media.Title">
-                    }
-                    <div class="card-block">
-                        <h4 class="card-title">@media.Title</h4>
-                        <p class="card-text">@media.Description</p>
-                        <a target="_blank" href="@media.Path" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span></a>
-                    </div>
-                </div>
+            <div class="text-center buttonLine">
+                <button onclick="location.href='@Url.Action("LikeAction", "Home", new { modelID = Model.Article.Id }, null)'" type="submit" name="submitbutton1" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-star">
+                    </span>
+                    Favorite  @Model.NbLikes
+                </button>
             </div>
         }
+        else
+        {
+            <div class="text-center buttonLine">
+                <button class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-star" style="color: yellow">
+                    </span>
+                    Favorite  @Model.NbLikes
+                </button>
+            </div>
+        }
+        <div class="text-center buttonLine">
+            <button class="btn btn-default btn-sm"><span style="padding-right: 30px;" class="glyphicon glyphicon-globe"></span>@Model.NbViews views</button>
+        </div>
     </div>
+    <hr />
+
+        <div class="row">
+            <h4 class="text-center">@Model.Translations.FirstOrDefault().TranslationArticleTitle have @Model.Article.ResourcesList.Count médias</h4>
+            @foreach (var media in Model.Article.ResourcesList)
+            {
+                <div class="col-sm-3">
+                    <div class="card">
+                        @if (@media.Path.EndsWith("png") || @media.Path.EndsWith("jpg"))
+                        {
+                            <img class="card-img-top img-responsive" style="width: 300px;" src="@Url.Content(@media.Path)" alt="@media.Title">
+                        }
+                        else if (@media.Path.EndsWith("pdf"))
+                        {
+                            <img class="card-img-top img-responsive" style="width: 300px;" src="https://raw.githubusercontent.com/Alezco/Mambo/master/Ressources/pdf_placeholder.png" alt="@media.Title">
+                        }
+                        else if (@media.Path.EndsWith("docx"))
+                        {
+                            <img class="card-img-top img-responsive" style="width: 300px;" src="https://raw.githubusercontent.com/Alezco/Mambo/master/Ressources/word_placeholder.png" alt="@media.Title">
+                        }
+                        else
+                        {
+                            <img class="card-img-top img-responsive" style="width: 300px;" src="https://raw.githubusercontent.com/Alezco/Mambo/master/Ressources/file_placeholder.png" alt="@media.Title">
+                        }
+                        <div class="card-block">
+                            <h4 class="card-title">@media.Title</h4>
+                            <p class="card-text">@media.Description</p>
+                            <a target="_blank" href="@media.Path" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span></a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
         <hr />
         <div class="row">
-            <h4 class="text-center"><span  style="padding-right: 30px;" class="glyphicon glyphicon-comment"></span>Commentaires (@Model.Comments.Count)</h4>
+            <h4 class="text-center"><span style="padding-right: 30px;" class="glyphicon glyphicon-comment"></span>Commentaires (@Model.Comments.Count)</h4>
             @foreach (var comment in Model.Comments)
             {
                 <div class="row">
@@ -86,7 +91,7 @@
             <hr />
         </div>
 
-        <h4 class="text-center"><span  style="padding-right: 30px;" class="glyphicon glyphicon-pencil"></span>Commenter cet article</h4>
+        <h4 class="text-center"><span style="padding-right: 30px;" class="glyphicon glyphicon-pencil"></span>Commenter cet article</h4>
         @Html.ValidationSummary(true)
         <br />
         @using (Html.BeginForm("ArticleDetails", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))

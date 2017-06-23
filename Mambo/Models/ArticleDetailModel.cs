@@ -18,6 +18,8 @@ namespace Mambo.Models
 
         public int NbLikes { get; set; }
 
+        public int NbViews { get; set; }
+
         public UserComment UserComment { get; set; }
 
         public bool IsFavorite { get; set; }

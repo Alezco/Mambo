@@ -44,5 +44,10 @@ namespace Mambo.BusinessManagement
             return articleAccess.Update(obj, resources);
         }
 
+        public bool Update(DBO.Article obj)
+        {
+            return articleAccess.Update(obj);
+        }
+
     }
 }

@@ -81,6 +81,7 @@ namespace Mambo.Controllers
             // Nombre de likes lié à l'article
             BusinessManagement.ArticleLike likeManagement = new BusinessManagement.ArticleLike();
             int likes = likeManagement.CountLikesByArticleId(id.Value);
+            int views = article.NbViews;
             List<DBO.ArticleLike> lal = likeManagement.GetAll();
             DBO.User currentUser = userManagement.GetByEmail(HttpContext.User.Identity.Name);
             bool isLikedByCurrentUser = false;
@@ -100,13 +101,17 @@ namespace Mambo.Controllers
                 Translations = translations,
                 Comments = commentModelList,
                 NbLikes = likes,
-                IsFavorite = isLikedByCurrentUser
+                IsFavorite = isLikedByCurrentUser,
+                NbViews = views
             };
 
             if (myModel == null)
             {
                 return HttpNotFound();
             }
+
+            article.NbViews += 1;
+            articleManagement.Update(article);
             return View(myModel);
         }
 

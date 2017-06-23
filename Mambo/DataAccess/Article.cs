@@ -171,5 +171,23 @@ namespace Mambo.DataAccess
                 return false;
             }
         }
+
+        public bool Update(DBO.Article obj)
+        {
+            try
+            {
+                using (dbNetEntities bdd = new dbNetEntities())
+                {
+                    var req = bdd.UpdateArticle(obj.Id, obj.AdminId, obj.CreationDate, obj.Status, obj.NbViews).FirstOrDefault();
+                    return obj.isEqual(new DBO.Article(req.adminID, req.creationDate, req.status, req.nbViews));
+                }
+            }
+            catch (Exception exception)
+            {
+                Debug.WriteLine("Article Exception");
+                Debug.WriteLine(exception.ToString());
+                return false;
+            }
+        }
     }
 }
