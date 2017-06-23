@@ -31,9 +31,23 @@ namespace Mambo.Controllers
             if (!String.IsNullOrEmpty(searchString))
             {
                 myModel.Translations = myModel.Translations.Where(
-                    s => s.TranslationArticleTitle.Contains(searchString));
+                    x => x.TranslationArticleTitle.Contains(searchString) ||
+                    x.TranslationArticleContent.Contains(searchString));
+                List<DBO.Article> articleList = new List<DBO.Article>();
+                foreach (var item in articles)
+                {
+                    List<DBO.Resources> resourceList = item.ResourcesList;
+                    foreach (var resource in resourceList)
+                    {
+                        if (resource.Title.Contains(searchString) || resource.Description.Contains(searchString))
+                        {
+                            articleList.Add(item);
+                        }
+                    }
+                }
+                myModel.Articles = articleList;
             }
-
+            
             return View(myModel);
         }
         
