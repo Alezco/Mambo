@@ -25,7 +25,7 @@ namespace Mambo.Controllers
         }
 
         [Authorize(Roles = "ADMIN")]
-        public ActionResult Statistics()
+        public ActionResult Statistics(string sortOrder)
         {
             BusinessManagement.Article articleManagement = new BusinessManagement.Article();
             BusinessManagement.Translation translationManagement = new BusinessManagement.Translation();
@@ -50,9 +50,29 @@ namespace Mambo.Controllers
                 statModel.ArticleList.Add(articleStatModel);
             }
 
+            switch (sortOrder)
+            {
+                case "sortComment":
+                    statModel.ArticleList = statModel.ArticleList.OrderByDescending(x => x.NbComments).ToList();
+                    break;
+                case "sortLike":
+                    statModel.ArticleList = statModel.ArticleList.OrderByDescending(x => x.NbLikes).ToList();
+                    break;
+                case "sortView":
+                    statModel.ArticleList = statModel.ArticleList.OrderByDescending(x => x.Article.NbViews).ToList();
+                    break;
+                case "sortDate":
+                    statModel.ArticleList = statModel.ArticleList.OrderByDescending(x => x.Article.CreationDate).ToList();
+                    break;
+                default:
+                    statModel.ArticleList = statModel.ArticleList.OrderBy(x => x.Article.Id).ToList();
+                    break;
+            }
             return View(statModel);
         }
-        
+
+        // Date
+
         // GET: BackOffice/Details/5
         [Authorize(Roles = "ADMIN, TRADUCTEUR")]
         public ActionResult Details(int? id)
@@ -93,7 +113,7 @@ namespace Mambo.Controllers
                 int articleId = articleManagement.Create(article);
 
                 // Création de la traduction
-                int languageId = (int) newArticle.Language;
+                int languageId = (int)newArticle.Language;
                 BusinessManagement.Language languageManagement = new BusinessManagement.Language();
                 BusinessManagement.Translation translationManagmeent = new BusinessManagement.Translation();
                 DBO.Translation translation = new DBO.Translation(articleId, currentUser.Id, languageId, newArticle.Title, newArticle.Text);
@@ -121,7 +141,7 @@ namespace Mambo.Controllers
             List<DBO.Resources> resources = resourceManagement.GetAll();
             List<SelectListItem> items = new List<SelectListItem>();
 
-            for(int i = 0; i < resources.Count; i++)
+            for (int i = 0; i < resources.Count; i++)
             {
                 items.Add(new SelectListItem { Text = resources.ElementAt(i).Title, Value = i.ToString() });
             }
