@@ -13,7 +13,7 @@
 <h2>Back Office</h2>
 
 <p>
-    @Html.ActionLink("Créer un article", "Create")
+    @Html.ActionLink("Create an article", "Create")
 </p>
 <table class="table">
     <tr>
@@ -31,13 +31,13 @@
         @if (@HttpContext.Current.User.IsInRole("ADMIN"))
         {
             <td>
-                @Html.ActionLink("Lire", "Details", new { id = @article.Id })
+                @Html.ActionLink("Read", "Details", new { id = @article.Id })
             </td>
         }
         else
         {
             <td>
-                @Html.ActionLink("Traduire", "Details", new { id = @article.Id })
+                @Html.ActionLink("Translate", "Details", new { id = @article.Id })
             </td>
         }
 
