@@ -9,21 +9,35 @@
 <br />
 @using (Html.BeginForm(null, null, new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
 {
-    @Html.LabelFor(m => m.UserName)
-    @Html.TextBoxFor(m => m.UserName)
-    @Html.ValidationMessageFor(m => m.UserName)
-    <br />
-    @Html.LabelFor(m => m.Email)
-    @Html.TextBoxFor(m => m.Email)
-    @Html.ValidationMessageFor(m => m.Email)
-    <br />
-    @Html.LabelFor(m => m.Password)
-    @Html.PasswordFor(m => m.Password)
-    @Html.ValidationMessageFor(m => m.Password)
-    <br />
-    @Html.LabelFor(m => m.PasswordConfirm)
-    @Html.PasswordFor(m => m.PasswordConfirm)
-    @Html.ValidationMessageFor(m => m.PasswordConfirm)
-    <br />
-    <input type="submit" value="Register" />
+    <form>
+        <div class="input-group">
+            <label>@Html.LabelFor(m => m.UserName)</label>
+            <br />
+            @Html.TextBoxFor(m => m.UserName)
+            <br />
+            @Html.ValidationMessageFor(m => m.UserName)
+        </div>
+        <div class="input-group">
+            <label>@Html.LabelFor(m => m.Email)</label>
+            <br />
+            @Html.TextBoxFor(m => m.Email)
+            <br />
+            @Html.ValidationMessageFor(m => m.Email)
+        </div>
+        <div class="input-group">
+            <label>@Html.LabelFor(m => m.Password)</label>
+            <br />
+            @Html.PasswordFor(m => m.Password)
+            <br />
+            @Html.ValidationMessageFor(m => m.Password)
+        </div>
+        <div class="input-group">
+            <label>@Html.LabelFor(m => m.PasswordConfirm)</label>
+            <br />
+            @Html.PasswordFor(m => m.PasswordConfirm)
+            <br />
+            @Html.ValidationMessageFor(m => m.PasswordConfirm)
+        </div>
+        <input type="submit" class="btn btn-primary" value="Register" />
+</form>
 }

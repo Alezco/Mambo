@@ -9,18 +9,27 @@
 <br />
 @using (Html.BeginForm(null, null, new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
 {
-    @Html.LabelFor(m => m.Email)
-    @Html.TextBoxFor(m => m.Email)
-    @Html.ValidationMessageFor(m => m.Email)
-    <br />
-    @Html.LabelFor(m => m.Password)
-    @Html.PasswordFor(m => m.Password)
-    @Html.ValidationMessageFor(m => m.Password)
-    <br />
-    <label>
-        @Html.CheckBoxFor(m => m.RememberMe)
-        @Html.LabelFor(m => m.RememberMe)
-    </label>
-    <br />
-    <input type="submit" value="Log in" />
+    <form>
+        <div class="form-group">
+            <label>@Html.LabelFor(m => m.Email)</label>
+            <br />
+            @Html.TextBoxFor(m => m.Email)
+            <br />
+            @Html.ValidationMessageFor(m => m.Email)
+        </div>
+        <div class="form-group">
+            <label>@Html.LabelFor(m => m.Password)</label>
+            <br />
+            @Html.PasswordFor(m => m.Password)
+            <br />
+            @Html.ValidationMessageFor(m => m.Password)
+</div>
+        <div class="form-group">
+            <label>
+                @Html.CheckBoxFor(m => m.RememberMe)
+                @Html.LabelFor(m => m.RememberMe)
+            </label>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Log in" />
+</form>
 }
