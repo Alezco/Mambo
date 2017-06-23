@@ -348,6 +348,7 @@
     <Content Include="Views\BackOffice\Details.cshtml" />
     <Content Include="Views\BackOffice\Edit.cshtml" />
     <Content Include="Views\BackOffice\Index.cshtml" />
+    <Content Include="Views\BackOffice\Statistics.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -10,11 +10,17 @@
     <h1>Mambo</h1>
 </div>
 
-<h2>Back Office</h2>
+<h1>Back Office</h1>
 
-<p>
-    @Html.ActionLink("Create an article", "Create")
-</p>
+<h3>@Html.ActionLink("Create an article", "Create")</h3>
+@if (@HttpContext.Current.User.IsInRole("ADMIN"))
+{
+    <h3>@Html.ActionLink("View articles statistics", "Statistics")</h3>
+}
+
+
+<h2>Pending articles</h2>
+
 <table class="table">
     <tr>
         <th></th>
