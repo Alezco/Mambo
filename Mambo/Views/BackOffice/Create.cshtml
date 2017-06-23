@@ -41,6 +41,22 @@
             </div>
         </div>
 
+        <hr />
+
+        <h4>Ajouter une ressource</h4>
+
+        @Html.ValidationSummary(true)
+        <br />
+        @using (Html.BeginForm("ArticleDetails", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+        {
+            @Html.Label("Titre")
+            @Html.TextBoxFor(m => m.Medias.First().Title)
+            <br /> <br />
+            <input type="submit" value="Ajouter" />
+        }
+
+        <hr />
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Créer" class="btn btn-default" />
