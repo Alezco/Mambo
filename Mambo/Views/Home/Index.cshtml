@@ -11,6 +11,13 @@
     <h1>Mambo</h1>
 </div>
 
+<form asp-controller="Movies" asp-action="Index">
+    <p>
+        Search: <input type="text" name="SearchString">
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
 <h2>Last articles</h2>
 
 <table class="table">
