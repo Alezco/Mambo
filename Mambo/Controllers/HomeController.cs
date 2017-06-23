@@ -31,8 +31,14 @@ namespace Mambo.Controllers
             return View(myModel);
         }
 
+
+        
         public ActionResult ArticleDetails(ArticleDetailModel model, int? id)
         {
+            if (model == null)
+            {
+                return RedirectToAction("Index");
+            }
             if (model.UserComment != null)
             {
                 AddComment(model);
@@ -71,13 +77,26 @@ namespace Mambo.Controllers
             // Nombre de likes lié à l'article
             BusinessManagement.ArticleLike likeManagement = new BusinessManagement.ArticleLike();
             int likes = likeManagement.CountLikesByArticleId(id.Value);
+            List<DBO.ArticleLike> lal = likeManagement.GetAll();
+            DBO.User currentUser = userManagement.GetByEmail(HttpContext.User.Identity.Name);
+            bool isLikedByCurrentUser = false;
+            foreach (var elt in lal)
+            {
+                if (elt.UserId == currentUser.Id && elt.ArticleId == id.Value)
+                {
+                    isLikedByCurrentUser = true;
+                    break;
+                }
+            }
+
 
             ArticleDetailModel myModel = new ArticleDetailModel()
             {
                 Article = article,
                 Translations = translations,
                 Comments = commentModelList,
-                NbLikes = likes
+                NbLikes = likes,
+                IsFavorite = isLikedByCurrentUser
             };
 
             if (myModel == null)
@@ -120,10 +139,17 @@ namespace Mambo.Controllers
         }
 
 
-        public ActionResult LikeAction()
+        public ActionResult LikeAction(int modelID)
         {
-
-            return View();
+            if (ModelState.IsValid)
+            {
+                BusinessManagement.ArticleLike bAl = new BusinessManagement.ArticleLike();
+                BusinessManagement.User userManagement = new BusinessManagement.User();
+                DBO.User currentUser = userManagement.GetByEmail(HttpContext.User.Identity.Name);
+                DBO.ArticleLike al = new DBO.ArticleLike(currentUser.Id, modelID);
+                bAl.Create(al);
+            }
+            return RedirectToAction("ArticleDetails", new { id = modelID });
         }
     }
 }
