@@ -19,14 +19,18 @@
                 <button onclick="location.href='@Url.Action("LikeAction", "Home", new { modelID = Model.Article.Id }, null)'" type="submit" name="submitbutton1" class="btn btn-default btn-sm">
                     <span class="glyphicon glyphicon-star">
                     </span>
-                    Favorite  @Model.NbLikes
+                    Favorite
+                    @if (Model.NbLikes != -1)
+                    {
+                        @Model.NbLikes
+                    }
                 </button>
             </div>
         }
         else
         {
             <div class="text-center buttonLine">
-                <button class="btn btn-default btn-sm">
+                <button onclick="location.href='@Url.Action("LikeAction", "Home", new { modelID = Model.Article.Id }, null)'" type="submit" name="submitbutton1" class="btn btn-default btn-sm">
                     <span class="glyphicon glyphicon-star" style="color: yellow">
                     </span>
                     Favorite  @Model.NbLikes
@@ -71,36 +75,44 @@
             }
         </div>
         <hr />
-        <div class="row">
-            <h4 class="text-center"><span style="padding-right: 30px;" class="glyphicon glyphicon-comment"></span>Commentaires (@Model.Comments.Count)</h4>
-            @foreach (var comment in Model.Comments)
-            {
-                <div class="row">
-                    <div class="col-sm-5">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <strong>@comment.Username</strong> <span class="text-muted">@comment.Date</span>
-                            </div>
-                            <div class="panel-body">
-                                @comment.Comment
+        @if (@HttpContext.Current.User.Identity.IsAuthenticated)
+        {
+            <div class="row">
+                <h4 class="text-center"><span style="padding-right: 30px;" class="glyphicon glyphicon-comment"></span>Commentaires (@Model.Comments.Count)</h4>
+            
+                    @foreach (var comment in Model.Comments)
+                    {
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <strong>@comment.Username</strong> <span class="text-muted">@comment.Date</span>
+                                    </div>
+                                    <div class="panel-body">
+                                        @comment.Comment
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            }
-            <hr />
-        </div>
+                    }
+                <hr />
+            </div>
 
-        <h4 class="text-center"><span style="padding-right: 30px;" class="glyphicon glyphicon-pencil"></span>Commenter cet article</h4>
-        @Html.ValidationSummary(true)
-        <br />
-        @using (Html.BeginForm("ArticleDetails", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
-            {
-            @Html.TextAreaFor(m => m.UserComment.Text, new { @class = "form-control", rows = "3", style = "min-width: 100%" })
-            @Html.HiddenFor(m => m.Article.Id)
-            @Html.ValidationMessageFor(m => m.UserComment.Text)
-            <br /> <br />
-            <input type="submit" class="btn btn-primary" value="Publish" />
+            <h4 class="text-center"><span style="padding-right: 30px;" class="glyphicon glyphicon-pencil"></span>Commenter cet article</h4>
+            @Html.ValidationSummary(true)
+            <br />
+            using (Html.BeginForm("ArticleDetails", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+                {
+                @Html.TextAreaFor(m => m.UserComment.Text, new { @class = "form-control", rows = "3", style = "min-width: 100%" })
+                @Html.HiddenFor(m => m.Article.Id)
+                @Html.ValidationMessageFor(m => m.UserComment.Text)
+                <br /> <br />
+                <input type="submit" class="btn btn-primary" value="Publish" />
+            }
+        }
+        else
+        {
+            <p>You need to be connected to comment and to see the comments of this article</p>
         }
         <hr />
 

@@ -102,22 +102,7 @@ namespace Mambo.Controllers
                 };
                 commentModelList.Add(commentModel);
             }
-
-            // Nombre de likes lié à l'article
-            BusinessManagement.ArticleLike likeManagement = new BusinessManagement.ArticleLike();
-            int likes = likeManagement.CountLikesByArticleId(id.Value);
             int views = article.NbViews;
-            List<DBO.ArticleLike> lal = likeManagement.GetAll();
-            DBO.User currentUser = userManagement.GetByEmail(HttpContext.User.Identity.Name);
-            bool isLikedByCurrentUser = false;
-            foreach (var elt in lal)
-            {
-                if (elt.UserId == currentUser.Id && elt.ArticleId == id.Value)
-                {
-                    isLikedByCurrentUser = true;
-                    break;
-                }
-            }
 
 
             ArticleDetailModel myModel = new ArticleDetailModel()
@@ -125,10 +110,39 @@ namespace Mambo.Controllers
                 Article = article,
                 Translations = translations,
                 Comments = commentModelList,
-                NbLikes = likes,
-                IsFavorite = isLikedByCurrentUser,
+                NbLikes = -1,
+                IsFavorite = false,
                 NbViews = views
             };
+
+            // Nombre de likes lié à l'article
+            DBO.User currentUser = userManagement.GetByEmail(HttpContext.User.Identity.Name);
+            if (currentUser != null)
+            {
+                BusinessManagement.ArticleLike likeManagement = new BusinessManagement.ArticleLike();
+                int likes = likeManagement.CountLikesByArticleId(id.Value);
+                List<DBO.ArticleLike> lal = likeManagement.GetAll();
+
+                bool isLikedByCurrentUser = false;
+                foreach (var elt in lal)
+                {
+                    if (elt.UserId == currentUser.Id && elt.ArticleId == id.Value)
+                    {
+                        isLikedByCurrentUser = true;
+                        break;
+                    }
+                }
+
+                myModel = new ArticleDetailModel()
+                {
+                    Article = article,
+                    Translations = translations,
+                    Comments = commentModelList,
+                    NbLikes = likes,
+                    IsFavorite = isLikedByCurrentUser,
+                    NbViews = views
+                };
+            }
 
             if (myModel == null)
             {
@@ -154,6 +168,10 @@ namespace Mambo.Controllers
                 BusinessManagement.CommentArticle commentManagement = new BusinessManagement.CommentArticle();
                 commentManagement.Create(new DBO.CommentArticle(currentUser.Id, model.Article.Id, DateTime.Now, model.UserComment.Text));
                 ModelState.Clear();
+                BusinessManagement.Article ba = new BusinessManagement.Article();
+                DBO.Article tmp = ba.Get(model.Article.Id);
+                tmp.NbViews -= 1;
+                ba.Update(tmp);
             }
         }
 
@@ -204,14 +222,36 @@ namespace Mambo.Controllers
 
         public ActionResult LikeAction(int modelID)
         {
-            if (ModelState.IsValid)
+            BusinessManagement.User userManagement = new BusinessManagement.User();
+            DBO.User currentUser = userManagement.GetByEmail(HttpContext.User.Identity.Name);
+            if (ModelState.IsValid && currentUser != null)
             {
                 BusinessManagement.ArticleLike bAl = new BusinessManagement.ArticleLike();
-                BusinessManagement.User userManagement = new BusinessManagement.User();
-                DBO.User currentUser = userManagement.GetByEmail(HttpContext.User.Identity.Name);
+
                 DBO.ArticleLike al = new DBO.ArticleLike(currentUser.Id, modelID);
-                bAl.Create(al);
+                List<DBO.ArticleLike> als = bAl.GetAll();
+                int isLikedByCurrentUser = -1;
+                foreach (var elt in als)
+                {
+                    if (elt.UserId == currentUser.Id && elt.ArticleId == modelID)
+                    {
+                        isLikedByCurrentUser = elt.Id;
+                        break;
+                    }
+                }
+                if (isLikedByCurrentUser < 0)
+                {
+                    bAl.Create(al);
+                }
+                else
+                {
+                    bAl.Delete(isLikedByCurrentUser);
+                }
             }
+            BusinessManagement.Article ba = new BusinessManagement.Article();
+            DBO.Article tmp = ba.Get(modelID);
+            tmp.NbViews -= 1;
+            ba.Update(tmp);
             return RedirectToAction("ArticleDetails", new { id = modelID });
         }
     }
