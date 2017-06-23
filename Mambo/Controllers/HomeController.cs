@@ -1,11 +1,13 @@
 ﻿using Mambo.DataAccess;
 using Mambo.DBO;
 using Mambo.Models;
+using Mambo.RSS;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.ServiceModel.Syndication;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -168,6 +170,35 @@ namespace Mambo.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public ActionResult Rss()
+        {
+            BusinessManagement.Article bA = new BusinessManagement.Article();
+            BusinessManagement.Translation bT = new BusinessManagement.Translation();
+            List<DBO.Translation> listTransaction = bT.GetAll();
+            List<DBO.Translation> listArticlesInWaiting = new List<DBO.Translation>();
+            foreach (var elt in listTransaction)
+            {
+                DBO.Article a = bA.Get(elt.ArticleId);
+                if (a.Status == "WAITING_VALIDATION")
+                {
+                    listArticlesInWaiting.Add(elt);
+                }
+            }
+            var feed = new SyndicationFeed("Articles waiting for translation", "Mambo RSS Feed",
+                new Uri("https://raw.githubusercontent.com/Alezco/Mambo/master/Ressources/file_placeholder.png"),
+                Guid.NewGuid().ToString(), DateTime.Now);
+            var items = new List<SyndicationItem>();
+            foreach (DBO.Translation a in listTransaction)
+            {
+                DBO.Article elt = bA.Get(a.ArticleId);
+                var item =
+                    new SyndicationItem(a.TranslationArticleTitle, a.TranslationArticleContent, new Uri(elt.ResourcesList[0].Path));
+                items.Add(item);
+            }
+            feed.Items = items;
+            return new RSSActionResult { Feed = feed };
         }
 
 

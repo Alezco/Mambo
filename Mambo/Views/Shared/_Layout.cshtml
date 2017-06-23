@@ -31,6 +31,7 @@
                     @if (@HttpContext.Current.User.IsInRole("ADMIN") || @HttpContext.Current.User.IsInRole("TRADUCTEUR"))
                     {
                         <li>@Html.ActionLink("Back Office", "Index", "BackOffice")</li>
+                        <li>@Html.ActionLink("Rss Feed", "Rss", "Home")</li>
                     }
                     @if (@HttpContext.Current.User.Identity.IsAuthenticated)
                     {
