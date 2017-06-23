@@ -132,5 +132,23 @@ namespace Mambo.DataAccess
                 return false;
             }
         }
+
+        public int CountCommentsByArticleId(int key)
+        {
+            try
+            {
+                using (dbNetEntities bdd = new dbNetEntities())
+                {
+                    List<T_COMMENT_ARTICLE> tListComments = bdd.T_COMMENT_ARTICLE.Where(x => x.articleID == key).ToList();
+                    return tListComments.Count;
+                }
+            }
+            catch (Exception exception)
+            {
+                Debug.WriteLine("CommentArticle Exception");
+                Debug.WriteLine(exception.ToString());
+                return 0;
+            }
+        }
     }
 }

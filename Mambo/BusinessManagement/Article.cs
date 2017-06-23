@@ -34,6 +34,11 @@ namespace Mambo.BusinessManagement
             return articleAccess.GetArticlesNotValidated();
         }
 
+        public List<DBO.Article> GetArticlesValidated()
+        {
+            return articleAccess.GetArticlesValidated();
+        }
+
         public List<DBO.Article> GetAll()
         {
             return articleAccess.GetAll();

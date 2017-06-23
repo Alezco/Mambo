@@ -276,10 +276,12 @@
     </Compile>
     <Compile Include="Models\ArticleCreationModel.cs" />
     <Compile Include="Models\ArticleDetailModel.cs" />
+    <Compile Include="Models\ArticleStatisticModel.cs" />
     <Compile Include="Models\ArticleViewModel.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Register.cs" />
     <Compile Include="Models\CommentModel.cs" />
+    <Compile Include="Models\StatisticModel.cs" />
     <Compile Include="Models\UserComment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

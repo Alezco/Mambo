@@ -1,7 +1,44 @@
-﻿
+﻿@using Mambo.Models
+
+@model Mambo.Models.StatisticModel
+
 @{
     ViewBag.Title = "Statistics";
 }
 
-<h2>Statistics</h2>
+<h1>Mambo Statistics</h1>
+
+<p>Number of articles : @Model.ArticleList.Count</p>
+
+<h2>Validated articles</h2>
+
+<table class="table">
+    <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Views Number</th>
+        <th>Comments number</th>
+        <th>Likes Numnber</th>
+    </tr>
+
+    @foreach (var article in Model.ArticleList)
+    {
+        // Langue à définir en fonction du choix de l'utilisateur
+        foreach (var translation in article.Translations)
+        {
+            if (translation.LanguageId == 1)
+            {
+                <tr>
+                    <td>@article.Article.Id</td>
+                    <td>@translation.TranslationArticleTitle</td>
+                    <td>@article.Article.NbViews</td>
+                    <td>@article.NbComments</td>
+                    <td>@article.NbLikes</td>
+                </tr>
+            }
+        }
+    }
+</table>
+
+
 

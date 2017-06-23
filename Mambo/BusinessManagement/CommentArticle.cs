@@ -44,5 +44,10 @@ namespace Mambo.BusinessManagement
         {
             return commentArticleAccess.Update(obj);
         }
+
+        public int CountCommentsByArticleId(int key)
+        {
+            return commentArticleAccess.CountCommentsByArticleId(key);
+        }
     }
 }
