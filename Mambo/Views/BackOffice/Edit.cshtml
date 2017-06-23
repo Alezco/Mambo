@@ -9,11 +9,12 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Article</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
         @Html.HiddenFor(model => model.Id)
 
         <div class="form-group">
@@ -47,6 +48,39 @@
                 @Html.ValidationMessageFor(model => model.NbViews, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        <table class="table">
+            @if (Model.ResourcesList.Count == 0)
+            {
+                @Html.Label("No resource found for this article", htmlAttributes: new { @class = "control-label col-md-4" , style= "color: #e30c37" });
+            }
+            else
+            {
+                foreach (var resource in Model.ResourcesList)
+                {
+                    <tr>
+                        <td>
+                            <label class="control-label col-md-3">Resource title : @resource.Title</label>
+                            @if (resource.Path.EndsWith("png") || resource.Path.EndsWith("jpg"))
+                            {
+                            <img src="@resource.Path" width="50px" height="50px" />
+                            break;
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+
+
+        </table>
+
+
+        @using (Html.BeginForm("Edit", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+        {
+            @Html.Label("Resources", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.DropDownList("ResourcesList")
+            <input type="submit" class="btn btn-default" value="Add" />
+        }
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

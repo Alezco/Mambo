@@ -84,7 +84,18 @@ namespace Mambo.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DBO.Article article = db.Articles.Find(id);
+            BusinessManagement.Article articleManagement = new BusinessManagement.Article();
+            DBO.Article article = articleManagement.Get(id.Value);
+
+            BusinessManagement.Resources resourceManagement = new BusinessManagement.Resources();
+            List<DBO.Resources> resources = resourceManagement.GetAll();
+            List<SelectListItem> items = new List<SelectListItem>();
+
+            for(int i = 0; i < resources.Count; i++)
+            {
+                items.Add(new SelectListItem { Text = resources.ElementAt(i).Title, Value = i.ToString() });
+            }
+            ViewBag.ResourcesList = items;
             if (article == null)
             {
                 return HttpNotFound();
@@ -101,8 +112,8 @@ namespace Mambo.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(article).State = EntityState.Modified;
-                db.SaveChanges();
+                BusinessManagement.Article articleManagement = new BusinessManagement.Article();
+                articleManagement.Update(article);
                 return RedirectToAction("Index");
             }
             return View(article);
