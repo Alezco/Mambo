@@ -23,7 +23,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -33,12 +33,12 @@
                     }
                     @if (@HttpContext.Current.User.Identity.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Deconnexion", "Deconnect", "Authentification")</li>
+                        <li>@Html.ActionLink("Log out", "Deconnect", "Authentification")</li>
                     }
                     else
                     {
-                        <li>@Html.ActionLink("Se connecter", "Login", "Authentification")</li>
-                        <li>@Html.ActionLink("S'inscrire", "Register", "Authentification")</li>
+                        <li>@Html.ActionLink("Log in", "Login", "Authentification")</li>
+                        <li>@Html.ActionLink("Register", "Register", "Authentification")</li>
                     }
                     
                 </ul>
@@ -50,7 +50,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Mambo</p>
         </footer>
     </div>
 

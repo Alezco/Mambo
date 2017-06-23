@@ -60,7 +60,7 @@
             @Html.HiddenFor(m => m.Article.Id)
             @Html.ValidationMessageFor(m => m.UserComment.Text)
             <br /> <br />
-            <input type="submit" value="Publier" />
+            <input type="submit" class="btn btn-primary" value="Publish" />
         }
         <hr />
 
@@ -69,5 +69,5 @@
 
 
 <p>
-    @Html.ActionLink("Retour", "Index")
+    @Html.ActionLink("Back", "Index")
 </p>
