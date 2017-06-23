@@ -3,6 +3,7 @@ using Mambo.DBO;
 using Mambo.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -30,22 +31,30 @@ namespace Mambo.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                myModel.Translations = myModel.Translations.Where(
-                    x => x.TranslationArticleTitle.Contains(searchString) ||
-                    x.TranslationArticleContent.Contains(searchString));
-                List<DBO.Article> articleList = new List<DBO.Article>();
-                foreach (var item in articles)
+                List<DBO.Translation> translationList = new List<DBO.Translation>();
+                foreach (var item in translations)
                 {
-                    List<DBO.Resources> resourceList = item.ResourcesList;
+                    if (item.TranslationArticleTitle.Contains(searchString) || item.TranslationArticleContent.Contains(searchString))
+                    {
+                        translationList.Add(item);
+                        continue;
+                    }
+                    DBO.Article article = articleManagement.Get(item.ArticleId);
+                    List<DBO.Resources> resourceList = article.ResourcesList;
                     foreach (var resource in resourceList)
                     {
                         if (resource.Title.Contains(searchString) || resource.Description.Contains(searchString))
                         {
-                            articleList.Add(item);
+                            translationList.Add(item);
                         }
                     }
                 }
-                myModel.Articles = articleList;
+
+                myModel = new ArticleViewModel()
+                {
+                    Articles = articles,
+                    Translations = translationList
+                };
             }
             
             return View(myModel);
