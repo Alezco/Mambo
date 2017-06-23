@@ -15,7 +15,7 @@ namespace Mambo.Controllers
     {
         private dbNetEntities db = new dbNetEntities();
 
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
             BusinessManagement.Article articleManagement = new BusinessManagement.Article();
             List<DBO.Article> articles = articleManagement.GetAll();
@@ -28,10 +28,14 @@ namespace Mambo.Controllers
                 Translations = translations
             };
 
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                myModel.Translations = myModel.Translations.Where(
+                    s => s.TranslationArticleTitle.Contains(searchString));
+            }
+
             return View(myModel);
         }
-
-
         
         public ActionResult ArticleDetails(ArticleDetailModel model, int? id)
         {

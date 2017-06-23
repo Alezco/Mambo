@@ -12,12 +12,16 @@
 </div>
 
 <form asp-controller="Movies" asp-action="Index">
-    <p>
-        Search: <input type="text" name="SearchString">
-        <input type="submit" value="Filter" />
-    </p>
+    <div class="col-sm-4">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search for..." name="SearchString">
+            <span class="input-group-btn">
+                <input type="submit" class="btn btn-primary" value="Search" />
+            </span>
+        </div>
+    </div>
 </form>
-
+<br /><br />
 <h2>Last articles</h2>
 
 <table class="table">
