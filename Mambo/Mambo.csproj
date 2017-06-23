@@ -286,6 +286,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="CustomRessources\Css\articlesDetail.css" />
     <Content Include="DataAccess\modele.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>modele.edmx</DependentUpon>
