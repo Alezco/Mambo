@@ -18,11 +18,15 @@ namespace Mambo.Controllers
     {
         private dbNetEntities db = new dbNetEntities();
 
+        private BusinessManagement.Article articleManagement = new BusinessManagement.Article();
+        private BusinessManagement.Translation translationManagement = new BusinessManagement.Translation();
+        private BusinessManagement.CommentArticle commentManagement = new BusinessManagement.CommentArticle();
+        private BusinessManagement.ArticleLike likeManagement = new BusinessManagement.ArticleLike();
+        private BusinessManagement.User userManagement = new BusinessManagement.User();
+
         public ActionResult Index(string searchString)
-        {
-            BusinessManagement.Article articleManagement = new BusinessManagement.Article();
+        {      
             List<DBO.Article> articles = articleManagement.GetAll();
-            BusinessManagement.Translation translationManagement = new BusinessManagement.Translation();
             List<DBO.Translation> translations = translationManagement.GetAll();
 
             ArticleViewModel myModel = new ArticleViewModel()
@@ -79,16 +83,12 @@ namespace Mambo.Controllers
             }
 
             // Article à afficher
-            BusinessManagement.Article articleManagement = new BusinessManagement.Article();
             DBO.Article article = articleManagement.Get(id.Value);
 
             // Traduction liées à l'article
-            BusinessManagement.Translation translationManagement = new BusinessManagement.Translation();
             List<DBO.Translation> translations = translationManagement.GetTranslationsByArticleId(id.Value);
 
             // Liste des commentaires liés à l'article
-            BusinessManagement.CommentArticle commentManagement = new BusinessManagement.CommentArticle();
-            BusinessManagement.User userManagement = new BusinessManagement.User();
             List<CommentModel> commentModelList = new List<CommentModel>();
             List<DBO.CommentArticle> comments = commentManagement.GetCommentsByArticleId(id.Value);
 
@@ -119,7 +119,6 @@ namespace Mambo.Controllers
             DBO.User currentUser = userManagement.GetByEmail(HttpContext.User.Identity.Name);
             if (currentUser != null)
             {
-                BusinessManagement.ArticleLike likeManagement = new BusinessManagement.ArticleLike();
                 int likes = likeManagement.CountLikesByArticleId(id.Value);
                 List<DBO.ArticleLike> lal = likeManagement.GetAll();
 
@@ -163,15 +162,12 @@ namespace Mambo.Controllers
                 {
                     ModelState.AddModelError("", "Le champ ne peut pas être vide");
                 }
-                BusinessManagement.User userManagement = new BusinessManagement.User();
                 DBO.User currentUser = userManagement.GetByEmail(HttpContext.User.Identity.Name);
-                BusinessManagement.CommentArticle commentManagement = new BusinessManagement.CommentArticle();
                 commentManagement.Create(new DBO.CommentArticle(currentUser.Id, model.Article.Id, DateTime.Now, model.UserComment.Text));
                 ModelState.Clear();
-                BusinessManagement.Article ba = new BusinessManagement.Article();
-                DBO.Article tmp = ba.Get(model.Article.Id);
+                DBO.Article tmp = articleManagement.Get(model.Article.Id);
                 tmp.NbViews -= 1;
-                ba.Update(tmp);
+                articleManagement.Update(tmp);
             }
         }
 
@@ -192,13 +188,11 @@ namespace Mambo.Controllers
 
         public ActionResult Rss()
         {
-            BusinessManagement.Article bA = new BusinessManagement.Article();
-            BusinessManagement.Translation bT = new BusinessManagement.Translation();
-            List<DBO.Translation> listTransaction = bT.GetAll();
+            List<DBO.Translation> listTransaction = translationManagement.GetAll();
             List<DBO.Translation> listArticlesInWaiting = new List<DBO.Translation>();
             foreach (var elt in listTransaction)
             {
-                DBO.Article a = bA.Get(elt.ArticleId);
+                DBO.Article a = articleManagement.Get(elt.ArticleId);
                 if (a.Status == "WAITING_VALIDATION")
                 {
                     listArticlesInWaiting.Add(elt);
@@ -210,7 +204,7 @@ namespace Mambo.Controllers
             var items = new List<SyndicationItem>();
             foreach (DBO.Translation a in listTransaction)
             {
-                DBO.Article elt = bA.Get(a.ArticleId);
+                DBO.Article elt = articleManagement.Get(a.ArticleId);
                 var item =
                     new SyndicationItem(a.TranslationArticleTitle, a.TranslationArticleContent, new Uri(elt.ResourcesList[0].Path));
                 items.Add(item);
@@ -219,17 +213,13 @@ namespace Mambo.Controllers
             return new RSSActionResult { Feed = feed };
         }
 
-
         public ActionResult LikeAction(int modelID)
         {
-            BusinessManagement.User userManagement = new BusinessManagement.User();
             DBO.User currentUser = userManagement.GetByEmail(HttpContext.User.Identity.Name);
             if (ModelState.IsValid && currentUser != null)
             {
-                BusinessManagement.ArticleLike bAl = new BusinessManagement.ArticleLike();
-
                 DBO.ArticleLike al = new DBO.ArticleLike(currentUser.Id, modelID);
-                List<DBO.ArticleLike> als = bAl.GetAll();
+                List<DBO.ArticleLike> als = likeManagement.GetAll();
                 int isLikedByCurrentUser = -1;
                 foreach (var elt in als)
                 {
@@ -240,18 +230,13 @@ namespace Mambo.Controllers
                     }
                 }
                 if (isLikedByCurrentUser < 0)
-                {
-                    bAl.Create(al);
-                }
+                    likeManagement.Create(al);
                 else
-                {
-                    bAl.Delete(isLikedByCurrentUser);
-                }
+                    likeManagement.Delete(isLikedByCurrentUser);
             }
-            BusinessManagement.Article ba = new BusinessManagement.Article();
-            DBO.Article tmp = ba.Get(modelID);
+            DBO.Article tmp = articleManagement.Get(modelID);
             tmp.NbViews -= 1;
-            ba.Update(tmp);
+            articleManagement.Update(tmp);
             return RedirectToAction("ArticleDetails", new { id = modelID });
         }
     }

@@ -16,22 +16,21 @@ namespace Mambo.Controllers
     {
         private dbNetEntities db = new dbNetEntities();
 
+        private BusinessManagement.Article articleManagement = new BusinessManagement.Article();
+        private BusinessManagement.Translation translationManagement = new BusinessManagement.Translation();
+        private BusinessManagement.CommentArticle commentManagement = new BusinessManagement.CommentArticle();
+        private BusinessManagement.ArticleLike articleLikeManagment = new BusinessManagement.ArticleLike();
+
         // GET: BackOffice
         [Authorize(Roles = "ADMIN, TRADUCTEUR")]
         public ActionResult Index()
         {
-            BusinessManagement.Article articleManagement = new BusinessManagement.Article();
             return View(articleManagement.GetArticlesNotValidated());
         }
 
         [Authorize(Roles = "ADMIN")]
         public ActionResult Statistics(string sortOrder)
         {
-            BusinessManagement.Article articleManagement = new BusinessManagement.Article();
-            BusinessManagement.Translation translationManagement = new BusinessManagement.Translation();
-            BusinessManagement.CommentArticle commentManagement = new BusinessManagement.CommentArticle();
-            BusinessManagement.ArticleLike articleLikeManagment = new BusinessManagement.ArticleLike();
-
             StatisticModel statModel = new StatisticModel();
             List<DBO.Article> articles = articleManagement.GetArticlesValidated();
 
@@ -70,8 +69,6 @@ namespace Mambo.Controllers
             }
             return View(statModel);
         }
-
-        // Date
 
         // GET: BackOffice/Details/5
         [Authorize(Roles = "ADMIN, TRADUCTEUR")]
