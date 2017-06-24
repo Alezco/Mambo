@@ -56,14 +56,23 @@
         {
             <td>
                 @Html.ActionLink("Read", "Details", new { id = @article.Id })
-                @Html.ActionLink("Edit", "Edit", new { id = @article.Id })
             </td>
         }
         else
         {
-            <td>
-                @Html.ActionLink("Translate", "Details", new { id = @article.Id })
-            </td>
+            if (article.Status == "WAITING_VALIDATION")
+            {
+                <td>
+                    @Html.ActionLink("Modify", "Translate", new { id = @article.Id })
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.ActionLink("Translate", "Translate", new { id = @article.Id })
+                </td>
+            }
+
         }
 
     </tr>

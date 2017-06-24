@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Mambo.DBO;
 using Mambo.DataAccess;
 using Mambo.Models;
+using System.Diagnostics;
 
 namespace Mambo.Controllers
 {
@@ -122,7 +123,7 @@ namespace Mambo.Controllers
         }
 
         // GET: BackOffice/Edit/5
-        [Authorize(Roles = "ADMIN, TRADUCTEUR")]
+        [Authorize(Roles = "ADMIN")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -159,6 +160,137 @@ namespace Mambo.Controllers
             }
             return View(article);
         }
+
+        // GET: BackOffice/Translate/5
+        [Authorize(Roles = "TRADUCTEUR")]
+        public ActionResult Translate(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            BusinessManagement.Article articleManagement = new BusinessManagement.Article();
+            DBO.Article article = articleManagement.Get(id.Value);
+
+            BusinessManagement.Translation translationManagement = new BusinessManagement.Translation();
+            List<DBO.Translation> translations = translationManagement.GetTranslationsByArticleId(id.Value);
+            BusinessManagement.Language languageManagement = new BusinessManagement.Language();
+            List<DBO.Language> languages = new List<DBO.Language>();
+            foreach (var item in translations)
+            {
+                DBO.Language language = languageManagement.Get(item.LanguageId);
+                language.Id = item.LanguageId;
+                languages.Add(language);
+            }
+
+            List<DBO.Language> allLanguages = languageManagement.GetAll();
+            foreach (var item in languages)
+            {
+                DBO.Language alreadyTranslated = allLanguages.Where(x => x.LanguageName == item.LanguageName).FirstOrDefault();
+                allLanguages.Remove(alreadyTranslated);
+            }
+
+            List<SelectListItem> items = new List<SelectListItem>();
+
+            for (int i = 0; i < allLanguages.Count; i++)
+            {
+                items.Add(new SelectListItem { Text = allLanguages.ElementAt(i).LanguageName, Value = allLanguages.ElementAt(i).Id.ToString() });
+            }
+
+            Models.ArticleTranslateModel articleTranslateModel = new Models.ArticleTranslateModel()
+            {
+                Article = article,
+                Translations = translations,
+                ExistingTranslatedLanguage = languages,
+                LanguageSelectList = items
+            };
+
+
+            if (article == null)
+            {
+                return HttpNotFound();
+            }
+            return View(articleTranslateModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Translate(Models.ArticleTranslateModel translateModel, string titleTranslatedString, string contentTranslatedString)
+        {
+            BusinessManagement.Language languageManagement = new BusinessManagement.Language();
+            BusinessManagement.Translation translationManagement = new BusinessManagement.Translation();
+            List<DBO.Language> allLanguages = languageManagement.GetAll();
+
+            BusinessManagement.Article articleManagement = new BusinessManagement.Article();
+            DBO.Article article = articleManagement.Get(translateModel.Article.Id);
+
+            List<DBO.Translation> translations = translationManagement.GetTranslationsByArticleId(translateModel.Article.Id);
+            List<DBO.Language> languages = new List<DBO.Language>();
+            foreach (var item in translations)
+            {
+                DBO.Language language = languageManagement.Get(item.LanguageId);
+                languages.Add(language);
+            }
+
+            
+            foreach (var item in languages)
+            {
+                allLanguages.Remove(item);
+            }
+
+            List<SelectListItem> items = new List<SelectListItem>();
+
+            for (int i = 0; i < allLanguages.Count; i++)
+            {
+                items.Add(new SelectListItem { Text = allLanguages.ElementAt(i).LanguageName, Value = i.ToString() });
+            }
+
+            Models.ArticleTranslateModel articleTranslateModel = new Models.ArticleTranslateModel()
+            {
+                Article = article,
+                Translations = translations,
+                ExistingTranslatedLanguage = languages,
+                LanguageSelectList = items
+            };
+
+            if (ModelState.IsValid)
+            {
+                int selectedLanguage = int.Parse(translateModel.SelectedLanguage);
+                if (titleTranslatedString != null && contentTranslatedString != null)
+                {
+                    if (titleTranslatedString.Trim() != "" && contentTranslatedString.Trim() != "")
+                    {
+                        DBO.Language curLang = allLanguages.Where(x => x.Id == selectedLanguage).FirstOrDefault();
+                        DBO.Translation curTranslate = articleTranslateModel.Translations.Where(x => x.LanguageId == curLang.Id).FirstOrDefault();
+                        
+                        string str = User.Identity.Name;
+                        BusinessManagement.User userManagement = new BusinessManagement.User();
+                        DBO.User curUser = userManagement.GetByEmail(str);
+                        
+                        if (curTranslate != null)
+                        {
+                            curTranslate.TranslationArticleContent = contentTranslatedString;
+                            curTranslate.TranslationArticleTitle = titleTranslatedString;
+                            curTranslate.TranslatorId = curUser.Id;
+                            translationManagement.Update(curTranslate);
+                        }
+                        else
+                        {
+                            curTranslate = new DBO.Translation();
+                            curTranslate.LanguageId = curLang.Id;
+                            curTranslate.ArticleId = articleTranslateModel.Article.Id;
+                            curTranslate.TranslationArticleContent = contentTranslatedString;
+                            curTranslate.TranslationArticleTitle = titleTranslatedString;
+                            curTranslate.TranslatorId = curUser.Id;
+                            translationManagement.Create(curTranslate);
+                        }
+                    }
+                }
+            }
+
+            return View(articleTranslateModel);
+        }
+
 
         // GET: BackOffice/Delete/5
         [Authorize(Roles = "ADMIN, TRADUCTEUR")]

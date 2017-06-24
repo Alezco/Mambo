@@ -1,0 +1,113 @@
+﻿@model Mambo.Models.ArticleTranslateModel
+
+@{
+    ViewBag.Title = "Translate";
+}
+
+<h2>Translate</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Article</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(model => model.Article.Id)
+
+        <table class="table">
+            @if (Model.Article.ResourcesList.Count == 0)
+            {
+                @Html.Label("No resource found for this article", htmlAttributes: new { @class = "control-label col-md-4", style = "color: #e30c37" });
+            }
+            else
+            {
+                foreach (var media in Model.Article.ResourcesList)
+                {
+                    <div class="col-sm-3">
+                        <div class="card">
+                            @if (@media.Path.EndsWith("png") || @media.Path.EndsWith("jpg"))
+                        {
+                                <img class="card-img-top img-responsive" style="width: 300px;" src="@Url.Content(@media.Path)" alt="@media.Title">
+                            }
+                            else if (@media.Path.EndsWith("pdf"))
+                            {
+                                <img class="card-img-top img-responsive" style="width: 300px;" src="https://raw.githubusercontent.com/Alezco/Mambo/master/Ressources/pdf_placeholder.png" alt="@media.Title">
+                            }
+                            else if (@media.Path.EndsWith("docx"))
+                            {
+                                <img class="card-img-top img-responsive" style="width: 300px;" src="https://raw.githubusercontent.com/Alezco/Mambo/master/Ressources/word_placeholder.png" alt="@media.Title">
+                            }
+                            else
+                            {
+                                <img class="card-img-top img-responsive" style="width: 300px;" src="https://raw.githubusercontent.com/Alezco/Mambo/master/Ressources/file_placeholder.png" alt="@media.Title">
+                            }
+                            <div class="card-block">
+                                <h4 class="card-title">@media.Title</h4>
+                                <p class="card-text">@media.Description</p>
+                                <a target="_blank" href="@media.Path" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            <tr>
+                <td>
+                    @foreach (var translation in Model.Translations)
+                    {
+                        if (translation.TranslatorId == Model.Article.AdminId)
+                        {
+                            <div class="col-md-6">
+                                <label>Original version is :</label> <br />
+                                <label>Title :</label>
+                                <text>@translation.TranslationArticleTitle</text><br />
+                                <label>Content :</label>
+                                <text>@translation.TranslationArticleContent</text>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-6">
+                                <label>Translated Version</label> <br />
+                                <label>Title :</label>
+                                <text>@translation.TranslationArticleTitle</text><br />
+                                <label>Content :</label>
+                                <text>@translation.TranslationArticleContent</text>
+                            </div>
+                        }
+                    }                    
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="col-md-6">
+
+                        <h5>Translate this article</h5>
+                        @using (Html.BeginForm("Translate", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+                        {
+                            @Html.Label("Language", htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.DropDownListFor(l => l.SelectedLanguage, Model.LanguageSelectList);
+                        }
+                        <br /><br />
+                        <input type="text" class="form-control" placeholder="Title" name="titleTranslatedString">
+                        <input type="text" class="form-control" placeholder="Content" name="ContentTranslatedString">
+                    </div>
+                </td>
+            </tr>
+</table>
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

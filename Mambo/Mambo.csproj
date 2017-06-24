@@ -279,6 +279,7 @@
     <Compile Include="Models\ArticleCreationModel.cs" />
     <Compile Include="Models\ArticleDetailModel.cs" />
     <Compile Include="Models\ArticleStatisticModel.cs" />
+    <Compile Include="Models\ArticleTranslateModel.cs" />
     <Compile Include="Models\ArticleViewModel.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Register.cs" />
@@ -354,6 +355,7 @@
     <Content Include="Views\BackOffice\Edit.cshtml" />
     <Content Include="Views\BackOffice\Index.cshtml" />
     <Content Include="Views\BackOffice\Statistics.cshtml" />
+    <Content Include="Views\BackOffice\Translate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
