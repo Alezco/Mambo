@@ -78,7 +78,7 @@
         @if (@HttpContext.Current.User.Identity.IsAuthenticated)
         {
             <div class="row">
-                <h4 class="text-center"><span style="padding-right: 30px;" class="glyphicon glyphicon-comment"></span>Commentaires (@Model.Comments.Count)</h4>
+                <h4 class="text-center"><span style="padding-right: 30px;" class="glyphicon glyphicon-comment"></span>Comments (@Model.Comments.Count)</h4>
             
                     @foreach (var comment in Model.Comments)
                     {
@@ -98,7 +98,7 @@
                 <hr />
             </div>
 
-            <h4 class="text-center"><span style="padding-right: 30px;" class="glyphicon glyphicon-pencil"></span>Commenter cet article</h4>
+            <h4 class="text-center"><span style="padding-right: 30px;" class="glyphicon glyphicon-pencil"></span>Comment this article</h4>
             @Html.ValidationSummary(true)
             <br />
             using (Html.BeginForm("ArticleDetails", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
