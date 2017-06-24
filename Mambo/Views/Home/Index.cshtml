@@ -13,22 +13,22 @@
 <form asp-controller="Movies" asp-action="Index">
     <div class="col-sm-4">
         <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search for..." name="SearchString">
+            <input type="text" class="form-control" placeholder=@Resource.searchFor name="SearchString">
             <span class="input-group-btn">
-                <input type="submit" class="btn btn-primary" value="Search" />
+                <input type="submit" class="btn btn-primary" value=@Resource.search />
             </span>
         </div>
     </div>
 </form>
 <br /><br />
-<h2>Last articles</h2>
+<h2>@Resource.lastArticle</h2>
 
 <table class="table">
     <tr>
         <th></th>
-        <th>Title</th>
-        <th>Date</th>
-        <th>Content</th> 
+        <th>@Resource.title</th>
+        <th>@Resource.date</th>
+        <th>@Resource.content</th> 
     </tr>
 
     @foreach (var article in Model.Articles)
@@ -67,7 +67,7 @@
                         <td>@translation.TranslationArticleContent.Substring(0, 200)...</td>
                     }
                     <td>
-                        @Html.ActionLink("Lire", "ArticleDetails", new { id = @article.Id })
+                        @Html.ActionLink(Resource.read, "ArticleDetails", new { id = @article.Id })
                     </td>
                 </tr>
             }

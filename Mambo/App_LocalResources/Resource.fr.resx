@@ -117,7 +117,43 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="about" xml:space="preserve">
+    <value>A propos</value>
+  </data>
+  <data name="content" xml:space="preserve">
+    <value>Contenu</value>
+  </data>
+  <data name="date" xml:space="preserve">
+    <value>Date</value>
+  </data>
   <data name="home" xml:space="preserve">
     <value>Accueil</value>
+  </data>
+  <data name="lastArticle" xml:space="preserve">
+    <value>Derniers articles</value>
+  </data>
+  <data name="login" xml:space="preserve">
+    <value>Connexion</value>
+  </data>
+  <data name="logout" xml:space="preserve">
+    <value>Déconnexion</value>
+  </data>
+  <data name="read" xml:space="preserve">
+    <value>Lire</value>
+  </data>
+  <data name="register" xml:space="preserve">
+    <value>Inscription</value>
+  </data>
+  <data name="rss" xml:space="preserve">
+    <value>Flux RSS</value>
+  </data>
+  <data name="search" xml:space="preserve">
+    <value>Rechercher</value>
+  </data>
+  <data name="searchFor" xml:space="preserve">
+    <value>Rechercher...</value>
+  </data>
+  <data name="title" xml:space="preserve">
+    <value>Titre</value>
   </data>
 </root>

@@ -20,28 +20,27 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Resource.home
                 @Html.ActionLink("Mambo", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink(Resource.home, "Index", "Home")</li>
+                    <li>@Html.ActionLink(Resource.about, "About", "Home")</li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     @if (@HttpContext.Current.User.IsInRole("ADMIN") || @HttpContext.Current.User.IsInRole("TRADUCTEUR"))
                     {
                         <li>@Html.ActionLink("Back Office", "Index", "BackOffice")</li>
-                        <li>@Html.ActionLink("Rss Feed", "Rss", "Home")</li>
+                        <li>@Html.ActionLink(Resource.rss, "Rss", "Home")</li>
                     }
                     @if (@HttpContext.Current.User.Identity.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Log out", "Deconnect", "Authentification")</li>
+                        <li>@Html.ActionLink(Resource.logout, "Deconnect", "Authentification")</li>
                     }
                     else
                     {
-                        <li>@Html.ActionLink("Log in", "Login", "Authentification")</li>
-                        <li>@Html.ActionLink("Register", "Register", "Authentification")</li>
+                        <li>@Html.ActionLink(Resource.login, "Login", "Authentification")</li>
+                        <li>@Html.ActionLink(Resource.register, "Register", "Authentification")</li>
                     }
                     
                 </ul>
