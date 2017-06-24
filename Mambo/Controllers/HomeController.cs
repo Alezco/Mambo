@@ -206,7 +206,7 @@ namespace Mambo.Controllers
             {
                 DBO.Article elt = articleManagement.Get(a.ArticleId);
                 Uri tempValue = new Uri("https://fr.wikipedia.org/wiki/Mambo");
-                if (Uri.TryCreate(elt.ResourcesList[0].Path, UriKind.RelativeOrAbsolute, out tempValue))
+                if (elt.ResourcesList.Count > 0 && Uri.TryCreate(elt.ResourcesList[0].Path, UriKind.RelativeOrAbsolute, out tempValue))
                 {
                 }
                 var item =
