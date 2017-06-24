@@ -12,8 +12,6 @@ namespace Mambo.Models
 
         public List<Translation> Translations { get; set; }
 
-        //public List<Resources> Medias { get; set; }
-
         public List<CommentModel> Comments { get; set; }
 
         public int NbLikes { get; set; }

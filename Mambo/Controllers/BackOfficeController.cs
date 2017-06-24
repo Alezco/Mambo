@@ -20,6 +20,8 @@ namespace Mambo.Controllers
         private BusinessManagement.Translation translationManagement = new BusinessManagement.Translation();
         private BusinessManagement.CommentArticle commentManagement = new BusinessManagement.CommentArticle();
         private BusinessManagement.ArticleLike articleLikeManagment = new BusinessManagement.ArticleLike();
+        private BusinessManagement.User userManagement = new BusinessManagement.User();
+        private BusinessManagement.Resources resourceManagement = new BusinessManagement.Resources();
 
         // GET: BackOffice
         [Authorize(Roles = "ADMIN, TRADUCTEUR")]
@@ -103,18 +105,14 @@ namespace Mambo.Controllers
             if (ModelState.IsValid)
             {
                 // Création de l'article
-                BusinessManagement.User userManagement = new BusinessManagement.User();
-                BusinessManagement.Article articleManagement = new BusinessManagement.Article();
                 DBO.User currentUser = userManagement.GetByEmail(HttpContext.User.Identity.Name);
                 DBO.Article article = new DBO.Article(currentUser.Id, DateTime.Now, "WAITING_TRANSLATION", 0);
                 int articleId = articleManagement.Create(article);
 
                 // Création de la traduction
                 int languageId = (int)newArticle.Language;
-                BusinessManagement.Language languageManagement = new BusinessManagement.Language();
-                BusinessManagement.Translation translationManagmeent = new BusinessManagement.Translation();
                 DBO.Translation translation = new DBO.Translation(articleId, currentUser.Id, languageId, newArticle.Title, newArticle.Text);
-                translationManagmeent.Create(translation);
+                translationManagement.Create(translation);
 
                 // Création de la liste de ressources
 
@@ -131,10 +129,7 @@ namespace Mambo.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BusinessManagement.Article articleManagement = new BusinessManagement.Article();
             DBO.Article article = articleManagement.Get(id.Value);
-
-            BusinessManagement.Resources resourceManagement = new BusinessManagement.Resources();
             List<DBO.Resources> resources = resourceManagement.GetAll();
             List<SelectListItem> items = new List<SelectListItem>();
 
@@ -159,7 +154,6 @@ namespace Mambo.Controllers
         {
             if (ModelState.IsValid)
             {
-                BusinessManagement.Article articleManagement = new BusinessManagement.Article();
                 articleManagement.Update(article);
                 return RedirectToAction("Index");
             }
