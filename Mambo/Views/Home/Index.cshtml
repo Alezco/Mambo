@@ -58,7 +58,14 @@
                     </td>
                     <td>@Html.ActionLink(translation.TranslationArticleTitle, "ArticleDetails", new { id = @article.Id })</td>
                     <td>@article.CreationDate</td>
-                    <td>@translation.TranslationArticleContent</td>
+                    @if (translation.TranslationArticleContent.Length <= 200)
+                    {
+                        <td>@translation.TranslationArticleContent</td>
+                    }
+                    else
+                    {
+                        <td>@translation.TranslationArticleContent.Substring(0, 200)...</td>
+                    }
                     <td>
                         @Html.ActionLink("Lire", "ArticleDetails", new { id = @article.Id })
                     </td>
