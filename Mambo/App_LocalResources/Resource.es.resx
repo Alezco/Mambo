@@ -120,7 +120,4 @@
   <data name="home" xml:space="preserve">
     <value>Inicio</value>
   </data>
-  <data name="LogIn" xml:space="preserve">
-    <value>Conectarse</value>
-  </data>
 </root>

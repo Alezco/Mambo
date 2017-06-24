@@ -1,5 +1,6 @@
 ﻿using Mambo.DataAccess;
 using Mambo.DBO;
+using Mambo.LanguageManagement;
 using Mambo.Models;
 using Mambo.RSS;
 using System;
@@ -14,6 +15,7 @@ using System.Web.Security;
 
 namespace Mambo.Controllers
 {
+    [Localization("en")]
     public class HomeController : Controller
     {
         private dbNetEntities db = new dbNetEntities();

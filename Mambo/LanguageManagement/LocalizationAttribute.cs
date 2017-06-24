@@ -10,26 +10,25 @@ namespace Mambo.LanguageManagement
 {
     public class LocalizationAttribute : ActionFilterAttribute
     {
-        private string _DefaultLanguage = "en";
+        private readonly string _defaultLanguage;
 
         public LocalizationAttribute(string defaultLanguage)
         {
-            _DefaultLanguage = defaultLanguage;
+            _defaultLanguage = defaultLanguage;
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            string lang = (string)filterContext.RouteData.Values["lang"] ?? _DefaultLanguage;
-            if (lang != _DefaultLanguage)
+            string lang = (string)filterContext.RouteData.Values["lang"] ?? _defaultLanguage;
+            if (lang != null)
             {
                 try
                 {
-                    Thread.CurrentThread.CurrentCulture =
-                    Thread.CurrentThread.CurrentUICulture = new CultureInfo(lang);
+                    Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = new CultureInfo(lang);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    throw new NotSupportedException(String.Format("ERROR: Invalid language code '{0}'.", lang));
+                    throw new NotSupportedException($"Invalid language code '{lang}'.");
                 }
             }
         }

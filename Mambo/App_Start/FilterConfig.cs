@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using Mambo.LanguageManagement;
+using System.Web;
 using System.Web.Mvc;
 
 namespace Mambo
@@ -8,6 +9,7 @@ namespace Mambo
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new LocalizationAttribute("en"), 0);
         }
     }
 }
