@@ -205,8 +205,12 @@ namespace Mambo.Controllers
             foreach (DBO.Translation a in listTransaction)
             {
                 DBO.Article elt = articleManagement.Get(a.ArticleId);
+                Uri tempValue = new Uri("https://fr.wikipedia.org/wiki/Mambo");
+                if (Uri.TryCreate(elt.ResourcesList[0].Path, UriKind.RelativeOrAbsolute, out tempValue))
+                {
+                }
                 var item =
-                    new SyndicationItem(a.TranslationArticleTitle, a.TranslationArticleContent, new Uri(elt.ResourcesList[0].Path));
+                    new SyndicationItem(a.TranslationArticleTitle, a.TranslationArticleContent, tempValue);
                 items.Add(item);
             }
             feed.Items = items;
