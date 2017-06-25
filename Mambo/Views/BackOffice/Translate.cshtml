@@ -83,28 +83,33 @@
             <tr>
                 <td>
                     <div class="col-md-6">
-
-                        <h5>Translate this article</h5>
-                        @using (Html.BeginForm("Translate", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+                        @if (Model.LanguageSelectList.Count > 0)
                         {
-                            @Html.Label("Language", htmlAttributes: new { @class = "control-label col-md-2" })
-                            @Html.DropDownListFor(l => l.SelectedLanguage, Model.LanguageSelectList);
+                            <h5>Translate this article</h5>
+                            using (Html.BeginForm("Translate", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+                            {
+                                @Html.Label("Language", htmlAttributes: new { @class = "control-label col-md-2" })
+                                @Html.DropDownListFor(l => l.SelectedLanguage, Model.LanguageSelectList);
+                            }
+                            <br /><br />
+                            <input type="text" class="form-control" placeholder="Title" name="titleTranslatedString">
+                            <input type="text" class="form-control" placeholder="Content" name="ContentTranslatedString">
                         }
-                        <br /><br />
-                        <input type="text" class="form-control" placeholder="Title" name="titleTranslatedString">
-                        <input type="text" class="form-control" placeholder="Content" name="ContentTranslatedString">
                     </div>
                 </td>
             </tr>
 </table>
 
 
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+        @if (Model.LanguageSelectList.Count > 0)
+        {
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
             </div>
-        </div>
+        }
+
     </div>
 }
 

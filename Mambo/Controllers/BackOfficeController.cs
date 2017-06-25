@@ -255,9 +255,6 @@ namespace Mambo.Controllers
             BusinessManagement.Translation translationManagement = new BusinessManagement.Translation();
             List<DBO.Language> allLanguages = languageManagement.GetAll();
 
-            BusinessManagement.Article articleManagement = new BusinessManagement.Article();
-            DBO.Article article = articleManagement.Get(translateModel.Article.Id);
-
             List<DBO.Translation> translations = translationManagement.GetTranslationsByArticleId(translateModel.Article.Id);
             List<DBO.Language> languages = new List<DBO.Language>();
             foreach (var item in translations)
@@ -265,28 +262,13 @@ namespace Mambo.Controllers
                 DBO.Language language = languageManagement.Get(item.LanguageId);
                 languages.Add(language);
             }
-
             
             foreach (var item in languages)
             {
                 allLanguages.Remove(item);
             }
-
+            
             List<SelectListItem> items = new List<SelectListItem>();
-
-            for (int i = 0; i < allLanguages.Count; i++)
-            {
-                items.Add(new SelectListItem { Text = allLanguages.ElementAt(i).LanguageName, Value = i.ToString() });
-            }
-
-            Models.ArticleTranslateModel articleTranslateModel = new Models.ArticleTranslateModel()
-            {
-                Article = article,
-                Translations = translations,
-                ExistingTranslatedLanguage = languages,
-                LanguageSelectList = items
-            };
-
             if (ModelState.IsValid)
             {
                 int selectedLanguage = int.Parse(translateModel.SelectedLanguage);
@@ -295,7 +277,7 @@ namespace Mambo.Controllers
                     if (titleTranslatedString.Trim() != "" && contentTranslatedString.Trim() != "")
                     {
                         DBO.Language curLang = allLanguages.Where(x => x.Id == selectedLanguage).FirstOrDefault();
-                        DBO.Translation curTranslate = articleTranslateModel.Translations.Where(x => x.LanguageId == curLang.Id).FirstOrDefault();
+                        DBO.Translation curTranslate = translations.Where(x => x.LanguageId == curLang.Id).FirstOrDefault();
                         
                         string str = User.Identity.Name;
                         BusinessManagement.User userManagement = new BusinessManagement.User();
@@ -312,17 +294,18 @@ namespace Mambo.Controllers
                         {
                             curTranslate = new DBO.Translation();
                             curTranslate.LanguageId = curLang.Id;
-                            curTranslate.ArticleId = articleTranslateModel.Article.Id;
+                            curTranslate.ArticleId = translateModel.Article.Id;
                             curTranslate.TranslationArticleContent = contentTranslatedString;
                             curTranslate.TranslationArticleTitle = titleTranslatedString;
                             curTranslate.TranslatorId = curUser.Id;
                             translationManagement.Create(curTranslate);
                         }
+                        return RedirectToAction("Index");
                     }
                 }
             }
 
-            return View(articleTranslateModel);
+            return View(translateModel);
         }
 
 
