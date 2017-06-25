@@ -47,31 +47,35 @@
             <h4 class="text-center">@Model.Translations.FirstOrDefault().TranslationArticleTitle have @Model.Article.ResourcesList.Count médias</h4>
             @foreach (var media in Model.Article.ResourcesList)
             {
-                <div class="col-sm-3">
-                    <div class="card">
-                        @if (@media.Path.EndsWith("png") || @media.Path.EndsWith("jpg"))
-                        {
-                            <img class="card-img-top img-responsive" style="width: 300px;" src="@Url.Content(@media.Path)" alt="@media.Title">
-                        }
-                        else if (@media.Path.EndsWith("pdf"))
-                        {
-                            <img class="card-img-top img-responsive" style="width: 300px;" src="https://raw.githubusercontent.com/Alezco/Mambo/master/Ressources/pdf_placeholder.png" alt="@media.Title">
-                        }
-                        else if (@media.Path.EndsWith("docx"))
-                        {
-                            <img class="card-img-top img-responsive" style="width: 300px;" src="https://raw.githubusercontent.com/Alezco/Mambo/master/Ressources/word_placeholder.png" alt="@media.Title">
-                        }
-                        else
-                        {
-                            <img class="card-img-top img-responsive" style="width: 300px;" src="https://raw.githubusercontent.com/Alezco/Mambo/master/Ressources/file_placeholder.png" alt="@media.Title">
-                        }
-                        <div class="card-block">
-                            <h4 class="card-title">@media.Title</h4>
-                            <p class="card-text">@media.Description</p>
-                            <a target="_blank" href="@media.Path" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span></a>
+                if (media.LanguageId == @Model.Translations.FirstOrDefault().LanguageId)
+                {
+                    <div class="col-sm-3">
+                        <div class="card">
+                            @if (@media.Path.EndsWith("png") || @media.Path.EndsWith("jpg"))
+                            {
+                                <img class="card-img-top img-responsive" style="width: 300px;" src="@Url.Content(@media.Path)" alt="@media.Title">
+                            }
+                            else if (@media.Path.EndsWith("pdf"))
+                            {
+                                <img class="card-img-top img-responsive" style="width: 300px;" src="https://raw.githubusercontent.com/Alezco/Mambo/master/Ressources/pdf_placeholder.png" alt="@media.Title">
+                            }
+                            else if (@media.Path.EndsWith("docx"))
+                            {
+                                <img class="card-img-top img-responsive" style="width: 300px;" src="https://raw.githubusercontent.com/Alezco/Mambo/master/Ressources/word_placeholder.png" alt="@media.Title">
+                            }
+                            else
+                            {
+                                <img class="card-img-top img-responsive" style="width: 300px;" src="https://raw.githubusercontent.com/Alezco/Mambo/master/Ressources/file_placeholder.png" alt="@media.Title">
+                            }
+                            <div class="card-block">
+                                <h4 class="card-title">@media.Title</h4>
+                                <p class="card-text">@media.Description</p>
+                                <a target="_blank" href="@media.Path" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span></a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
+
             }
         </div>
         <hr />
@@ -102,7 +106,7 @@
             @Html.ValidationSummary(true)
             <br />
             using (Html.BeginForm("ArticleDetails", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
-                {
+            {
                 @Html.TextAreaFor(m => m.UserComment.Text, new { @class = "form-control", rows = "3", style = "min-width: 100%" })
                 @Html.HiddenFor(m => m.Article.Id)
                 @Html.ValidationMessageFor(m => m.UserComment.Text)

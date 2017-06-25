@@ -22,6 +22,7 @@ namespace Mambo.Controllers
         private BusinessManagement.CommentArticle commentManagement = new BusinessManagement.CommentArticle();
         private BusinessManagement.ArticleLike articleLikeManagment = new BusinessManagement.ArticleLike();
         private BusinessManagement.User userManagement = new BusinessManagement.User();
+        private BusinessManagement.Language languageManagement = new BusinessManagement.Language();
         private BusinessManagement.Resources resourceManagement = new BusinessManagement.Resources();
 
         private ArticleCreationModel articleModel;
@@ -83,12 +84,30 @@ namespace Mambo.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DBO.Article article = db.Articles.Find(id);
+            DBO.Article article = articleManagement.Get(id.Value);
             if (article == null)
             {
                 return HttpNotFound();
             }
-            return View(article);
+            List<DBO.Translation> translations = translationManagement.GetTranslationsByArticleId(id.Value);
+            ArticleDetailModel articleModel = new ArticleDetailModel()
+            {
+                Article = article,
+                Translations = translations
+            };
+
+            return View(articleModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ValidateArticle(int? id)
+        {
+            DBO.Article article = articleManagement.Get(id.Value);
+            if (article.Status.Equals("WAITING_VALIDATION"))
+                article.Status = "VALIDATED";
+            articleManagement.Update(article);
+            return RedirectToAction("Index");
         }
 
         // GET: BackOffice/Create
@@ -203,12 +222,10 @@ namespace Mambo.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BusinessManagement.Article articleManagement = new BusinessManagement.Article();
-            DBO.Article article = articleManagement.Get(id.Value);
 
-            BusinessManagement.Translation translationManagement = new BusinessManagement.Translation();
+            DBO.Article article = articleManagement.Get(id.Value);
             List<DBO.Translation> translations = translationManagement.GetTranslationsByArticleId(id.Value);
-            BusinessManagement.Language languageManagement = new BusinessManagement.Language();
+
             List<DBO.Language> languages = new List<DBO.Language>();
             foreach (var item in translations)
             {
@@ -251,10 +268,7 @@ namespace Mambo.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Translate(Models.ArticleTranslateModel translateModel, string titleTranslatedString, string contentTranslatedString)
         {
-            BusinessManagement.Language languageManagement = new BusinessManagement.Language();
-            BusinessManagement.Translation translationManagement = new BusinessManagement.Translation();
             List<DBO.Language> allLanguages = languageManagement.GetAll();
-
             List<DBO.Translation> translations = translationManagement.GetTranslationsByArticleId(translateModel.Article.Id);
             List<DBO.Language> languages = new List<DBO.Language>();
             foreach (var item in translations)
@@ -280,7 +294,6 @@ namespace Mambo.Controllers
                         DBO.Translation curTranslate = translations.Where(x => x.LanguageId == curLang.Id).FirstOrDefault();
                         
                         string str = User.Identity.Name;
-                        BusinessManagement.User userManagement = new BusinessManagement.User();
                         DBO.User curUser = userManagement.GetByEmail(str);
                         
                         if (curTranslate != null)
@@ -304,10 +317,8 @@ namespace Mambo.Controllers
                     }
                 }
             }
-
             return View(translateModel);
         }
-
 
         // GET: BackOffice/Delete/5
         [Authorize(Roles = "ADMIN, TRADUCTEUR")]

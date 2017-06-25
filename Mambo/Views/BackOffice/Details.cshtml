@@ -1,50 +1,84 @@
-﻿@model Mambo.DBO.Article
+﻿@using Mambo.Models
+@model ArticleDetailModel
 
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h1 class="text-center">@Model.Translations.FirstOrDefault().TranslationArticleTitle</h1>
+<h6 class="text-center"><span style="padding-right: 30px;" class="glyphicon glyphicon-calendar"></span>@Model.Article.CreationDate</h6>
 
-<div>
-    <h4>Article</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.AdminId)
-        </dt>
+@foreach (var translation in Model.Translations)
+{
+    <div>
+        @if (translation.LanguageId == 1)
+        {
+            <h2>Français</h2>
+        }
+        else if (translation.LanguageId == 2)
+        {
+            <h2>English</h2>
+        }
+        else
+        {
+            <h2>Español</h2>
+        }
 
-        <dd>
-            @Html.DisplayFor(model => model.AdminId)
-        </dd>
+        <h3>@translation.TranslationArticleTitle</h3>
+        <p class="text-center">
+            @translation.TranslationArticleContent
+        </p>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CreationDate)
-        </dt>
+        <div class="row">
+            <h4 class="text-center">Médias</h4>
+            @foreach (var media in Model.Article.ResourcesList)
+            {
+                if (media.LanguageId == translation.LanguageId)
+                {
+                    <div class="col-sm-3">
+                        <div class="card">
+                            @if (@media.Path.EndsWith("png") || @media.Path.EndsWith("jpg"))
+                        {
+                                <img class="card-img-top img-responsive" style="width: 300px;" src="@Url.Content(@media.Path)" alt="@media.Title">
+                            }
+                            else if (@media.Path.EndsWith("pdf"))
+                            {
+                                <img class="card-img-top img-responsive" style="width: 300px;" src="https://raw.githubusercontent.com/Alezco/Mambo/master/Ressources/pdf_placeholder.png" alt="@media.Title">
+                            }
+                            else if (@media.Path.EndsWith("docx"))
+                            {
+                                <img class="card-img-top img-responsive" style="width: 300px;" src="https://raw.githubusercontent.com/Alezco/Mambo/master/Ressources/word_placeholder.png" alt="@media.Title">
+                            }
+                            else
+                            {
+                                <img class="card-img-top img-responsive" style="width: 300px;" src="https://raw.githubusercontent.com/Alezco/Mambo/master/Ressources/file_placeholder.png" alt="@media.Title">
+                            }
+                            <div class="card-block">
+                                <h4 class="card-title">@media.Title</h4>
+                                <p class="card-text">@media.Description</p>
+                                <a target="_blank" href="@media.Path" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.CreationDate)
-        </dd>
+    </div>
+    <br />
+        <hr />
+}
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
+@Html.ValidationSummary(true)
+@using (Html.BeginForm("ValidateArticle", "BackOffice", new { id = Model.Article.Id }, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <input type="submit" class="btn btn-primary" value="Valider" />
+    <br />
+}
 
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
+<br />
 
-        <dt>
-            @Html.DisplayNameFor(model => model.NbViews)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NbViews)
-        </dd>
-
-    </dl>
-</div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back", "Index")
 </p>
