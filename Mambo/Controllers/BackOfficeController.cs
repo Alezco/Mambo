@@ -92,7 +92,7 @@ namespace Mambo.Controllers
         }
 
         // GET: BackOffice/Create
-        [Authorize(Roles = "ADMIN, TRADUCTEUR")]
+        [Authorize(Roles = "ADMIN")]
         public ActionResult Create()
         {
             articleModel = new ArticleCreationModel();

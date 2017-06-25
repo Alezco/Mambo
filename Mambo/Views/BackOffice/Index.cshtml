@@ -12,9 +12,9 @@
 
 <h1>Back Office</h1>
 
-<h3>@Html.ActionLink("Create an article", "Create")</h3>
 @if (@HttpContext.Current.User.IsInRole("ADMIN"))
 {
+    <h3>@Html.ActionLink("Create an article", "Create")</h3>
     <h3>@Html.ActionLink("View articles statistics", "Statistics")</h3>
 }
 

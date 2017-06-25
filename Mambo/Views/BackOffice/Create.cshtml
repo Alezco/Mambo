@@ -6,7 +6,7 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Nouvel Article</h2>
+<h2>New article</h2>
 
 @using (Html.BeginForm("Create", "BackOffice"))
 {
@@ -22,17 +22,15 @@
                 @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
             </div>
         </div>
-        <br />
-        <br />
+        <br /><br /><br />
         <div class="form-group">
             @Html.LabelFor(model => model.Text, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Text, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.Text, new { @class = "form-control", rows = "3", style = "min-width: 100%" })
                 @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
             </div>
         </div>
-        <br />
-        <br />
+        <br /><br /><br /><br /><br />
         <div class="form-group">
             @Html.LabelFor(model => model.Language, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -41,9 +39,7 @@
                     "Select a language")
             </div>
         </div>
-
-        <hr />
-
+        <br /><br /><br />
         <div class="form-group">
             <div class="col-md-10">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -54,7 +50,7 @@
     </form>
 }
 
-<hr />
+<br /> <br />
 
 @Html.Partial("CreateResource", new ResourceCreationModel())
 

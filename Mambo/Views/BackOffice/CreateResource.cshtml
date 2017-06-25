@@ -1,7 +1,10 @@
 ﻿@using Mambo.Models;
 @model ResourceCreationModel
 
-<h4>Add a resource</h4>
+<br />
+<hr />
+
+<h3>Add a resource</h3>
 
 @using (Html.BeginForm("CreateResource", "BackOffice"))
 {
@@ -16,6 +19,7 @@
                 @Html.ValidationMessageFor(model => model.MediaName, "", new { @class = "text-danger" })
             </div>
         </div>
+        <br /><br /><br />
         <div class="form-group">
             @Html.Label("Description", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -23,6 +27,7 @@
                 @Html.ValidationMessageFor(model => model.MediaDescription, "", new { @class = "text-danger" })
             </div>
         </div>
+        <br /><br />
         <div class="form-group">
             @Html.Label("Path", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -30,6 +35,7 @@
                 @Html.ValidationMessageFor(model => model.MediaPath, "", new { @class = "text-danger" })
             </div>
         </div>
+        <br /><br /><br />
         <div class="form-group">
             <div class="col-md-10">
                 <input type="submit" value="Add" class="btn btn-primary" />
