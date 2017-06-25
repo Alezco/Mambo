@@ -28,7 +28,7 @@ namespace Mambo.Controllers
 
         public ActionResult Index(string searchString)
         {      
-            List<DBO.Article> articles = articleManagement.GetAll();
+            List<DBO.Article> articles = articleManagement.GetArticlesValidated();
             List<DBO.Translation> translations = translationManagement.GetAll();
 
             ArticleViewModel myModel = new ArticleViewModel()
