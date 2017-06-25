@@ -8,10 +8,10 @@
 
 <h2>Nouvel Article</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create", "BackOffice"))
 {
     @Html.AntiForgeryToken()
-    
+
     <form>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -24,7 +24,7 @@
             </div>
         </div>
         <br />
-        <br/>
+        <br />
         <div class="form-group">
             @Html.LabelFor(model => model.Text, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -37,39 +37,61 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Language, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-            @Html.DropDownListFor(model => model.Language, 
+                @Html.DropDownListFor(model => model.Language,
                     new SelectList(Enum.GetValues(typeof(Language))),
-                    "Sélectionner une langue")
+                    "Select a language")
             </div>
         </div>
-        <br />
-        <br />
-        <hr />
-
-        <h4>Add a resource</h4>
-
-        @Html.ValidationSummary(true)
-        <br />
-        @using (Html.BeginForm("ArticleDetails", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
-        {
-            <label>@Html.Label("Titre")</label>
-            <br />
-            @Html.TextBoxFor(m => m.Medias.First().Title)
-            <br /> <br />
-            <input type="submit" class="btn btn-default" value="Add" />
-        }
 
         <hr />
 
         <div class="form-group">
             <div class="col-md-10">
                 <input type="submit" value="Create" class="btn btn-primary" />
-                <br/> <br/>
+                <br /> <br />
                 @Html.ActionLink("Abort", "Index")
             </div>
         </div>
+    </form>
+}
 
-        <hr/>
+<hr />
+
+<h4>Add a resource (@Model.Medias.Count)</h4>
+
+@using (Html.BeginForm("CreateResource", "BackOffice"))
+{
+
+    @Html.AntiForgeryToken()
+
+    <form>
+        <div class="form-group">
+            @Html.Label("Title", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MediaName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MediaName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Description", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MediaDescrition, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MediaDescrition, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Path", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MediaPath, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MediaPath, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="submit" value="Add"  class="btn btn-primary" />
+                <br /> <br />
+            </div>
+        </div>
 
     </form>
 }

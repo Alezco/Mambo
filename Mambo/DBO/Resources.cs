@@ -25,6 +25,13 @@ namespace Mambo.DBO
             Path = path;
         }
 
+        public Resources(string title, string description, string path)
+        {
+            Title = title;
+            Description = description;
+            Path = path;
+        }
+
         public Resources(int id, int languageId, List<Article> articlesList, string title, string description, string path)
         {
             Id = Id;

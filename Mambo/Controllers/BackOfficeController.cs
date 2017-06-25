@@ -93,7 +93,7 @@ namespace Mambo.Controllers
         [Authorize(Roles = "ADMIN, TRADUCTEUR")]
         public ActionResult Create()
         {
-            return View();
+            return View(new ArticleCreationModel());
         }
 
         // POST: BackOffice/Create
@@ -115,11 +115,28 @@ namespace Mambo.Controllers
                 DBO.Translation translation = new DBO.Translation(articleId, currentUser.Id, languageId, newArticle.Title, newArticle.Text);
                 translationManagement.Create(translation);
 
+                foreach (DBO.Resources resource in newArticle.Medias)
+                {
+                    resource.LanguageId = languageId;
+                    resourceManagement.Create(resource);
+                }
+
                 // Création de la liste de ressources
 
                 return RedirectToAction("Index");
             }
             return View(newArticle);
+        }
+
+        public ActionResult CreateResource(Models.ArticleCreationModel newArticle)
+        {
+            DBO.Resources newResource = new DBO.Resources(newArticle.MediaName, newArticle.MediaDescrition, newArticle.MediaPath);
+            ArticleCreationModel test = newArticle;
+            test.Medias.Add(newResource);
+            newArticle.MediaName = "";
+            newArticle.MediaDescrition = "";
+            newArticle.MediaPath = "";
+            return View("Create", test);
         }
 
         // GET: BackOffice/Edit/5
