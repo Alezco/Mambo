@@ -4,11 +4,17 @@
 <br />
 <hr />
 
-<h3>Add a resource</h3>
+@if (Mambo.Models.SessionBag.Current.Resources != null)
+{
+    <h3>Add a resource - actual number : @Mambo.Models.SessionBag.Current.Resources.Count</h3>
+}
+else
+{
+    <h3>Add a resource - actual number : 0</h3>
+}
 
 @using (Html.BeginForm("CreateResource", "BackOffice"))
 {
-
     @Html.AntiForgeryToken()
 
     <form>
