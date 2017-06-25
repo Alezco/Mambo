@@ -69,12 +69,15 @@
         <hr />
 }
 
-@Html.ValidationSummary(true)
-@using (Html.BeginForm("ValidateArticle", "BackOffice", new { id = Model.Article.Id }, FormMethod.Post))
+@if (Model.Article.Status.Equals("WAITING_VALIDATION"))
 {
-    @Html.AntiForgeryToken()
-    <input type="submit" class="btn btn-primary" value="Valider" />
-    <br />
+    @Html.ValidationSummary(true)
+    using (Html.BeginForm("ValidateArticle", "BackOffice", new { id = Model.Article.Id }, FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <input type="submit" class="btn btn-primary" value="Valider" />
+        <br />
+    }
 }
 
 <br />

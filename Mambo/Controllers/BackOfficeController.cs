@@ -253,7 +253,8 @@ namespace Mambo.Controllers
                 Article = article,
                 Translations = translations,
                 ExistingTranslatedLanguage = languages,
-                LanguageSelectList = items
+                LanguageSelectList = items,
+                Resources = article.ResourcesList
             };
 
 
@@ -266,8 +267,11 @@ namespace Mambo.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Translate(Models.ArticleTranslateModel translateModel, string titleTranslatedString, string contentTranslatedString)
+        public ActionResult Translate(Models.ArticleTranslateModel translateModel)
         {
+
+            ArticleTranslateModel test = translateModel;
+
             List<DBO.Language> allLanguages = languageManagement.GetAll();
             List<DBO.Translation> translations = translationManagement.GetTranslationsByArticleId(translateModel.Article.Id);
             List<DBO.Language> languages = new List<DBO.Language>();
@@ -282,6 +286,7 @@ namespace Mambo.Controllers
                 allLanguages.Remove(item);
             }
             
+            /*
             List<SelectListItem> items = new List<SelectListItem>();
             if (ModelState.IsValid)
             {
@@ -316,7 +321,7 @@ namespace Mambo.Controllers
                         return RedirectToAction("Index");
                     }
                 }
-            }
+            }*/
             return View(translateModel);
         }
 

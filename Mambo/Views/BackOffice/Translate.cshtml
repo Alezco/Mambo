@@ -6,111 +6,138 @@
 
 <h2>Translate</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Translate", "BackOffice"))
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>Article</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <form>
 
-        @Html.HiddenFor(model => model.Article.Id)
+        <div class="form-horizontal">
+            <h4>Article</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <table class="table">
+            @Html.HiddenFor(model => model.Article.Id)
+
             @if (Model.Article.ResourcesList.Count == 0)
             {
                 @Html.Label("No resource found for this article", htmlAttributes: new { @class = "control-label col-md-4", style = "color: #e30c37" });
             }
             else
             {
-                foreach (var media in Model.Article.ResourcesList)
-                {
-                    <div class="col-sm-3">
-                        <div class="card">
-                            @if (@media.Path.EndsWith("png") || @media.Path.EndsWith("jpg"))
+                <div class="row">
+                    @for (var i = 0; i < Model.Article.ResourcesList.Count(); i++)
+                    {
+                        var media = Model.Article.ResourcesList[i];
+                        <div class="col-sm-3">
+                            <div class="card">
+                                @if (@media.Path.EndsWith("png") || @media.Path.EndsWith("jpg"))
                         {
-                                <img class="card-img-top img-responsive" style="width: 300px;" src="@Url.Content(@media.Path)" alt="@media.Title">
-                            }
-                            else if (@media.Path.EndsWith("pdf"))
-                            {
-                                <img class="card-img-top img-responsive" style="width: 300px;" src="https://raw.githubusercontent.com/Alezco/Mambo/master/Ressources/pdf_placeholder.png" alt="@media.Title">
-                            }
-                            else if (@media.Path.EndsWith("docx"))
-                            {
-                                <img class="card-img-top img-responsive" style="width: 300px;" src="https://raw.githubusercontent.com/Alezco/Mambo/master/Ressources/word_placeholder.png" alt="@media.Title">
-                            }
-                            else
-                            {
-                                <img class="card-img-top img-responsive" style="width: 300px;" src="https://raw.githubusercontent.com/Alezco/Mambo/master/Ressources/file_placeholder.png" alt="@media.Title">
-                            }
-                            <div class="card-block">
-                                <h4 class="card-title">@media.Title</h4>
-                                <p class="card-text">@media.Description</p>
-                                <a target="_blank" href="@media.Path" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span></a>
+                                    <img class="card-img-top img-responsive" style="width: 300px;" src="@Url.Content(@media.Path)" alt="@media.Title">
+                                }
+                                else if (@media.Path.EndsWith("pdf"))
+                                {
+                                    <img class="card-img-top img-responsive" style="width: 300px;" src="https://raw.githubusercontent.com/Alezco/Mambo/master/Ressources/pdf_placeholder.png" alt="@media.Title">
+                                }
+                                else if (@media.Path.EndsWith("docx"))
+                                {
+                                    <img class="card-img-top img-responsive" style="width: 300px;" src="https://raw.githubusercontent.com/Alezco/Mambo/master/Ressources/word_placeholder.png" alt="@media.Title">
+                                }
+                                else
+                                {
+                                    <img class="card-img-top img-responsive" style="width: 300px;" src="https://raw.githubusercontent.com/Alezco/Mambo/master/Ressources/file_placeholder.png" alt="@media.Title">
+                                }
+                                <div class="card-block">
+                                    <h4 class="card-title">@media.Title</h4>
+                                    <p class="card-text">@media.Description</p>
+                                    <a target="_blank" href="@media.Path" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span></a>
+                                </div>
                             </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => Model.Resources[i].Title, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.HiddenFor(model => Model.Resources[i].Title)
+                                    @Html.ValidationMessageFor(model => Model.Resources[i].Title, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => Model.Resources[i].Description, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.HiddenFor(model => Model.Resources[i].Description)
+                                    @Html.HiddenFor(model => Model.Resources[i].Path)
+                                    @Html.ValidationMessageFor(model => Model.Resources[i].Description, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            @Html.HiddenFor(model => Model.Resources[i].Path)
                         </div>
+                    }
+                </div>
+            }
+
+            @foreach (var translation in Model.Translations)
+            {
+                <hr />
+                if (translation.TranslatorId == Model.Article.AdminId)
+                {
+                    <div class="row">
+                        <label>Original version is :</label> <br />
+                        <label>Title :</label>
+                        <text>@translation.TranslationArticleTitle</text><br />
+                        <label>Content :</label>
+                        <text>@translation.TranslationArticleContent</text>
+                    </div>
+                }
+                else
+                {
+                    <div class="row">
+                        <label>Translated Version</label> <br />
+                        <label>Title :</label>
+                        <text>@translation.TranslationArticleTitle</text><br />
+                        <label>Content :</label>
+                        <text>@translation.TranslationArticleContent</text>
                     </div>
                 }
             }
-            <tr>
-                <td>
-                    @foreach (var translation in Model.Translations)
-                    {
-                        if (translation.TranslatorId == Model.Article.AdminId)
-                        {
-                            <div class="col-md-6">
-                                <label>Original version is :</label> <br />
-                                <label>Title :</label>
-                                <text>@translation.TranslationArticleTitle</text><br />
-                                <label>Content :</label>
-                                <text>@translation.TranslationArticleContent</text>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="col-md-6">
-                                <label>Translated Version</label> <br />
-                                <label>Title :</label>
-                                <text>@translation.TranslationArticleTitle</text><br />
-                                <label>Content :</label>
-                                <text>@translation.TranslationArticleContent</text>
-                            </div>
-                        }
-                    }                    
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="col-md-6">
-                        @if (Model.LanguageSelectList.Count > 0)
-                        {
-                            <h5>Translate this article</h5>
-                            using (Html.BeginForm("Translate", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
-                            {
-                                @Html.Label("Language", htmlAttributes: new { @class = "control-label col-md-2" })
-                                @Html.DropDownListFor(l => l.SelectedLanguage, Model.LanguageSelectList);
-                            }
-                            <br /><br />
-                            <input type="text" class="form-control" placeholder="Title" name="titleTranslatedString">
-                            <input type="text" class="form-control" placeholder="Content" name="ContentTranslatedString">
-                        }
+
+            <hr />
+
+            <div class="row">
+                @if (Model.LanguageSelectList.Count > 0)
+                {
+                    <h3>Translate this article</h3>
+                    @Html.Label("Language", htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.DropDownListFor(l => l.SelectedLanguage, Model.LanguageSelectList);
+                    <br /><br /><br />
+                    <div class="form-group">
+                        @Html.Label("Title", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.NewTranslation.TranslationArticleTitle, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.NewTranslation.TranslationArticleTitle, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </td>
-            </tr>
-</table>
-
-
-        @if (Model.LanguageSelectList.Count > 0)
-        {
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Save" class="btn btn-default" />
-                </div>
+                    <br /><br /><br />
+                    <div class="form-group">
+                        @Html.Label("Content", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(model => model.NewTranslation.TranslationArticleContent, new { @class = "form-control", rows = "3", style = "min-width: 100%" })
+                            @Html.ValidationMessageFor(model => model.NewTranslation.TranslationArticleContent, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                }
             </div>
-        }
 
-    </div>
+            @if (Model.LanguageSelectList.Count > 0)
+                {
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                </div>
+            }
+
+        </div>
+
+    </form>
 }
 
 <div>
