@@ -14,7 +14,7 @@ namespace Mambo.BusinessManagement
             resourcesAccess = new DataAccess.Resources();
         }
 
-        public bool Create(DBO.Resources obj)
+        public int Create(DBO.Resources obj)
         {
             return resourcesAccess.Create(obj);
         }

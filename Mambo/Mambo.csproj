@@ -302,6 +302,8 @@
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Register.cs" />
     <Compile Include="Models\CommentModel.cs" />
+    <Compile Include="Models\ResourceCreationModel.cs" />
+    <Compile Include="Models\SessionBag.cs" />
     <Compile Include="Models\StatisticModel.cs" />
     <Compile Include="Models\UserComment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -374,6 +376,7 @@
     <Content Include="Views\BackOffice\Index.cshtml" />
     <Content Include="Views\BackOffice\Statistics.cshtml" />
     <Content Include="Views\BackOffice\Translate.cshtml" />
+    <Content Include="Views\BackOffice\CreateResource.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

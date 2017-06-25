@@ -24,6 +24,8 @@ namespace Mambo.Controllers
         private BusinessManagement.User userManagement = new BusinessManagement.User();
         private BusinessManagement.Resources resourceManagement = new BusinessManagement.Resources();
 
+        private ArticleCreationModel articleModel;
+
         // GET: BackOffice
         [Authorize(Roles = "ADMIN, TRADUCTEUR")]
         public ActionResult Index()
@@ -93,7 +95,8 @@ namespace Mambo.Controllers
         [Authorize(Roles = "ADMIN, TRADUCTEUR")]
         public ActionResult Create()
         {
-            return View(new ArticleCreationModel());
+            articleModel = new ArticleCreationModel();
+            return View(articleModel);
         }
 
         // POST: BackOffice/Create
@@ -107,36 +110,50 @@ namespace Mambo.Controllers
             {
                 // Création de l'article
                 DBO.User currentUser = userManagement.GetByEmail(HttpContext.User.Identity.Name);
-                DBO.Article article = new DBO.Article(currentUser.Id, DateTime.Now, "WAITING_TRANSLATION", 0);
+                DBO.Article article = new DBO.Article(currentUser.Id, DateTime.Now, "WAITING_TRANSLATION", 0)
+                {
+                    ResourcesList = SessionBag.Current.Resources
+                };
+
                 int articleId = articleManagement.Create(article);
+                DBO.Article updateArticle = articleManagement.Get(articleId);
 
                 // Création de la traduction
                 int languageId = (int)newArticle.Language;
                 DBO.Translation translation = new DBO.Translation(articleId, currentUser.Id, languageId, newArticle.Title, newArticle.Text);
                 translationManagement.Create(translation);
 
-                foreach (DBO.Resources resource in newArticle.Medias)
+                foreach (DBO.Resources resource in SessionBag.Current.Resources)
                 {
                     resource.LanguageId = languageId;
-                    resourceManagement.Create(resource);
+                    int resourceId = resourceManagement.Create(resource);
+                    DBO.Resources updateResource = resourceManagement.Get(resourceId);
+                    articleManagement.Update(updateArticle, updateResource);
                 }
+                SessionBag.Current.Resources = null;
 
                 // Création de la liste de ressources
-
                 return RedirectToAction("Index");
             }
             return View(newArticle);
         }
 
-        public ActionResult CreateResource(Models.ArticleCreationModel newArticle)
+        public ActionResult CreateResource(Models.ResourceCreationModel newResource)
         {
-            DBO.Resources newResource = new DBO.Resources(newArticle.MediaName, newArticle.MediaDescrition, newArticle.MediaPath);
-            ArticleCreationModel test = newArticle;
-            test.Medias.Add(newResource);
-            newArticle.MediaName = "";
-            newArticle.MediaDescrition = "";
-            newArticle.MediaPath = "";
-            return View("Create", test);
+            if (ModelState.IsValid)
+            {
+                List<DBO.Resources> listResources = SessionBag.Current.Resources;
+                if (listResources == null)
+                {
+                    listResources = new List<DBO.Resources>();
+                }
+                DBO.Resources resource = new DBO.Resources(newResource.MediaName, newResource.MediaDescription, newResource.MediaPath);
+                listResources.Add(resource);
+                SessionBag.Current.Resources = listResources;
+                //ModelState.Clear();
+                return View("Create");
+            }
+            return View("Create"); 
         }
 
         // GET: BackOffice/Edit/5

@@ -9,14 +9,14 @@ namespace Mambo.DataAccess
 {
     public class Resources
     {
-        public bool Create(DBO.Resources obj)
+        public int Create(DBO.Resources obj)
         {
             try
             {
                 using (dbNetEntities bdd = new dbNetEntities())
                 {
-                    long resultResources = bdd.CreateResources(obj.Title, obj.Description, obj.Path, obj.LanguageId).FirstOrDefault().Value;
-                    return resultResources > 0;
+                    int resultResources = bdd.CreateResources(obj.Title, obj.Description, obj.Path, obj.LanguageId).FirstOrDefault().Value;
+                    return resultResources;
 
                 }
             }
@@ -24,7 +24,7 @@ namespace Mambo.DataAccess
             {
                 Debug.WriteLine("Resource Exception");
                 Debug.WriteLine(exception.ToString());
-                return false;
+                return 0;
             }
         }
 
