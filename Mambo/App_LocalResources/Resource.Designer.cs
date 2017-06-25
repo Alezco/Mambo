@@ -61,11 +61,29 @@ namespace Mambo.App_LocalResources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Abort.
+        /// </summary>
+        public static string abort {
+            get {
+                return ResourceManager.GetString("abort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à About.
         /// </summary>
         public static string about {
             get {
                 return ResourceManager.GetString("about", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Back.
+        /// </summary>
+        public static string back {
+            get {
+                return ResourceManager.GetString("back", resourceCulture);
             }
         }
         
@@ -79,6 +97,15 @@ namespace Mambo.App_LocalResources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Create.
+        /// </summary>
+        public static string create {
+            get {
+                return ResourceManager.GetString("create", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Date.
         /// </summary>
         public static string date {
@@ -88,11 +115,29 @@ namespace Mambo.App_LocalResources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Favorite.
+        /// </summary>
+        public static string favorite {
+            get {
+                return ResourceManager.GetString("favorite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Home.
         /// </summary>
         public static string home {
             get {
                 return ResourceManager.GetString("home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Select a language.
+        /// </summary>
+        public static string languageSelection {
+            get {
+                return ResourceManager.GetString("languageSelection", resourceCulture);
             }
         }
         
@@ -174,6 +219,15 @@ namespace Mambo.App_LocalResources {
         public static string title {
             get {
                 return ResourceManager.GetString("title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Views.
+        /// </summary>
+        public static string views {
+            get {
+                return ResourceManager.GetString("views", resourceCulture);
             }
         }
     }

@@ -36,15 +36,15 @@
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.Language,
                     new SelectList(Enum.GetValues(typeof(Language))),
-                    "Select a language")
+                    Resource.languageSelection)
             </div>
         </div>
         <br /><br /><br />
         <div class="form-group">
             <div class="col-md-10">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value=@Resource.create class="btn btn-primary" />
                 <br /> <br />
-                @Html.ActionLink("Abort", "Index")
+                @Html.ActionLink(Resource.abort, "Index")
             </div>
         </div>
     </form>

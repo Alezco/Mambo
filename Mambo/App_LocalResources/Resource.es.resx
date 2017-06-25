@@ -117,14 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="abort" xml:space="preserve">
+    <value>Abortar</value>
+  </data>
   <data name="about" xml:space="preserve">
     <value>A proposito</value>
+  </data>
+  <data name="back" xml:space="preserve">
+    <value>Retorno</value>
   </data>
   <data name="content" xml:space="preserve">
     <value>Contenido</value>
   </data>
+  <data name="create" xml:space="preserve">
+    <value>Crear</value>
+  </data>
   <data name="date" xml:space="preserve">
     <value>Fecha</value>
+  </data>
+  <data name="favorite" xml:space="preserve">
+    <value>Favorito</value>
   </data>
   <data name="home" xml:space="preserve">
     <value>Inicio</value>
@@ -153,7 +165,13 @@
   <data name="searchFor" xml:space="preserve">
     <value>Buscar...</value>
   </data>
+  <data name="selectLanguage" xml:space="preserve">
+    <value>Seleccionar un idioma</value>
+  </data>
   <data name="title" xml:space="preserve">
     <value>Título</value>
+  </data>
+  <data name="views" xml:space="preserve">
+    <value>Vistas</value>
   </data>
 </root>

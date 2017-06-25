@@ -117,17 +117,32 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="abort" xml:space="preserve">
+    <value>Abort</value>
+  </data>
   <data name="about" xml:space="preserve">
     <value>About</value>
+  </data>
+  <data name="back" xml:space="preserve">
+    <value>Back</value>
   </data>
   <data name="content" xml:space="preserve">
     <value>Content</value>
   </data>
+  <data name="create" xml:space="preserve">
+    <value>Create</value>
+  </data>
   <data name="date" xml:space="preserve">
     <value>Date</value>
   </data>
+  <data name="favorite" xml:space="preserve">
+    <value>Favorite</value>
+  </data>
   <data name="home" xml:space="preserve">
     <value>Home</value>
+  </data>
+  <data name="languageSelection" xml:space="preserve">
+    <value>Select a language</value>
   </data>
   <data name="lastArticle" xml:space="preserve">
     <value>Last articles</value>
@@ -155,5 +170,8 @@
   </data>
   <data name="title" xml:space="preserve">
     <value>Title</value>
+  </data>
+  <data name="views" xml:space="preserve">
+    <value>Views</value>
   </data>
 </root>

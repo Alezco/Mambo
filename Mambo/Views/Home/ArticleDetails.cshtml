@@ -19,7 +19,7 @@
                 <button onclick="location.href='@Url.Action("LikeAction", "Home", new { modelID = Model.Article.Id }, null)'" type="submit" name="submitbutton1" class="btn btn-default btn-sm">
                     <span class="glyphicon glyphicon-star">
                     </span>
-                    Favorite
+                    @Resource.favorite
                     @if (Model.NbLikes != -1)
                     {
                         @Model.NbLikes
@@ -33,12 +33,12 @@
                 <button onclick="location.href='@Url.Action("LikeAction", "Home", new { modelID = Model.Article.Id }, null)'" type="submit" name="submitbutton1" class="btn btn-default btn-sm">
                     <span class="glyphicon glyphicon-star" style="color: yellow">
                     </span>
-                    Favorite  @Model.NbLikes
+                    @Resource.favorite  @Model.NbLikes
                 </button>
             </div>
         }
         <div class="text-center buttonLine">
-            <button class="btn btn-default btn-sm"><span style="padding-right: 30px;" class="glyphicon glyphicon-globe"></span>@Model.NbViews views</button>
+            <button class="btn btn-default btn-sm"><span style="padding-right: 30px;" class="glyphicon glyphicon-globe"></span>@Model.NbViews @Resource.views</button>
         </div>
     </div>
     <hr />
