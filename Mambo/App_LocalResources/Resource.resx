@@ -123,8 +123,14 @@
   <data name="about" xml:space="preserve">
     <value>About</value>
   </data>
+  <data name="aboutText" xml:space="preserve">
+    <value>Mambo is a website where you can post and see articles about music.</value>
+  </data>
   <data name="back" xml:space="preserve">
     <value>Back</value>
+  </data>
+  <data name="connectNeeded" xml:space="preserve">
+    <value>You need to be connected to comment and to see the comments of this article</value>
   </data>
   <data name="content" xml:space="preserve">
     <value>Content</value>
@@ -135,8 +141,17 @@
   <data name="date" xml:space="preserve">
     <value>Date</value>
   </data>
+  <data name="errorText" xml:space="preserve">
+    <value>An error occured during the treatment of your request.</value>
+  </data>
+  <data name="errorTitle" xml:space="preserve">
+    <value>Error.</value>
+  </data>
   <data name="favorite" xml:space="preserve">
     <value>Favorite</value>
+  </data>
+  <data name="have" xml:space="preserve">
+    <value>Have</value>
   </data>
   <data name="home" xml:space="preserve">
     <value>Home</value>
