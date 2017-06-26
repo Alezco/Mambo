@@ -1,6 +1,6 @@
 ﻿@model Mambo.Models.Register
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = Resource.register;
 }
 
 <h2>@ViewBag.Title</h2>
@@ -11,33 +11,34 @@
 {
     <form>
         <div class="input-group">
-            <label>@Html.LabelFor(m => m.UserName)</label>
+            <label>@Resource.username</label>
             <br />
             @Html.TextBoxFor(m => m.UserName)
             <br />
             @Html.ValidationMessageFor(m => m.UserName)
         </div>
         <div class="input-group">
-            <label>@Html.LabelFor(m => m.Email)</label>
+            <label>@Resource.email</label>
             <br />
             @Html.TextBoxFor(m => m.Email)
             <br />
             @Html.ValidationMessageFor(m => m.Email)
         </div>
         <div class="input-group">
-            <label>@Html.LabelFor(m => m.Password)</label>
+            <label>@Resource.password</label>
             <br />
             @Html.PasswordFor(m => m.Password)
             <br />
             @Html.ValidationMessageFor(m => m.Password)
         </div>
         <div class="input-group">
-            <label>@Html.LabelFor(m => m.PasswordConfirm)</label>
+            <label>@Resource.passwordConfirm</label>
             <br />
             @Html.PasswordFor(m => m.PasswordConfirm)
             <br />
             @Html.ValidationMessageFor(m => m.PasswordConfirm)
         </div>
-        <input type="submit" class="btn btn-primary" value="Register" />
+        <br />
+        <input type="submit" class="btn btn-primary" value="@Resource.register" />
 </form>
 }

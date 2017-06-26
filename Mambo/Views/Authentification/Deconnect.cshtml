@@ -1,8 +1,8 @@
 ﻿
 @{
-    ViewBag.Title = "Disconnect";
+    ViewBag.Title = Resource.logout;
 }
 
-<h2>Disconnect @HttpContext.Current.User.Identity.Name ?</h2>
+<h2>@Resource.disconnect @HttpContext.Current.User.Identity.Name ?</h2>
 
-<input type="button" value="Log out" class="btn btn-danger" onclick="location.href='@Url.Action("DeconnectAction")'" />
+<input type="button" value="@Resource.logout" class="btn btn-danger" onclick="location.href='@Url.Action("DeconnectAction")'" />
