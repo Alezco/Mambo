@@ -3,23 +3,23 @@
 @model Mambo.Models.StatisticModel
 
 @{
-    ViewBag.Title = "Statistics";
+    ViewBag.Title = Resource.stats;
 }
 
-<h1>Mambo Statistics</h1>
+<h1>Mambo @ViewBag.Title</h1>
 
-<p>Number of articles : @Model.ArticleList.Count</p>
+<p>@Resource.numberArticles: @Model.ArticleList.Count</p>
 
-<h2>Validated articles</h2>
+<h2>@Resource.validatedArticles</h2>
 
 <table class="table">
     <tr>
         <th>Id</th>
-        <th>Title</th>
-        <th>@Html.ActionLink("Date", "Statistics", new { sortOrder = "sortDate" })</th>
-        <th>@Html.ActionLink("Views", "Statistics", new { sortOrder = "sortView" })</th>
-        <th>@Html.ActionLink("Comments", "Statistics", new { sortOrder = "sortComment" })</th>
-        <th>@Html.ActionLink("Likes", "Statistics", new { sortOrder = "sortLike" })</th>
+        <th>@Resource.title</th>
+        <th>@Html.ActionLink(Resource.date, "Statistics", new { sortOrder = "sortDate" })</th>
+        <th>@Html.ActionLink(Resource.views, "Statistics", new { sortOrder = "sortView" })</th>
+        <th>@Html.ActionLink(Resource.comments, "Statistics", new { sortOrder = "sortComment" })</th>
+        <th>@Html.ActionLink(Resource.likes, "Statistics", new { sortOrder = "sortLike" })</th>
     </tr>
 
     @foreach (var article in Model.ArticleList)

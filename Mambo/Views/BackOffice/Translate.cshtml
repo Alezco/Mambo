@@ -1,19 +1,19 @@
 ﻿@model Mambo.Models.ArticleTranslateModel
 
 @{
-    ViewBag.Title = "Translate";
+    ViewBag.Title = Resource.translate;
 }
 
-<h2>Translate</h2>
+<h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("Translate", "BackOffice"))
+@using (Html.BeginForm(Resource.translate, "BackOffice"))
 {
     @Html.AntiForgeryToken()
 
     <form>
 
         <div class="form-horizontal">
-            <h4>Article</h4>
+            <h4>@Resource.article</h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -21,7 +21,7 @@
 
             @if (Model.Article.ResourcesList.Count == 0)
             {
-                @Html.Label("No resource found for this article", htmlAttributes: new { @class = "control-label col-md-4", style = "color: #e30c37" });
+                @Html.Label(Resource.noResource, htmlAttributes: new { @class = "control-label col-md-4", style = "color: #e30c37" });
             }
             else
             {
@@ -80,20 +80,20 @@
                 if (translation.TranslatorId == Model.Article.AdminId)
                 {
                     <div class="row">
-                        <label>Original version is :</label> <br />
-                        <label>Title :</label>
+                        <label>@Resource.originalVersion</label> <br />
+                        <label>@Resource.title</label>
                         <text>@translation.TranslationArticleTitle</text><br />
-                        <label>Content :</label>
+                        <label>@Resource.content</label>
                         <text>@translation.TranslationArticleContent</text>
                     </div>
                 }
                 else
                 {
                     <div class="row">
-                        <label>Translated Version</label> <br />
-                        <label>Title :</label>
+                        <label>@Resource.translatedVersion</label> <br />
+                        <label>@Resource.title</label>
                         <text>@translation.TranslationArticleTitle</text><br />
-                        <label>Content :</label>
+                        <label>@Resource.content</label>
                         <text>@translation.TranslationArticleContent</text>
                     </div>
                 }
@@ -104,12 +104,12 @@
             <div class="row">
                 @if (Model.LanguageSelectList.Count > 0)
                 {
-                    <h3>Translate this article</h3>
-                    @Html.Label("Language", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <h3>@Resource.translateArticle</h3>
+                    @Html.Label(Resource.language, htmlAttributes: new { @class = "control-label col-md-2" })
                     @Html.DropDownListFor(l => l.SelectedLanguage, Model.LanguageSelectList);
                     <br /><br /><br />
                     <div class="form-group">
-                        @Html.Label("Title", htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.Label(Resource.title, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.NewTranslation.TranslationArticleTitle, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.NewTranslation.TranslationArticleTitle, "", new { @class = "text-danger" })
@@ -117,7 +117,7 @@
                     </div>
                     <br /><br /><br />
                     <div class="form-group">
-                        @Html.Label("Content", htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.Label(Resource.content, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
                             @Html.TextAreaFor(model => model.NewTranslation.TranslationArticleContent, new { @class = "form-control", rows = "3", style = "min-width: 100%" })
                             @Html.ValidationMessageFor(model => model.NewTranslation.TranslationArticleContent, "", new { @class = "text-danger" })
@@ -130,7 +130,7 @@
                 {
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Save" class="btn btn-default" />
+                        <input type="submit" value="@Resource.save" class="btn btn-default" />
                     </div>
                 </div>
             }

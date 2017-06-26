@@ -3,7 +3,7 @@
 
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = Resource.home;
 }
 
 <div class="jumbotron">
@@ -14,18 +14,18 @@
 
 @if (@HttpContext.Current.User.IsInRole("ADMIN"))
 {
-    <h3>@Html.ActionLink("Create an article", "Create")</h3>
-    <h3>@Html.ActionLink("View articles statistics", "Statistics")</h3>
+    <h3>@Html.ActionLink(Resource.createArticle, "Create")</h3>
+    <h3>@Html.ActionLink(Resource.viewStats, "Statistics")</h3>
 }
 
-<h2>Pending articles</h2>
+<h2>@Resource.pendingArticles</h2>
 
 <table class="table">
     <tr>
         <th></th>
         <th>Id</th>
-        <th>Date</th>
-        <th>Status</th>
+        <th>@Resource.date</th>
+        <th>@Resource.status</th>
     </tr>
 
    @foreach (var article in Model)
@@ -54,7 +54,7 @@
         @if (@HttpContext.Current.User.IsInRole("ADMIN"))
         {
             <td>
-                @Html.ActionLink("Read", "Details", new { id = @article.Id })
+                @Html.ActionLink(Resource.read, "Details", new { id = @article.Id })
             </td>
         }
         else
@@ -62,13 +62,13 @@
             if (article.Status == "WAITING_VALIDATION")
             {
                 <td>
-                    @Html.ActionLink("Modify", "Translate", new { id = @article.Id })
+                    @Html.ActionLink(Resource.modify, "Translate", new { id = @article.Id })
                 </td>
             }
             else
             {
                 <td>
-                    @Html.ActionLink("Translate", "Translate", new { id = @article.Id })
+                    @Html.ActionLink(Resource.translate, "Translate", new { id = @article.Id })
                 </td>
             }
         }

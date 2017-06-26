@@ -1,17 +1,17 @@
 ﻿@model Mambo.DBO.Article
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = Resource.edit;
 }
 
-<h2>Edit</h2>
+<h2>@ViewBag.Title</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Article</h4>
+        <h4>@Resource.article</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -52,7 +52,7 @@
         <table class="table">
             @if (Model.ResourcesList.Count == 0)
             {
-                @Html.Label("No resource found for this article", htmlAttributes: new { @class = "control-label col-md-4" , style= "color: #e30c37" });
+                @Html.Label(Resource.noResource, htmlAttributes: new { @class = "control-label col-md-4" , style= "color: #e30c37" });
             }
             else
             {
@@ -90,21 +90,21 @@
         </table>
 
 
-        @using (Html.BeginForm("Edit", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+        @using (Html.BeginForm(Resource.edit, "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
         {
-            @Html.Label("Resources", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label(Resource.resource, htmlAttributes: new { @class = "control-label col-md-2" })
             @Html.DropDownList("ResourcesList")
-            <input type="submit" class="btn btn-default" value="Add" />
+            <input type="submit" class="btn btn-default" value="@Resource.add" />
         }
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="@Resource.save" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink(Resource.back, "Index")
 </div>

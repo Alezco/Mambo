@@ -2,7 +2,7 @@
 @model ArticleDetailModel
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Resource.details;
 }
 
 <h1 class="text-center">@Model.Translations.FirstOrDefault().TranslationArticleTitle</h1>
@@ -30,7 +30,7 @@
         </p>
 
         <div class="row">
-            <h4 class="text-center">Médias</h4>
+            <h4 class="text-center">@Resource.medias</h4>
             @foreach (var media in Model.Article.ResourcesList)
             {
                 if (media.LanguageId == translation.LanguageId)
@@ -72,10 +72,10 @@
 @if (Model.Article.Status.Equals("WAITING_VALIDATION"))
 {
     @Html.ValidationSummary(true)
-    using (Html.BeginForm("ValidateArticle", "BackOffice", new { id = Model.Article.Id }, FormMethod.Post))
+    using (Html.BeginForm(Resource.validateArticle, "BackOffice", new { id = Model.Article.Id }, FormMethod.Post))
     {
         @Html.AntiForgeryToken()
-        <input type="submit" class="btn btn-primary" value="Valider" />
+        <input type="submit" class="btn btn-primary" value="@Resource.validate" />
         <br />
     }
 }

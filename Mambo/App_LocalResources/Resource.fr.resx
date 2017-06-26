@@ -138,6 +138,9 @@
   <data name="back" xml:space="preserve">
     <value>Retour</value>
   </data>
+  <data name="comments" xml:space="preserve">
+    <value>Commentaires</value>
+  </data>
   <data name="connectNeeded" xml:space="preserve">
     <value>Vous devez être connecté pour commenter et voir des commentaires sur un article</value>
   </data>
@@ -147,14 +150,23 @@
   <data name="create" xml:space="preserve">
     <value>Créer</value>
   </data>
+  <data name="createArticle" xml:space="preserve">
+    <value>Créer un article</value>
+  </data>
   <data name="date" xml:space="preserve">
     <value>Date</value>
   </data>
   <data name="description" xml:space="preserve">
     <value>Description</value>
   </data>
+  <data name="details" xml:space="preserve">
+    <value>Détails</value>
+  </data>
   <data name="disconnect" xml:space="preserve">
     <value>Déconnecter</value>
+  </data>
+  <data name="edit" xml:space="preserve">
+    <value>Modifier</value>
   </data>
   <data name="email" xml:space="preserve">
     <value>Email</value>
@@ -183,11 +195,29 @@
   <data name="lastArticle" xml:space="preserve">
     <value>Derniers articles</value>
   </data>
+  <data name="likes" xml:space="preserve">
+    <value>J'aime</value>
+  </data>
   <data name="login" xml:space="preserve">
     <value>Connexion</value>
   </data>
   <data name="logout" xml:space="preserve">
     <value>Déconnexion</value>
+  </data>
+  <data name="medias" xml:space="preserve">
+    <value>Médias</value>
+  </data>
+  <data name="modify" xml:space="preserve">
+    <value>Modifier</value>
+  </data>
+  <data name="noResource" xml:space="preserve">
+    <value>Pas de ressource trouvée pour cet article</value>
+  </data>
+  <data name="numberArticles" xml:space="preserve">
+    <value>Nombre d'articles</value>
+  </data>
+  <data name="originalVersion" xml:space="preserve">
+    <value>Version originale</value>
   </data>
   <data name="password" xml:space="preserve">
     <value>Mot de passe</value>
@@ -198,6 +228,9 @@
   <data name="path" xml:space="preserve">
     <value>Chemin</value>
   </data>
+  <data name="pendingArticles" xml:space="preserve">
+    <value>Articles en attente</value>
+  </data>
   <data name="read" xml:space="preserve">
     <value>Lire</value>
   </data>
@@ -207,8 +240,14 @@
   <data name="rememberme" xml:space="preserve">
     <value>Se souvenir</value>
   </data>
+  <data name="resource" xml:space="preserve">
+    <value>Ressource</value>
+  </data>
   <data name="rss" xml:space="preserve">
     <value>Flux RSS</value>
+  </data>
+  <data name="save" xml:space="preserve">
+    <value>Sauvegarder</value>
   </data>
   <data name="search" xml:space="preserve">
     <value>Rechercher</value>
@@ -216,16 +255,43 @@
   <data name="searchFor" xml:space="preserve">
     <value>Rechercher...</value>
   </data>
+  <data name="stats" xml:space="preserve">
+    <value>Statistiques</value>
+  </data>
+  <data name="status" xml:space="preserve">
+    <value>Statut</value>
+  </data>
   <data name="text" xml:space="preserve">
     <value>Texte</value>
   </data>
   <data name="title" xml:space="preserve">
     <value>Titre</value>
   </data>
+  <data name="translate" xml:space="preserve">
+    <value>Traduire</value>
+  </data>
+  <data name="translateArticle" xml:space="preserve">
+    <value>Traduisez cet article</value>
+  </data>
+  <data name="translatedVersion" xml:space="preserve">
+    <value>Version traduite</value>
+  </data>
   <data name="username" xml:space="preserve">
     <value>Nom d'utilisateur</value>
   </data>
+  <data name="validate" xml:space="preserve">
+    <value>Valider</value>
+  </data>
+  <data name="validateArticle" xml:space="preserve">
+    <value>Valider l'article</value>
+  </data>
+  <data name="validatedArticles" xml:space="preserve">
+    <value>Articles validés</value>
+  </data>
   <data name="views" xml:space="preserve">
     <value>Vues</value>
+  </data>
+  <data name="viewStats" xml:space="preserve">
+    <value>Voir les statistiques des articles</value>
   </data>
 </root>

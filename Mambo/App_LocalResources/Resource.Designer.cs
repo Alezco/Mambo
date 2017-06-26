@@ -124,6 +124,15 @@ namespace Mambo.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Comments.
+        /// </summary>
+        public static string comments {
+            get {
+                return ResourceManager.GetString("comments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You need to be connected to comment and to see the comments of this article.
         /// </summary>
         public static string connectNeeded {
@@ -151,6 +160,15 @@ namespace Mambo.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create an article.
+        /// </summary>
+        public static string createArticle {
+            get {
+                return ResourceManager.GetString("createArticle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date.
         /// </summary>
         public static string date {
@@ -169,11 +187,29 @@ namespace Mambo.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Details.
+        /// </summary>
+        public static string details {
+            get {
+                return ResourceManager.GetString("details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disconnect.
         /// </summary>
         public static string disconnect {
             get {
                 return ResourceManager.GetString("disconnect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string edit {
+            get {
+                return ResourceManager.GetString("edit", resourceCulture);
             }
         }
         
@@ -259,6 +295,15 @@ namespace Mambo.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Likes.
+        /// </summary>
+        public static string likes {
+            get {
+                return ResourceManager.GetString("likes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Log in.
         /// </summary>
         public static string login {
@@ -273,6 +318,51 @@ namespace Mambo.App_LocalResources {
         public static string logout {
             get {
                 return ResourceManager.GetString("logout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Medias.
+        /// </summary>
+        public static string medias {
+            get {
+                return ResourceManager.GetString("medias", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modify.
+        /// </summary>
+        public static string modify {
+            get {
+                return ResourceManager.GetString("modify", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No resource found for this article.
+        /// </summary>
+        public static string noResource {
+            get {
+                return ResourceManager.GetString("noResource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of articles.
+        /// </summary>
+        public static string numberArticles {
+            get {
+                return ResourceManager.GetString("numberArticles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Original version.
+        /// </summary>
+        public static string originalVersion {
+            get {
+                return ResourceManager.GetString("originalVersion", resourceCulture);
             }
         }
         
@@ -304,6 +394,15 @@ namespace Mambo.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pending articles.
+        /// </summary>
+        public static string pendingArticles {
+            get {
+                return ResourceManager.GetString("pendingArticles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Read.
         /// </summary>
         public static string read {
@@ -331,11 +430,29 @@ namespace Mambo.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Resource.
+        /// </summary>
+        public static string resource {
+            get {
+                return ResourceManager.GetString("resource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to RSS Feed.
         /// </summary>
         public static string rss {
             get {
                 return ResourceManager.GetString("rss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string save {
+            get {
+                return ResourceManager.GetString("save", resourceCulture);
             }
         }
         
@@ -358,6 +475,24 @@ namespace Mambo.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Statistics.
+        /// </summary>
+        public static string stats {
+            get {
+                return ResourceManager.GetString("stats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string status {
+            get {
+                return ResourceManager.GetString("status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Text.
         /// </summary>
         public static string text {
@@ -376,6 +511,33 @@ namespace Mambo.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Translate.
+        /// </summary>
+        public static string translate {
+            get {
+                return ResourceManager.GetString("translate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Translate this article.
+        /// </summary>
+        public static string translateArticle {
+            get {
+                return ResourceManager.GetString("translateArticle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Translated version.
+        /// </summary>
+        public static string translatedVersion {
+            get {
+                return ResourceManager.GetString("translatedVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Username.
         /// </summary>
         public static string username {
@@ -385,11 +547,47 @@ namespace Mambo.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Validate.
+        /// </summary>
+        public static string validate {
+            get {
+                return ResourceManager.GetString("validate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Validate article.
+        /// </summary>
+        public static string validateArticle {
+            get {
+                return ResourceManager.GetString("validateArticle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Validated Articles.
+        /// </summary>
+        public static string validatedArticles {
+            get {
+                return ResourceManager.GetString("validatedArticles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Views.
         /// </summary>
         public static string views {
             get {
                 return ResourceManager.GetString("views", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View articles statistics.
+        /// </summary>
+        public static string viewStats {
+            get {
+                return ResourceManager.GetString("viewStats", resourceCulture);
             }
         }
     }
