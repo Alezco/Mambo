@@ -171,7 +171,6 @@ namespace Mambo.Controllers
                 DBO.Resources resource = new DBO.Resources(newResource.MediaName, newResource.MediaDescription, newResource.MediaPath);
                 listResources.Add(resource);
                 SessionBag.Current.Resources = listResources;
-                //ModelState.Clear();
                 return View("Create");
             }
             return View("Create"); 
@@ -271,9 +270,6 @@ namespace Mambo.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Translate(Models.ArticleTranslateModel translateModel)
         {
-
-            ArticleTranslateModel test = translateModel;
-
             List<DBO.Language> allLanguages = languageManagement.GetAll();
             List<DBO.Translation> translations = translationManagement.GetTranslationsByArticleId(translateModel.Article.Id);
             List<DBO.Language> languages = new List<DBO.Language>();
@@ -288,42 +284,55 @@ namespace Mambo.Controllers
                 allLanguages.Remove(item);
             }
             
-            /*
             List<SelectListItem> items = new List<SelectListItem>();
             if (ModelState.IsValid)
             {
                 int selectedLanguage = int.Parse(translateModel.SelectedLanguage);
-                if (titleTranslatedString != null && contentTranslatedString != null)
+                if (translateModel.NewTranslation.TranslationArticleTitle != null && translateModel.NewTranslation.TranslationArticleContent != null)
                 {
-                    if (titleTranslatedString.Trim() != "" && contentTranslatedString.Trim() != "")
+                    if (translateModel.NewTranslation.TranslationArticleTitle.Trim() != "" && translateModel.NewTranslation.TranslationArticleContent.Trim() != "")
                     {
                         DBO.Language curLang = allLanguages.Where(x => x.Id == selectedLanguage).FirstOrDefault();
                         DBO.Translation curTranslate = translations.Where(x => x.LanguageId == curLang.Id).FirstOrDefault();
-                        
                         string str = User.Identity.Name;
                         DBO.User curUser = userManagement.GetByEmail(str);
-                        
+                        DBO.Article updateArticle = articleManagement.Get(translateModel.Article.Id);
+                        if (updateArticle.Status.Equals("WAITING_TRANSLATION"))
+                            updateArticle.Status = "WAITING_VALIDATION";
+                        articleManagement.Update(updateArticle);
+
                         if (curTranslate != null)
                         {
-                            curTranslate.TranslationArticleContent = contentTranslatedString;
-                            curTranslate.TranslationArticleTitle = titleTranslatedString;
+                            curTranslate.TranslationArticleContent = translateModel.NewTranslation.TranslationArticleContent;
+                            curTranslate.TranslationArticleTitle = translateModel.NewTranslation.TranslationArticleTitle;
                             curTranslate.TranslatorId = curUser.Id;
                             translationManagement.Update(curTranslate);
                         }
                         else
                         {
-                            curTranslate = new DBO.Translation();
-                            curTranslate.LanguageId = curLang.Id;
-                            curTranslate.ArticleId = translateModel.Article.Id;
-                            curTranslate.TranslationArticleContent = contentTranslatedString;
-                            curTranslate.TranslationArticleTitle = titleTranslatedString;
-                            curTranslate.TranslatorId = curUser.Id;
+                            curTranslate = new DBO.Translation()
+                            {
+                                LanguageId = curLang.Id,
+                                ArticleId = translateModel.Article.Id,
+                                TranslationArticleContent = translateModel.NewTranslation.TranslationArticleContent,
+                                TranslationArticleTitle = translateModel.NewTranslation.TranslationArticleTitle,
+                                TranslatorId = curUser.Id
+                            };
                             translationManagement.Create(curTranslate);
                         }
+
+                        foreach (DBO.Resources resource in translateModel.Resources)
+                        {
+                            resource.LanguageId = curLang.Id;
+                            int resourceId = resourceManagement.Create(resource);
+                            DBO.Resources updateResource = resourceManagement.Get(resourceId);
+                            articleManagement.Update(updateArticle, updateResource);
+                        }
+
                         return RedirectToAction("Index");
                     }
                 }
-            }*/
+            }
             return View(translateModel);
         }
 

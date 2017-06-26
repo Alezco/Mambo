@@ -44,7 +44,7 @@
     <hr />
 
         <div class="row">
-            <h4 class="text-center">@Model.Translations.FirstOrDefault().TranslationArticleTitle @Resource.have @Model.Article.ResourcesList.Count médias</h4>
+            <h4 class="text-center">@Model.Translations.FirstOrDefault().TranslationArticleTitle @Resource.have @Model.Article.ResourcesList.Where(x => x.LanguageId == 1).ToList().Count médias</h4>
             @foreach (var media in Model.Article.ResourcesList)
             {
                 if (media.LanguageId == @Model.Translations.FirstOrDefault().LanguageId)
