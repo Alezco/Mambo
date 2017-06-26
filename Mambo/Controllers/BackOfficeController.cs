@@ -10,9 +10,11 @@ using Mambo.DBO;
 using Mambo.DataAccess;
 using Mambo.Models;
 using System.Diagnostics;
+using Mambo.LanguageManagement;
 
 namespace Mambo.Controllers
 {
+    [Localization("en")]
     public class BackOfficeController : Controller
     {
         private dbNetEntities db = new dbNetEntities();

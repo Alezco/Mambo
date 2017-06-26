@@ -1,4 +1,5 @@
-﻿using Mambo.Models;
+﻿using Mambo.LanguageManagement;
+using Mambo.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Web.Security;
 
 namespace Mambo.Controllers
 {
+    [Localization("en")]
     public class AuthentificationController : Controller
     {
         // GET: Authentification

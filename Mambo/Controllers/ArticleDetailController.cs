@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mambo.LanguageManagement;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,6 +7,7 @@ using System.Web.Mvc;
 
 namespace Mambo.Controllers
 {
+    [Localization("en")]
     public class ArticleDetailController : Controller
     {
         // GET: ArticleDetail
@@ -13,8 +15,5 @@ namespace Mambo.Controllers
         {
             return View();
         }
-
-
-        
     }
 }
