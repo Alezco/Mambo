@@ -6,11 +6,11 @@
 
 @if (Mambo.Models.SessionBag.Current.Resources != null)
 {
-    <h3>Add a resource - actual number : @Mambo.Models.SessionBag.Current.Resources.Count</h3>
+    <h3>@Resource.addResource @Mambo.Models.SessionBag.Current.Resources.Count</h3>
 }
 else
 {
-    <h3>Add a resource - actual number : 0</h3>
+    <h3>@Resource.addResource 0</h3>
 }
 
 @using (Html.BeginForm("CreateResource", "BackOffice"))
@@ -19,7 +19,7 @@ else
 
     <form>
         <div class="form-group">
-            @Html.Label("Title", htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">@Resource.title</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.MediaName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.MediaName, "", new { @class = "text-danger" })
@@ -27,7 +27,7 @@ else
         </div>
         <br /><br /><br />
         <div class="form-group">
-            @Html.Label("Description", htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">@Resource.description</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.MediaDescription, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.MediaDescription, "", new { @class = "text-danger" })
@@ -35,7 +35,7 @@ else
         </div>
         <br /><br />
         <div class="form-group">
-            @Html.Label("Path", htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">@Resource.path</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.MediaPath, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.MediaPath, "", new { @class = "text-danger" })
@@ -44,7 +44,7 @@ else
         <br /><br /><br />
         <div class="form-group">
             <div class="col-md-10">
-                <input type="submit" value="Add" class="btn btn-primary" />
+                <input type="submit" value="@Resource.add" class="btn btn-primary" />
                 <br /> <br />
             </div>
         </div>

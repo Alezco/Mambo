@@ -126,6 +126,12 @@
   <data name="aboutText" xml:space="preserve">
     <value>Mambo est un site où vous pouvez poster et voir des articles sur la musique.</value>
   </data>
+  <data name="add" xml:space="preserve">
+    <value>Ajouter</value>
+  </data>
+  <data name="addResource" xml:space="preserve">
+    <value>Ajouter une ressource - nombre actuel :</value>
+  </data>
   <data name="article" xml:space="preserve">
     <value>Article</value>
   </data>
@@ -143,6 +149,9 @@
   </data>
   <data name="date" xml:space="preserve">
     <value>Date</value>
+  </data>
+  <data name="description" xml:space="preserve">
+    <value>Description</value>
   </data>
   <data name="disconnect" xml:space="preserve">
     <value>Déconnecter</value>
@@ -165,6 +174,9 @@
   <data name="home" xml:space="preserve">
     <value>Accueil</value>
   </data>
+  <data name="language" xml:space="preserve">
+    <value>Langue</value>
+  </data>
   <data name="languageSelection" xml:space="preserve">
     <value>Sélectionner une langue</value>
   </data>
@@ -183,6 +195,9 @@
   <data name="passwordConfirm" xml:space="preserve">
     <value>Confirmation de mot de passe</value>
   </data>
+  <data name="path" xml:space="preserve">
+    <value>Chemin</value>
+  </data>
   <data name="read" xml:space="preserve">
     <value>Lire</value>
   </data>
@@ -200,6 +215,9 @@
   </data>
   <data name="searchFor" xml:space="preserve">
     <value>Rechercher...</value>
+  </data>
+  <data name="text" xml:space="preserve">
+    <value>Texte</value>
   </data>
   <data name="title" xml:space="preserve">
     <value>Titre</value>

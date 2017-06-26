@@ -88,6 +88,24 @@ namespace Mambo.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string add {
+            get {
+                return ResourceManager.GetString("add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a resource - actual number:.
+        /// </summary>
+        public static string addResource {
+            get {
+                return ResourceManager.GetString("addResource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Article.
         /// </summary>
         public static string article {
@@ -138,6 +156,15 @@ namespace Mambo.App_LocalResources {
         public static string date {
             get {
                 return ResourceManager.GetString("date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string description {
+            get {
+                return ResourceManager.GetString("description", resourceCulture);
             }
         }
         
@@ -205,6 +232,15 @@ namespace Mambo.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string language {
+            get {
+                return ResourceManager.GetString("language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select a language.
         /// </summary>
         public static string languageSelection {
@@ -259,6 +295,15 @@ namespace Mambo.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Path.
+        /// </summary>
+        public static string path {
+            get {
+                return ResourceManager.GetString("path", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Read.
         /// </summary>
         public static string read {
@@ -309,6 +354,15 @@ namespace Mambo.App_LocalResources {
         public static string searchFor {
             get {
                 return ResourceManager.GetString("searchFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text.
+        /// </summary>
+        public static string text {
+            get {
+                return ResourceManager.GetString("text", resourceCulture);
             }
         }
         
