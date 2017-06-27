@@ -4,23 +4,11 @@
 
 @{
     ViewBag.Title = Resource.stats;
-    var lang = Request.RequestContext.RouteData.Values["lang"];
-    var langId = 0;
-    if (lang.Equals("fr"))
-    {
-        langId = 1;
-    }
-    else if (lang.Equals("en"))
-    {
-        langId = 2;
-    }
-    else
-    {
-        langId = 3;
-    }
 }
 
 <h1>Mambo @ViewBag.Title</h1>
+
+<p>@Resource.numberArticles: @Model.ArticleList.Count</p>
 
 <h2>@Resource.validatedArticles</h2>
 
@@ -37,21 +25,20 @@
     @foreach (var article in Model.ArticleList)
     {
         // Langue à définir en fonction du choix de l'utilisateur
-        foreach (var translation in article.Translations)
+        var translation = article.Translations.FirstOrDefault();
+        if (translation != null)
         {
-            if (translation.LanguageId == langId)
-            {
-                <tr>
-                    <td>@article.Article.Id</td>
-                    <td>@translation.TranslationArticleTitle</td>
-                    <td>@article.Article.CreationDate</td>
-                    <td>@article.Article.NbViews</td>
-                    <td>@article.NbComments</td>
-                    <td>@article.NbLikes</td>
-                </tr>
-            }
+            <tr>
+                <td>@article.Article.Id</td>
+                <td>@translation.TranslationArticleTitle</td>
+                <td>@article.Article.CreationDate</td>
+                <td>@article.Article.NbViews</td>
+                <td>@article.NbComments</td>
+                <td>@article.NbLikes</td>
+            </tr>
         }
     }
+  
 </table>
 
 <hr />
