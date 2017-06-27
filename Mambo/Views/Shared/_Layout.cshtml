@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Mambo.LanguageManagement
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -28,6 +29,16 @@
                     <li>@Html.ActionLink(Resource.about, "About", "Home")</li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    <li style="padding-top: 7px;">
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">Language</button>
+                            <ul class="dropdown-menu">
+                                @Url.LangSwitcher("English", ViewContext.RouteData, "en")
+                                @Url.LangSwitcher("Français", ViewContext.RouteData, "fr")
+                                @Url.LangSwitcher("Espanol", ViewContext.RouteData, "es")
+                            </ul>
+                        </div>
+                    </li>
                     @if (@HttpContext.Current.User.IsInRole("ADMIN") || @HttpContext.Current.User.IsInRole("TRADUCTEUR"))
                     {
                         <li>@Html.ActionLink("Back Office", "Index", "BackOffice")</li>
@@ -42,10 +53,8 @@
                         <li>@Html.ActionLink(Resource.login, "Login", "Authentification")</li>
                         <li>@Html.ActionLink(Resource.register, "Register", "Authentification")</li>
                     }
-                    
                 </ul>
             </div>
-                
         </div>
     </div>
     <div class="container body-content">

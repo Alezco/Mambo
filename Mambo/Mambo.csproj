@@ -292,6 +292,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="LanguageManagement\BaseController.cs" />
+    <Compile Include="LanguageManagement\LanguageHelper.cs" />
     <Compile Include="LanguageManagement\LocalizationAttribute.cs" />
     <Compile Include="LanguageManagement\LocalizationControllerActivator.cs" />
     <Compile Include="Models\ArticleCreationModel.cs" />
