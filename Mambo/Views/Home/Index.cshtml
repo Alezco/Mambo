@@ -4,6 +4,20 @@
 
 @{
     ViewBag.Title = "Mambo";
+    var lang = Request.RequestContext.RouteData.Values["lang"];
+    var langId = 0;
+    if (lang.Equals("fr"))
+    {
+        langId = 1;
+    }
+    else if (lang.Equals("en"))
+    {
+        langId = 2;
+    }
+    else
+    {
+        langId = 3;
+    }
 }
 
 <div class="jumbotron">
@@ -36,7 +50,7 @@
         foreach (var translation in Model.Translations)
         {
             // Langue à définir en fonction du choix de l'utilisateur
-            if (article.Id == translation.ArticleId && translation.LanguageId == 1)
+            if (article.Id == translation.ArticleId && translation.LanguageId == langId)
             {
                 <tr>
                     <td>

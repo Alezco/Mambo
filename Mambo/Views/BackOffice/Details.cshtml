@@ -3,9 +3,28 @@
 
 @{
     ViewBag.Title = Resource.details;
+    var lang = Request.RequestContext.RouteData.Values["lang"];
+    var langId = 0;
+    if (lang.Equals("fr"))
+    {
+        langId = 1;
+    }
+    else if (lang.Equals("en"))
+    {
+        langId = 2;
+    }
+    else
+    {
+        langId = 3;
+    }
+    var article = Model.Translations.Where(x => x.LanguageId == langId).FirstOrDefault();
+    if (article == null)
+    {
+        article = Model.Translations.FirstOrDefault();
+    }
 }
 
-<h1 class="text-center">@Model.Translations.FirstOrDefault().TranslationArticleTitle</h1>
+<h1 class="text-center">@article.TranslationArticleTitle</h1>
 <h6 class="text-center"><span style="padding-right: 30px;" class="glyphicon glyphicon-calendar"></span>@Model.Article.CreationDate</h6>
 
 @foreach (var translation in Model.Translations)

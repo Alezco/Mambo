@@ -3,14 +3,34 @@
 
 @{
     ViewBag.Title = Resource.article;
+    var lang = Request.RequestContext.RouteData.Values["lang"];
+    var langId = 0;
+    if (lang.Equals("fr"))
+    {
+        langId = 1;
+    }
+    else if (lang.Equals("en"))
+    {
+        langId = 2;
+    }
+    else
+    {
+        langId = 3;
+    }
+    var article = Model.Translations.Where(x => x.LanguageId == langId).FirstOrDefault();
+    if (article == null)
+    {
+        article = Model.Translations.FirstOrDefault();
+        langId = article.LanguageId;
+    }
 }
 
-<h1 class="text-center">@Model.Translations.FirstOrDefault().TranslationArticleTitle</h1>
+<h1 class="text-center">@article.TranslationArticleTitle</h1>
 <div>
     <h6 class="text-center"><span style="padding-right: 30px;" class="glyphicon glyphicon-calendar"></span>@Model.Article.CreationDate</h6>
     <br />
     <p class="text-center">
-        @Model.Translations.FirstOrDefault().TranslationArticleContent
+        @article.TranslationArticleContent
     </p>
     <div class="text-center">
         @if (Model.IsFavorite == false)
@@ -44,10 +64,10 @@
     <hr />
 
         <div class="row">
-            <h4 class="text-center">@Model.Translations.FirstOrDefault().TranslationArticleTitle @Resource.have @Model.Article.ResourcesList.Where(x => x.LanguageId == 1).ToList().Count médias</h4>
+            <h4 class="text-center">@article.TranslationArticleTitle @Resource.have @Model.Article.ResourcesList.Where(x => x.LanguageId == langId).ToList().Count @Resource.medias</h4>
             @foreach (var media in Model.Article.ResourcesList)
             {
-                if (media.LanguageId == @Model.Translations.FirstOrDefault().LanguageId)
+                if (media.LanguageId == langId )
                 {
                     <div class="col-sm-3">
                         <div class="card">
