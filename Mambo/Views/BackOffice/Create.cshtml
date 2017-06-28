@@ -8,7 +8,7 @@
 
 <h2>New article</h2>
 
-@using (Html.BeginForm(Resource.create, "BackOffice"))
+@using (Html.BeginForm("Create", "BackOffice"))
 {
     @Html.AntiForgeryToken()
 
