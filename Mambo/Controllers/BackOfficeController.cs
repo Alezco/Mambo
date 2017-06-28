@@ -285,7 +285,8 @@ namespace Mambo.Controllers
             }
             
             List<SelectListItem> items = new List<SelectListItem>();
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && !string.IsNullOrEmpty(translateModel.NewTranslation.TranslationArticleTitle)
+                && !string.IsNullOrEmpty(translateModel.NewTranslation.TranslationArticleTitle))
             {
                 int selectedLanguage = int.Parse(translateModel.SelectedLanguage);
                 if (translateModel.NewTranslation.TranslationArticleTitle != null && translateModel.NewTranslation.TranslationArticleContent != null)
@@ -333,7 +334,7 @@ namespace Mambo.Controllers
                     }
                 }
             }
-            return View(translateModel);
+            return Translate(translateModel.Article.Id);
         }
 
         // GET: BackOffice/Delete/5
