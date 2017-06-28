@@ -91,7 +91,7 @@
 @if (Model.Article.Status.Equals("WAITING_VALIDATION"))
 {
     @Html.ValidationSummary(true)
-    using (Html.BeginForm(Resource.validateArticle, "BackOffice", new { id = Model.Article.Id }, FormMethod.Post))
+    using (Html.BeginForm("ValidateArticle", "BackOffice", new { id = Model.Article.Id }, FormMethod.Post))
     {
         @Html.AntiForgeryToken()
         <input type="submit" class="btn btn-primary" value="@Resource.validate" />
