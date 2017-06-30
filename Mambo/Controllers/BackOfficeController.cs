@@ -144,14 +144,17 @@ namespace Mambo.Controllers
                 DBO.Translation translation = new DBO.Translation(articleId, currentUser.Id, languageId, newArticle.Title, newArticle.Text);
                 translationManagement.Create(translation);
 
-                foreach (DBO.Resources resource in SessionBag.Current.Resources)
+                if (SessionBag.Current.Resources != null)
                 {
-                    resource.LanguageId = languageId;
-                    int resourceId = resourceManagement.Create(resource);
-                    DBO.Resources updateResource = resourceManagement.Get(resourceId);
-                    articleManagement.Update(updateArticle, updateResource);
+                    foreach (DBO.Resources resource in SessionBag.Current.Resources)
+                    {
+                        resource.LanguageId = languageId;
+                        int resourceId = resourceManagement.Create(resource);
+                        DBO.Resources updateResource = resourceManagement.Get(resourceId);
+                        articleManagement.Update(updateArticle, updateResource);
+                    }
+                    SessionBag.Current.Resources = null;
                 }
-                SessionBag.Current.Resources = null;
 
                 // Création de la liste de ressources
                 return RedirectToAction("Index");
