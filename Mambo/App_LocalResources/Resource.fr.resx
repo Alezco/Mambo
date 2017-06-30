@@ -294,4 +294,7 @@
   <data name="viewStats" xml:space="preserve">
     <value>Voir les statistiques des articles</value>
   </data>
+  <data name="alertTranslation" xml:space="preserve">
+    <value>Un ou plusieurs articles ont besoin d'une traduction</value>
+  </data>
 </root>

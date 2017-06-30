@@ -106,6 +106,15 @@ namespace Mambo.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to One are several articles are waiting for translation.
+        /// </summary>
+        public static string alertTranslation {
+            get {
+                return ResourceManager.GetString("alertTranslation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Article.
         /// </summary>
         public static string article {

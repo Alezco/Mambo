@@ -18,6 +18,17 @@
     <h3>@Html.ActionLink(Resource.viewStats, "Statistics")</h3>
 }
 
+@if (@HttpContext.Current.User.IsInRole("TRADUCTEUR"))
+{
+    foreach (var article in Model)
+    {
+        if (article.CreationDate.AddDays(1) < DateTime.Now)
+        {
+            <div class="alert alert-danger" role="alert">@Resource.alertTranslation</div>
+            break;
+        }
+    }
+}
 <h2>@Resource.pendingArticles</h2>
 
 <table class="table">
