@@ -173,7 +173,6 @@ namespace Mambo.Controllers
             }
         }
 
-        [Authorize(Roles = "ADMIN")]
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
