@@ -162,6 +162,32 @@ namespace Mambo.Controllers
             return View(newArticle);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteTranslation(int? id, int lang)
+        {
+            // Suppression de la traduction
+            DBO.Translation transToDelete = translationManagement.GetTranslationsByArticleId(id.Value).Where(x => x.LanguageId == lang).FirstOrDefault();
+            translationManagement.Delete(transToDelete.Id);
+
+            // Suppression des ressources
+            DBO.Article article = articleManagement.Get(id.Value);
+            List<DBO.Resources> resourcesToDelete = article.ResourcesList.Where(x => x.LanguageId == lang).ToList();
+            foreach (DBO.Resources resource in resourcesToDelete)
+            {
+                resourceManagement.DeleteResourceLink(resource.Id);
+                resourceManagement.Delete(resource.Id);
+            }
+
+            List<DBO.Translation> translations = translationManagement.GetTranslationsByArticleId(id.Value);
+            if (translations.Count <= 1)
+            {
+                article.Status = "WAITING_TRANSLATION";
+                articleManagement.Update(article);
+            }
+            return RedirectToAction("Index");
+        }
+
         public ActionResult CreateResource(Models.ResourceCreationModel newResource)
         {
             if (ModelState.IsValid)

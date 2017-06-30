@@ -300,4 +300,7 @@
   <data name="alertTranslation" xml:space="preserve">
     <value>Uno es varios artículos están esperando la traducción</value>
   </data>
+  <data name="delete" xml:space="preserve">
+    <value>Borrar</value>
+  </data>
 </root>

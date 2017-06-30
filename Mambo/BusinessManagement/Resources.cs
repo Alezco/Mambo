@@ -24,6 +24,11 @@ namespace Mambo.BusinessManagement
             return resourcesAccess.Delete(key);
         }
 
+        public bool DeleteResourceLink(int key)
+        {
+            return resourcesAccess.DeleteResourceLink(key);
+        }
+             
         public DBO.Resources Get(int key)
         {
             return resourcesAccess.Get(key);

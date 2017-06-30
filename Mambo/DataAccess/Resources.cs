@@ -46,6 +46,29 @@ namespace Mambo.DataAccess
             }
         }
 
+        public bool DeleteResourceLink(int key)
+        {
+            try
+            {
+                using (dbNetEntities bdd = new dbNetEntities())
+                {
+                    T_RESOURCES tResource = bdd.T_RESOURCES.Where(x => x.id == key).FirstOrDefault();
+                    T_ARTICLE tArticle = tResource.T_ARTICLE.FirstOrDefault();
+                    tArticle.T_RESOURCES.Remove(tResource);
+                    tResource.T_ARTICLE.Remove(tArticle);
+                    bdd.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception exception)
+            {
+                Debug.WriteLine("Language Exception");
+                Debug.WriteLine(exception.ToString());
+                return false;
+            }
+         
+        }
+
         public DBO.Resources Get(int key)
         {
             try

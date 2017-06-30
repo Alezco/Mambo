@@ -5,6 +5,7 @@
     ViewBag.Title = Resource.details;
     var lang = Request.RequestContext.RouteData.Values["lang"];
     var langId = 0;
+    var cpt = 0;
     if (lang.Equals("fr"))
     {
         langId = 1;
@@ -82,10 +83,20 @@
                 }
             }
         </div>
-
+        @if (cpt++ != 0)
+        {
+            @Html.ValidationSummary(true)
+            using (Html.BeginForm("DeleteTranslation", "BackOffice", new { id = Model.Article.Id }, FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.Hidden("lang", translation.LanguageId)
+                <input type="submit" class="btn btn-primary" value="@Resource.delete" />
+                <br />
+            }
+        }
     </div>
     <br />
-        <hr />
+    <hr />
 }
 
 @if (Model.Article.Status.Equals("WAITING_VALIDATION"))

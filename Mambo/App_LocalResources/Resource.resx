@@ -297,4 +297,7 @@
   <data name="alertTranslation" xml:space="preserve">
     <value>One are several articles are waiting for translation</value>
   </data>
+  <data name="delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
 </root>
