@@ -49,11 +49,16 @@ namespace Mambo.Controllers
                     return View(model);
                 }
                 BusinessManagement.User bUser = new BusinessManagement.User();
+                if (bUser.GetByEmail(model.Email) != null)
+                {
+                    ModelState.AddModelError("", "Email already used");
+                    return View(model);
+                }
                 DBO.User u = new DBO.User(3, model.UserName, model.Email, BusinessManagement.Security.GenerateHash(model.Password));
                 var success = bUser.Create(u);
                 if (success)
                 {
-                    return View(model);
+                    return RedirectToAction("Login", "Authentification");
                 }
             }
             return View(model);

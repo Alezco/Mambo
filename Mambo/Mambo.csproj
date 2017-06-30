@@ -174,6 +174,7 @@
     <Compile Include="BusinessManagement\Language.cs" />
     <Compile Include="BusinessManagement\Resources.cs" />
     <Compile Include="BusinessManagement\Role.cs" />
+    <Compile Include="BusinessManagement\Rss.cs" />
     <Compile Include="BusinessManagement\Security.cs" />
     <Compile Include="BusinessManagement\Translation.cs" />
     <Compile Include="BusinessManagement\User.cs" />
@@ -304,11 +305,13 @@
     <Compile Include="Models\Register.cs" />
     <Compile Include="Models\CommentModel.cs" />
     <Compile Include="Models\ResourceCreationModel.cs" />
+    <Compile Include="Models\Rss.cs" />
     <Compile Include="Models\SessionBag.cs" />
     <Compile Include="Models\StatisticModel.cs" />
     <Compile Include="Models\UserComment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RSS\RSSActionResult.cs" />
+    <Compile Include="RSS\RssReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -328,6 +331,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Ressources\Style\Comments.css" />
+    <Content Include="Ressources\Style\Rss.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -376,6 +380,7 @@
     <Content Include="Views\BackOffice\Statistics.cshtml" />
     <Content Include="Views\BackOffice\Translate.cshtml" />
     <Content Include="Views\BackOffice\CreateResource.cshtml" />
+    <Content Include="Views\Home\RssReader.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

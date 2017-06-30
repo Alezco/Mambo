@@ -1,0 +1,32 @@
+﻿@using Mambo.Models
+@model IEnumerable<Rss>
+
+
+@{
+    ViewBag.Title = "RssReader";
+}
+
+<h2>RssReader</h2>
+@Html.ActionLink("Raw css flux", "Rss", "Home")
+<table>
+    <tr>
+        <th>
+            <p>Title
+        </th>
+        <th>
+            <p>Date
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <p>@item.Title</p>
+            </td>
+            <td>
+                <p>@item.Description</p>
+            </td>
+        </tr>
+    }
+</table>

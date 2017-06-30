@@ -6,6 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/Ressources/Style/Rss.css" type="text/css" />
     <link rel="stylesheet" href="~/Ressources/Style/Comments.css" type="text/css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
     @Styles.Render("~/Content/css")
@@ -42,7 +43,7 @@
                     @if (@HttpContext.Current.User.IsInRole("ADMIN") || @HttpContext.Current.User.IsInRole("TRADUCTEUR"))
                     {
                         <li>@Html.ActionLink("Back Office", "Index", "BackOffice")</li>
-                        <li>@Html.ActionLink(Resource.rss, "Rss", "Home")</li>
+                        <li>@Html.ActionLink(Resource.rss, "RssReader", "Home")</li>
                     }
                     @if (@HttpContext.Current.User.Identity.IsAuthenticated)
                     {

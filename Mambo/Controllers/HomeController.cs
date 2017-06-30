@@ -25,6 +25,7 @@ namespace Mambo.Controllers
         private BusinessManagement.CommentArticle commentManagement = new BusinessManagement.CommentArticle();
         private BusinessManagement.ArticleLike likeManagement = new BusinessManagement.ArticleLike();
         private BusinessManagement.User userManagement = new BusinessManagement.User();
+        private BusinessManagement.Rss rssManagement = new BusinessManagement.Rss();
 
         public ActionResult Index(string searchString)
         {      
@@ -189,33 +190,14 @@ namespace Mambo.Controllers
 
         public ActionResult Rss()
         {
-            List<DBO.Translation> listTransaction = translationManagement.GetAll();
-            List<DBO.Translation> listArticlesInWaiting = new List<DBO.Translation>();
-            foreach (var elt in listTransaction)
-            {
-                DBO.Article a = articleManagement.Get(elt.ArticleId);
-                if (a.Status == "WAITING_VALIDATION")
-                {
-                    listArticlesInWaiting.Add(elt);
-                }
-            }
-            var feed = new SyndicationFeed("Articles waiting for translation", "Mambo RSS Feed",
-                new Uri("https://raw.githubusercontent.com/Alezco/Mambo/master/Ressources/file_placeholder.png"),
-                Guid.NewGuid().ToString(), DateTime.Now);
-            var items = new List<SyndicationItem>();
-            foreach (DBO.Translation a in listTransaction)
-            {
-                DBO.Article elt = articleManagement.Get(a.ArticleId);
-                Uri tempValue = new Uri("https://fr.wikipedia.org/wiki/Mambo");
-                if (elt.ResourcesList.Count > 0 && Uri.TryCreate(elt.ResourcesList[0].Path, UriKind.RelativeOrAbsolute, out tempValue))
-                {
-                }
-                var item =
-                    new SyndicationItem(a.TranslationArticleTitle, a.TranslationArticleContent, tempValue);
-                items.Add(item);
-            }
-            feed.Items = items;
+            var feed = rssManagement.getRssData();
             return new RSSActionResult { Feed = feed };
+        }
+
+        public ActionResult RssReader()
+        {
+            var feed = rssManagement.getRssData();
+            return View(RSS.RssReader.GetRssFeed(feed));
         }
 
         public ActionResult LikeAction(int modelID)

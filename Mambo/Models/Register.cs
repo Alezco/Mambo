@@ -14,7 +14,7 @@ namespace Mambo.Models
 
 
         [Required]
-        [DataType(DataType.EmailAddress)]
+        [DataType(DataType.EmailAddress, ErrorMessage = "Invalid Email Address")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
